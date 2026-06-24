@@ -1,62 +1,65 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../Logo/Logo.jsx'
 import Icon from '../Icon/Icon.jsx'
 import IconButton from '../IconButton/IconButton.jsx'
+import CategoryMenu from '../CategoryMenu/CategoryMenu.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
-import { NAV_CATEGORIES } from '../../data/categories.js'
 import './Header.css'
 
-const NAV_LINKS = [
-  { label: 'סייל', to: '/shop?sale=1', accent: true },
-  ...NAV_CATEGORIES.map((c) => ({ label: c, to: `/shop?category=${encodeURIComponent(c)}` })),
-]
-
 /**
- * Fixed pomegranate top app bar. Shows desktop nav links at wide widths and
- * collapses to icon actions + menu on mobile. Always exposes an account entry
- * (→ /profile when signed in, → /login otherwise).
+ * Fixed pomegranate top app bar. Categories now live behind a "קטגוריות"
+ * trigger that opens a SHEIN-style panel, instead of inline links.
  */
 function Header({ onMenu }) {
   const { user } = useAuth()
+  const [catOpen, setCatOpen] = useState(false)
 
   return (
-    <header className="header">
-      <div className="header__group">
-        <IconButton name="menu" label="תפריט" onClick={onMenu} className="header__menu" />
-        <Link to="/" className="header__logo">
-          <Logo size="md" />
-        </Link>
-      </div>
-
-      <nav className="header__nav">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.label}
-            to={link.to}
-            className={`header__link ${link.accent ? 'header__link--accent' : ''}`}
-          >
-            {link.label}
+    <>
+      <header className="header">
+        <div className="header__group">
+          <IconButton name="menu" label="תפריט" onClick={onMenu} className="header__menu" />
+          <Link to="/" className="header__logo">
+            <Logo size="md" />
           </Link>
-        ))}
-      </nav>
+        </div>
 
-      <div className="header__group header__actions">
-        <Link to="/shop" className="header__action" aria-label="חיפוש">
-          <Icon name="search" />
-        </Link>
-        <Link to="/sell" className="header__action" aria-label="העלאת פריט">
-          <Icon name="add" />
-        </Link>
-        <Link
-          to={user ? '/profile' : '/login'}
-          className="header__action"
-          aria-label={user ? 'הפרופיל שלי' : 'התחברות'}
-        >
-          <Icon name={user ? 'account_circle' : 'person'} />
-        </Link>
-        <IconButton name="shopping_bag" label="סל קניות" />
-      </div>
-    </header>
+        <nav className="header__nav">
+          <button
+            type="button"
+            className="header__cats"
+            onClick={() => setCatOpen((v) => !v)}
+            aria-expanded={catOpen}
+          >
+            <Icon name="grid_view" size="md" />
+            <span className="header__cats-label">קטגוריות</span>
+          </button>
+          <Link to="/shop?sale=1" className="header__link header__link--accent">
+            סייל
+          </Link>
+        </nav>
+
+        <div className="header__group header__actions">
+          <Link to="/shop" className="header__action" aria-label="חיפוש">
+            <Icon name="search" />
+          </Link>
+          <Link to="/sell" className="header__action" aria-label="העלאת פריט">
+            <Icon name="add" />
+          </Link>
+          <Link
+            to={user ? '/profile' : '/login'}
+            className="header__action"
+            aria-label={user ? 'הפרופיל שלי' : 'התחברות'}
+          >
+            <Icon name={user ? 'account_circle' : 'person'} />
+          </Link>
+          <IconButton name="shopping_bag" label="סל קניות" />
+        </div>
+      </header>
+
+      <CategoryMenu open={catOpen} onClose={() => setCatOpen(false)} />
+    </>
   )
 }
 
