@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
 import HeroBanner from '../../components/HeroBanner/HeroBanner.jsx'
@@ -7,11 +7,32 @@ import ProductCard from '../../components/ProductCard/ProductCard.jsx'
 import NewsletterSignup from '../../components/NewsletterSignup/NewsletterSignup.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import BottomNavBar from '../../components/BottomNavBar/BottomNavBar.jsx'
-import { products, heroSplit } from '../../data/products.js'
+import StateMessage from '../../components/StateMessage/StateMessage.jsx'
+import { fetchProducts } from '../../api/products.js'
+import { heroSplit } from '../../data/content.js'
 import './Home.css'
 
 function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [products, setProducts] = useState([])
+  const [status, setStatus] = useState('loading') // loading | ready | error
+
+  useEffect(() => {
+    let active = true
+    fetchProducts()
+      .then((data) => {
+        if (!active) return
+        setProducts(data)
+        setStatus('ready')
+      })
+      .catch((err) => {
+        console.error(err)
+        if (active) setStatus('error')
+      })
+    return () => {
+      active = false
+    }
+  }, [])
 
   return (
     <div className="page">
@@ -27,16 +48,23 @@ function Home() {
             title="החדש בחנות"
             linkText="צפו בכל הפריטים"
           />
-          <div className="home__grid">
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                showFavorite
-                showAddToCart
-              />
-            ))}
-          </div>
+
+          {status === 'loading' && <StateMessage>טוען פריטים…</StateMessage>}
+          {status === 'error' && (
+            <StateMessage variant="error">
+              שגיאה בטעינת הפריטים. בדקי את החיבור ל-Supabase ונסי שוב.
+            </StateMessage>
+          )}
+          {status === 'ready' && products.length === 0 && (
+            <StateMessage>אין עדיין פריטים בחנות. היו הראשונים להעלות!</StateMessage>
+          )}
+          {status === 'ready' && products.length > 0 && (
+            <div className="home__grid">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} showFavorite showAddToCart />
+              ))}
+            </div>
+          )}
         </section>
 
         <NewsletterSignup

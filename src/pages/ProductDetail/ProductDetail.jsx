@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Header from '../../components/Header/Header.jsx'
 import ImageGallery from '../../components/ImageGallery/ImageGallery.jsx'
@@ -6,32 +7,73 @@ import SellerCard from '../../components/SellerCard/SellerCard.jsx'
 import ActionBar from '../../components/ActionBar/ActionBar.jsx'
 import ProductCarousel from '../../components/ProductCarousel/ProductCarousel.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
-import { getProduct, getSimilar, sellers } from '../../data/products.js'
+import StateMessage from '../../components/StateMessage/StateMessage.jsx'
+import { fetchProduct, fetchSimilar } from '../../api/products.js'
 import './ProductDetail.css'
 
 function ProductDetail() {
   const { id } = useParams()
-  const product = getProduct(id)
+  const [product, setProduct] = useState(null)
+  const [similar, setSimilar] = useState([])
+  const [status, setStatus] = useState('loading') // loading | ready | missing | error
 
-  if (!product) {
+  useEffect(() => {
+    let active = true
+    setStatus('loading')
+    Promise.all([fetchProduct(id), fetchSimilar(id)])
+      .then(([prod, sim]) => {
+        if (!active) return
+        if (!prod) {
+          setStatus('missing')
+          return
+        }
+        setProduct(prod)
+        setSimilar(sim)
+        setStatus('ready')
+      })
+      .catch((err) => {
+        console.error(err)
+        if (active) setStatus('error')
+      })
+    return () => {
+      active = false
+    }
+  }, [id])
+
+  if (status === 'loading' || status === 'error' || status === 'missing') {
     return (
       <div className="page">
         <Header />
         <main className="detail detail--missing">
-          <h1 className="detail__missing-title">הפריט לא נמצא</h1>
-          <Link to="/" className="detail__missing-link">חזרה לחנות ←</Link>
+          {status === 'loading' && <StateMessage>טוען פריט…</StateMessage>}
+          {status === 'error' && (
+            <StateMessage variant="error">שגיאה בטעינת הפריט.</StateMessage>
+          )}
+          {status === 'missing' && (
+            <>
+              <h1 className="detail__missing-title">הפריט לא נמצא</h1>
+              <Link to="/" className="detail__missing-link">חזרה לחנות ←</Link>
+            </>
+          )}
         </main>
         <Footer />
       </div>
     )
   }
 
-  const similar = getSimilar(product.id)
   const meta = [
     { label: 'מידה', value: product.size },
     { label: 'מצב הפריט', value: product.condition },
   ]
-  const tags = [product.brand, `מידה ${product.size}`, product.condition].filter(Boolean)
+  const tags = [product.brand, product.size && `מידה ${product.size}`, product.condition].filter(
+    Boolean
+  )
+  const seller = product.seller ?? {
+    name: 'מוכר/ת',
+    avatar: '',
+    location: '',
+    distance: product.distance,
+  }
 
   return (
     <div className="page">
@@ -58,20 +100,21 @@ function ProductDetail() {
               <p className="detail__description">{product.description}</p>
             </div>
 
-            <SellerCard seller={sellers.default} boxed />
+            <SellerCard seller={seller} boxed />
 
             <ActionBar buyText="קנייה מאובטחת" messageText="שליחת הודעה למוכרת" />
           </div>
         </div>
 
-        <section className="detail__similar">
-          <ProductCarousel title="פריטים דומים שאהבנו" items={similar} />
-        </section>
+        {similar.length > 0 && (
+          <section className="detail__similar">
+            <ProductCarousel title="פריטים דומים שאהבנו" items={similar} />
+          </section>
+        )}
       </main>
 
       <Footer />
 
-      {/* Mobile fixed purchase bar */}
       <div className="detail__mobile-bar">
         <ActionBar fixed buyText="קני עכשיו" messageText="שלחי הודעה" />
       </div>

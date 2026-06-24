@@ -7,14 +7,26 @@ import './PhotoUploader.css'
  *  - "grid" : feature primary slot + small add slots (desktop)
  * Images are mock previews; no real upload logic.
  */
-function PhotoUploader({ layout = 'row', photos = [], emptySlots = 4 }) {
+function PhotoUploader({ layout = 'row', photos = [], emptySlots = 4, previewUrl, onFileChange }) {
   if (layout === 'grid') {
     return (
       <div className="uploader uploader--grid">
-        <div className="uploader__primary">
-          <Icon name="add_a_photo" size="xl" className="uploader__primary-icon" />
-          <span className="uploader__primary-label">תמונה ראשית (3:4)</span>
-        </div>
+        <label className="uploader__primary">
+          {previewUrl ? (
+            <img src={previewUrl} alt="תצוגה מקדימה" className="uploader__primary-preview" />
+          ) : (
+            <>
+              <Icon name="add_a_photo" size="xl" className="uploader__primary-icon" />
+              <span className="uploader__primary-label">תמונה ראשית (3:4)</span>
+            </>
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            className="uploader__input"
+            onChange={(e) => onFileChange?.(e.target.files?.[0] ?? null)}
+          />
+        </label>
         {Array.from({ length: emptySlots }).map((_, i) => (
           <div key={i} className="uploader__slot uploader__slot--dashed">
             <Icon name="add" size="lg" />

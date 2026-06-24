@@ -1,0 +1,13 @@
+.state-message {
+  margin-top: var(--space-2xl);
+  padding: var(--space-3xl) var(--space-lg);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+  color: var(--color-text-secondary);
+}
+
+.state-message--error {
+  color: var(--color-error);
+}

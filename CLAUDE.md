@@ -6,7 +6,15 @@ Guidance for working in this repository.
 
 - **Vite + React**, written in **JavaScript** (`.jsx` / `.js` — not TypeScript).
 - **React Router** for navigation between pages.
-- All data is **placeholder/dummy**. Do **not** add API calls, fetches, or any backend. Hard-code mock data locally.
+- **Supabase** is the backend (Postgres + Storage). Product/seller data is read from and written to Supabase — see [src/api/products.js](src/api/products.js) and [src/lib/supabase.js](src/lib/supabase.js). The DB schema and seed live in [supabase/](supabase/).
+  - Connection comes from env vars `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` (`.env`, gitignored; also set in Vercel). Copy [.env.example](.env.example) to `.env`.
+  - Only non-catalogue marketing copy (e.g. the hero) stays static, in [src/data/content.js](src/data/content.js).
+  - _(This reverses the original "mock data only, no backend" rule — the project owner moved to Supabase.)_
+
+## Deploy
+
+- After changes, **push to GitHub** (`origin` → `kotoshov12/lovesh-et`, branch `main`) **and deploy to Vercel** via the Vercel CLI (`vercel --prod`).
+- The same `VITE_SUPABASE_*` env vars must be configured in Vercel for the live site to connect.
 
 ## Design system — source of truth
 
