@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  /* clear the fixed header so the card isn't hidden behind it */
+  padding: calc(var(--header-height) + var(--space-2xl)) var(--space-xl) var(--space-2xl);
   background: var(--color-background);
 }
 
@@ -16,10 +17,6 @@
   padding: var(--space-3xl) var(--space-2xl);
   background: var(--color-surface-container-lowest);
   border: var(--border-thick) solid var(--color-secondary);
-}
-
-.auth__logo {
-  align-self: center;
 }
 
 .auth__head {
