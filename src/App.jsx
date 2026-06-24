@@ -4,6 +4,7 @@ import ProductDetail from './pages/ProductDetail/ProductDetail.jsx'
 import UploadItem from './pages/UploadItem/UploadItem.jsx'
 import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
+import Profile from './pages/Profile/Profile.jsx'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
 
 function App() {
@@ -18,6 +19,14 @@ function App() {
         element={
           <ProtectedRoute>
             <UploadItem />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         }
       />

@@ -32,11 +32,11 @@ function BottomNavBar() {
       </button>
 
       <Link
-        to={user ? '/sell' : '/login'}
-        className={`bottom-nav__item ${isActive('/login') ? 'is-active' : ''}`}
-        aria-label={user ? 'החשבון שלי' : 'התחברות'}
+        to={user ? '/profile' : '/login'}
+        className={`bottom-nav__item ${isActive(user ? '/profile' : '/login') ? 'is-active' : ''}`}
+        aria-label={user ? 'הפרופיל שלי' : 'התחברות'}
       >
-        <Icon name={user ? 'account_circle' : 'login'} />
+        <Icon name={user ? 'account_circle' : 'login'} filled={isActive('/profile')} />
       </Link>
     </nav>
   )

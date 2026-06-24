@@ -57,6 +57,18 @@ export async function fetchProduct(id) {
   return mapProduct(data)
 }
 
+/** Products created by a given user (their own listings). */
+export async function fetchMyProducts(userId) {
+  if (!userId) return []
+  const { data, error } = await supabase
+    .from('products')
+    .select(SELECT_WITH_SELLER)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data.map(mapProduct)
+}
+
 /** A few other products to show as "similar items". */
 export async function fetchSimilar(excludeId, limit = 4) {
   const { data, error } = await supabase
@@ -90,7 +102,12 @@ export async function uploadProductImage(file) {
  * Returns the created product (mapped).
  */
 export async function createProduct(input) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   const row = {
+    user_id: user?.id ?? null,
     name: input.name,
     price: input.price ? Number(input.price) : 0,
     original_price: input.originalPrice ? Number(input.originalPrice) : null,

@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext.jsx'
 import './NavigationDrawer.css'
 
 const MENU = [
-  { label: 'הפרופיל שלי', icon: 'person', to: '#' },
+  { label: 'הפרופיל שלי', icon: 'person', to: '/profile' },
   { label: 'ההזמנות שלי', icon: 'package_2', to: '#' },
   { label: 'פריטים שאהבתי', icon: 'favorite', to: '#' },
   { label: 'הגדרות', icon: 'settings', to: '#' },

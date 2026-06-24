@@ -25,3 +25,8 @@ export function signInWithGoogle() {
 export function signOut() {
   return supabase.auth.signOut()
 }
+
+/** Update the signed-in user's display name (stored in user metadata). */
+export function updateFullName(fullName) {
+  return supabase.auth.updateUser({ data: { full_name: fullName } })
+}
