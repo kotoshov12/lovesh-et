@@ -1,0 +1,13 @@
+.location-map {
+  width: 100%;
+  border: var(--border-thick) solid var(--color-secondary);
+  background: var(--color-surface);
+}
+
+.location-map__frame {
+  display: block;
+  width: 100%;
+  height: var(--size-map);
+  border: 0;
+  filter: grayscale(0.2) contrast(1.05);
+}

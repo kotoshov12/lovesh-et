@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
@@ -13,6 +13,7 @@ import './Cart.css'
 
 function Cart() {
   const { items, remove, clear, total } = useCart()
+  const navigate = useNavigate()
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   return (
@@ -69,7 +70,7 @@ function Cart() {
                 <span>סה"כ לתשלום</span>
                 <span>{formatPrice(total)}</span>
               </div>
-              <Button variant="primary" fullWidth icon="arrow_back">
+              <Button variant="primary" fullWidth icon="arrow_back" onClick={() => navigate('/checkout')}>
                 מעבר לתשלום
               </Button>
               <button type="button" className="cart__clear" onClick={clear}>

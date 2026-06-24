@@ -1,0 +1,109 @@
+.support {
+  padding-top: calc(var(--header-height) + var(--space-3xl));
+  padding-bottom: var(--space-4xl);
+  padding-inline: var(--space-xl);
+  max-width: var(--container-md);
+  margin: 0 auto;
+}
+
+.support__intro {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.support__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  color: var(--color-primary);
+}
+
+.support__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-secondary);
+}
+
+.support__channels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-3xl);
+}
+
+.support__channel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface-container-lowest);
+  border: var(--border-thin) solid var(--color-secondary);
+  color: var(--color-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.support__channel:hover {
+  background: var(--color-secondary);
+  color: var(--color-background);
+}
+
+.support__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+.support__section-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h3);
+  color: var(--color-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.support__faq-item {
+  border-bottom: var(--border-thin) solid var(--color-outline-variant);
+  padding: var(--space-md) 0;
+}
+
+.support__faq-q {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-on-surface);
+  cursor: pointer;
+}
+
+.support__faq-a {
+  margin-top: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-on-surface-variant);
+}
+
+.support__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.support__sent {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-success);
+}
+
+@media (min-width: 768px) {
+  .support__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

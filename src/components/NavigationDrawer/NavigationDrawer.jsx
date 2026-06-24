@@ -8,7 +8,7 @@ const MENU = [
   { label: 'הפרופיל שלי', icon: 'person', to: '/profile' },
   { label: 'סל הקניות', icon: 'shopping_bag', to: '/cart' },
   { label: 'פריטים שאהבתי', icon: 'favorite', to: '/profile' },
-  { label: 'הגדרות', icon: 'settings', to: '#' },
+  { label: 'שירות לקוחות', icon: 'support_agent', to: '/support' },
 ]
 
 /**

@@ -27,8 +27,8 @@ export function signOut() {
 }
 
 /** Update the signed-in user's profile fields (stored in user metadata). */
-export function updateProfile({ fullName, avatarUrl, bio }) {
+export function updateProfile({ fullName, avatarUrl, bio, location }) {
   return supabase.auth.updateUser({
-    data: { full_name: fullName, avatar_url: avatarUrl, bio },
+    data: { full_name: fullName, avatar_url: avatarUrl, bio, location },
   })
 }

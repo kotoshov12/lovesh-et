@@ -140,6 +140,41 @@
   gap: var(--space-md);
 }
 
+.profile__location-text {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-secondary);
+  margin: var(--space-lg) 0;
+}
+
+.profile__listing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.profile__sold-btn {
+  background: transparent;
+  border: var(--border-thin) solid var(--color-secondary);
+  border-radius: var(--radius);
+  padding: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.profile__sold-btn:hover {
+  background: var(--color-secondary);
+  color: var(--color-background);
+}
+
 .profile__empty-cta {
   display: inline-flex;
 }

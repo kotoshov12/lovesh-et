@@ -35,6 +35,34 @@
   inset-inline-end: 0;
 }
 
+/* Sold state — blurred image + "נמכר" overlay */
+.product-card--sold .product-card__img {
+  filter: blur(3px) grayscale(0.4);
+}
+
+.product-card--sold:hover .product-card__img {
+  transform: none;
+}
+
+.product-card--sold .product-card__media {
+  position: relative;
+}
+
+.product-card__sold {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: var(--space-sm) var(--space-xl);
+  background: var(--color-secondary);
+  color: var(--color-background);
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h3);
+  letter-spacing: var(--tracking-badge);
+  z-index: 1;
+}
+
 .product-card__fav {
   position: absolute;
   top: var(--space-md);

@@ -163,6 +163,7 @@
   --size-hero-slide: 180px;     /* mobile hero banner height */
   --size-action-bar: 56px;      /* detail page CTA button height */
   --size-cat-tile: 88px;        /* category menu circular tile */
+  --size-map: 280px;            /* embedded location map height */
 
   /* ---- Display sizes not in the core scale ---------------------------- */
   --text-logo: 30px;        /* nav wordmark — Karantina Bold 30px */

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Logo from '../Logo/Logo.jsx'
 import Icon from '../Icon/Icon.jsx'
 import './Footer.css'
@@ -21,9 +22,9 @@ function Footer() {
         <div className="footer__col">
           <h4 className="footer__heading">שירות לקוחות</h4>
           {CUSTOMER_LINKS.map((link) => (
-            <a key={link} href="#" className="footer__link">
+            <Link key={link} to="/support" className="footer__link">
               {link}
-            </a>
+            </Link>
           ))}
         </div>
 

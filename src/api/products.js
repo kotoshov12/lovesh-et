@@ -27,6 +27,7 @@ function mapProduct(row) {
     condition: row.condition,
     eyebrow: row.eyebrow,
     description: row.description,
+    sold: row.is_sold === true,
     seller: row.seller
       ? {
           name: row.seller.name,
@@ -47,7 +48,9 @@ export async function fetchProducts() {
     .select(SELECT_WITH_SELLER)
     .order('created_at', { ascending: false })
   if (error) throw error
-  return data.map(mapProduct)
+  // Hide sold items from the public catalogue (filtered client-side so it works
+  // even before the is_sold migration has been applied).
+  return data.map(mapProduct).filter((p) => !p.sold)
 }
 
 /** A single product by id (null if not found). */
@@ -61,7 +64,19 @@ export async function fetchProduct(id) {
   return mapProduct(data)
 }
 
-/** Products created by a given user (their own listings). */
+/** Mark one of the current user's products as sold. */
+export async function markProductSold(id) {
+  const { data, error } = await supabase
+    .from('products')
+    .update({ is_sold: true })
+    .eq('id', id)
+    .select(SELECT_WITH_SELLER)
+    .single()
+  if (error) throw error
+  return mapProduct(data)
+}
+
+/** Products created by a given user (their own listings, including sold). */
 export async function fetchMyProducts(userId) {
   if (!userId) return []
   const { data, error } = await supabase
@@ -80,9 +95,12 @@ export async function fetchSimilar(excludeId, limit = 4) {
     .select(SELECT_WITH_SELLER)
     .neq('id', excludeId)
     .order('created_at', { ascending: false })
-    .limit(limit)
+    .limit(limit + 4)
   if (error) throw error
-  return data.map(mapProduct)
+  return data
+    .map(mapProduct)
+    .filter((p) => !p.sold)
+    .slice(0, limit)
 }
 
 /**

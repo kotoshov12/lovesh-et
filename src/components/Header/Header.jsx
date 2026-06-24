@@ -40,6 +40,9 @@ function Header({ onMenu }) {
           <Link to="/shop?sale=1" className="header__link header__link--accent">
             מבצע
           </Link>
+          <Link to="/support" className="header__link header__link--muted">
+            שירות לקוחות
+          </Link>
         </nav>
 
         <div className="header__group header__actions">

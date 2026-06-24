@@ -13,7 +13,7 @@ import './ProductCard.css'
  * @param {boolean} showFavorite - render the heart overlay
  * @param {boolean} showAddToCart - reveal "add to cart" on hover (desktop)
  */
-function ProductCard({ product, showFavorite = false, showAddToCart = false }) {
+function ProductCard({ product, showFavorite = false, showAddToCart = false, sold = false }) {
   const { id, name, image, price, original, badge, distance, caption } = product
   const { add, has } = useCart()
   const inCart = has(id)
@@ -25,23 +25,27 @@ function ProductCard({ product, showFavorite = false, showAddToCart = false }) {
   }
 
   return (
-    <Link to={`/product/${id}`} className="product-card">
+    <Link to={`/product/${id}`} className={`product-card ${sold ? 'product-card--sold' : ''}`}>
       <div className="product-card__media">
         <img src={image} alt={name} className="product-card__img" />
 
-        {badge && (
+        {sold && <span className="product-card__sold">נמכר</span>}
+
+        {!sold && badge && (
           <Badge variant={badge.variant} className="product-card__badge">
             {badge.text}
           </Badge>
         )}
 
-        {showFavorite && (
+        {!sold && showFavorite && (
           <FavoriteButton product={product} overlay className="product-card__fav" />
         )}
 
-        {distance && <DistancePill distance={distance} className="product-card__distance" />}
+        {!sold && distance && (
+          <DistancePill distance={distance} className="product-card__distance" />
+        )}
 
-        {showAddToCart && (
+        {!sold && showAddToCart && (
           <button type="button" className="product-card__cart" onClick={handleAdd}>
             {inCart ? 'נוסף לסל ✓' : 'הוספה לסל'}
           </button>

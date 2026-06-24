@@ -11,9 +11,10 @@ import Input from '../../components/Input/Input.jsx'
 import Textarea from '../../components/Textarea/Textarea.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
+import LocationMap from '../../components/LocationMap/LocationMap.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useFavorites } from '../../context/FavoritesContext.jsx'
-import { fetchMyProducts, uploadProductImage } from '../../api/products.js'
+import { fetchMyProducts, uploadProductImage, markProductSold } from '../../api/products.js'
 import { updateProfile } from '../../api/auth.js'
 import './Profile.css'
 
@@ -29,6 +30,7 @@ function Profile() {
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(meta.full_name || '')
   const [bio, setBio] = useState(meta.bio || '')
+  const [location, setLocation] = useState(meta.location || '')
   const [avatarFile, setAvatarFile] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState(null)
   const [saving, setSaving] = useState(false)
@@ -63,7 +65,12 @@ function Profile() {
     try {
       let avatarUrl = meta.avatar_url || null
       if (avatarFile) avatarUrl = await uploadProductImage(avatarFile)
-      const { error } = await updateProfile({ fullName: name.trim(), avatarUrl, bio: bio.trim() })
+      const { error } = await updateProfile({
+        fullName: name.trim(),
+        avatarUrl,
+        bio: bio.trim(),
+        location: location.trim(),
+      })
       if (error) throw error
       setAvatarFile(null)
       setEditing(false)
@@ -78,10 +85,23 @@ function Profile() {
   function cancelEdit() {
     setName(meta.full_name || '')
     setBio(meta.bio || '')
+    setLocation(meta.location || '')
     setAvatarFile(null)
     setSaveError(null)
     setEditing(false)
   }
+
+  async function handleMarkSold(id) {
+    try {
+      await markProductSold(id)
+      setItems((prev) => prev.map((p) => (p.id === id ? { ...p, sold: true } : p)))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const activeListings = items.filter((p) => !p.sold)
+  const soldListings = items.filter((p) => p.sold)
 
   const displayName = meta.full_name || user?.email
   const avatarUrl = avatarPreview || meta.avatar_url
@@ -139,6 +159,13 @@ function Profile() {
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="ספרי על עצמך, הסטייל שלך, מה את מוכרת…"
                 />
+                <Input
+                  id="location"
+                  label="אזור פיזור / מיקום לאיסוף"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="לדוגמה: תל אביב, דיזנגוף"
+                />
                 {saveError && <p className="profile__error">{saveError}</p>}
                 <div className="profile__edit-actions">
                   <Button variant="primary" onClick={handleSave}>
@@ -166,6 +193,18 @@ function Profile() {
             )}
           </div>
         </section>
+
+        {/* Pickup location map */}
+        {meta.location && (
+          <section className="profile__block">
+            <SectionHeader title="אזור הפיזור שלי" eyebrow="PICKUP" />
+            <p className="profile__location-text">
+              <Icon name="location_on" size="sm" />
+              {meta.location}
+            </p>
+            <LocationMap query={meta.location} title={`מיקום של ${displayName}`} />
+          </section>
+        )}
 
         {/* Favorites */}
         <section className="profile__block">
@@ -200,14 +239,35 @@ function Profile() {
               </Link>
             </div>
           )}
-          {status === 'ready' && items.length > 0 && (
+          {status === 'ready' && activeListings.length > 0 && (
             <div className="profile__grid">
-              {items.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {activeListings.map((product) => (
+                <div key={product.id} className="profile__listing">
+                  <ProductCard product={product} />
+                  <button
+                    type="button"
+                    className="profile__sold-btn"
+                    onClick={() => handleMarkSold(product.id)}
+                  >
+                    סמני כנמכר
+                  </button>
+                </div>
               ))}
             </div>
           )}
         </section>
+
+        {/* Sold items */}
+        {status === 'ready' && soldListings.length > 0 && (
+          <section className="profile__block">
+            <SectionHeader title="נמכרו" eyebrow="SOLD" />
+            <div className="profile__grid">
+              {soldListings.map((product) => (
+                <ProductCard key={product.id} product={product} sold />
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <Footer />
