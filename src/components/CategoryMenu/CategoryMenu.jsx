@@ -57,7 +57,7 @@ function CategoryMenu({ open, onClose }) {
               className="catmenu__quick-link catmenu__quick-link--accent"
               onClick={onClose}
             >
-              סייל
+              מבצע
             </Link>
           </aside>
 

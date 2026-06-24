@@ -75,7 +75,7 @@ function Shop() {
     })
   }
 
-  const title = sale ? 'סייל' : category || (q ? `חיפוש: ${q}` : 'כל הפריטים')
+  const title = sale ? 'מבצע' : category || (q ? `חיפוש: ${q}` : 'כל הפריטים')
 
   return (
     <div className="page">

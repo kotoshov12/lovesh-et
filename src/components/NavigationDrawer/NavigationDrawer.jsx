@@ -6,8 +6,8 @@ import './NavigationDrawer.css'
 
 const MENU = [
   { label: 'הפרופיל שלי', icon: 'person', to: '/profile' },
-  { label: 'ההזמנות שלי', icon: 'package_2', to: '#' },
-  { label: 'פריטים שאהבתי', icon: 'favorite', to: '#' },
+  { label: 'סל הקניות', icon: 'shopping_bag', to: '/cart' },
+  { label: 'פריטים שאהבתי', icon: 'favorite', to: '/profile' },
   { label: 'הגדרות', icon: 'settings', to: '#' },
 ]
 

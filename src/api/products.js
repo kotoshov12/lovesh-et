@@ -14,8 +14,11 @@ function mapProduct(row) {
     image: row.image,
     gallery: row.gallery?.length ? row.gallery : row.image ? [row.image] : [],
     price: formatPrice(row.price),
+    priceValue: row.price,
     original: row.original_price != null ? formatPrice(row.original_price) : undefined,
-    badge: row.badge_text ? { text: row.badge_text, variant: row.badge_variant } : undefined,
+    badge: row.badge_text
+      ? { text: row.badge_text === 'SALE' ? 'מבצע' : row.badge_text, variant: row.badge_variant }
+      : undefined,
     distance: row.distance,
     caption: row.caption,
     category: row.category,
@@ -125,6 +128,13 @@ export async function createProduct(input) {
     image: input.image || (input.gallery && input.gallery[0]) || null,
     gallery: input.gallery?.length ? input.gallery : input.image ? [input.image] : [],
   }
+
+  // Auto-tag a discounted item with a "מבצע" badge.
+  if (!row.badge_text && row.original_price && row.original_price > row.price) {
+    row.badge_text = 'מבצע'
+    row.badge_variant = 'sale'
+  }
+
   const { data, error } = await supabase
     .from('products')
     .insert(row)

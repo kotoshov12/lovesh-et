@@ -16,6 +16,7 @@
 }
 
 .profile__avatar {
+  position: relative;
   flex-shrink: 0;
   width: var(--size-avatar-lg);
   height: var(--size-avatar-lg);
@@ -24,10 +25,43 @@
   justify-content: center;
   background: var(--color-surface);
   color: var(--color-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
 }
 
 .profile__avatar .icon {
   font-size: var(--size-avatar-lg);
+}
+
+.profile__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile__avatar--edit {
+  cursor: pointer;
+}
+
+.profile__avatar-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-inverse-surface);
+  color: var(--color-background);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.profile__avatar--edit:hover .profile__avatar-overlay,
+.profile__avatar--edit .profile__avatar-overlay {
+  opacity: 0.85;
+}
+
+.profile__avatar-input {
+  display: none;
 }
 
 .profile__identity {
@@ -48,6 +82,22 @@
   font-size: var(--text-body);
   color: var(--color-text-secondary);
   margin-top: var(--space-xs);
+}
+
+.profile__bio {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-on-surface-variant);
+  margin-top: var(--space-md);
+  max-width: 60ch;
+}
+
+.profile__error {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-error);
 }
 
 .profile__account-actions {
@@ -71,8 +121,8 @@
   gap: var(--space-md);
 }
 
-/* ---- Listings ---- */
-.profile__listings {
+/* ---- Sections (favorites, listings) ---- */
+.profile__block {
   padding: var(--space-3xl) var(--space-xl) 0;
 }
 

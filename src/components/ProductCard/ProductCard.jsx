@@ -3,6 +3,7 @@ import Badge from '../Badge/Badge.jsx'
 import FavoriteButton from '../FavoriteButton/FavoriteButton.jsx'
 import DistancePill from '../DistancePill/DistancePill.jsx'
 import PriceTag from '../PriceTag/PriceTag.jsx'
+import { useCart } from '../../context/CartContext.jsx'
 import './ProductCard.css'
 
 /**
@@ -13,7 +14,15 @@ import './ProductCard.css'
  * @param {boolean} showAddToCart - reveal "add to cart" on hover (desktop)
  */
 function ProductCard({ product, showFavorite = false, showAddToCart = false }) {
-  const { id, name, image, price, original, badge, distance, caption, favorite } = product
+  const { id, name, image, price, original, badge, distance, caption } = product
+  const { add, has } = useCart()
+  const inCart = has(id)
+
+  function handleAdd(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    add(product)
+  }
 
   return (
     <Link to={`/product/${id}`} className="product-card">
@@ -27,12 +36,16 @@ function ProductCard({ product, showFavorite = false, showAddToCart = false }) {
         )}
 
         {showFavorite && (
-          <FavoriteButton initial={favorite} overlay className="product-card__fav" />
+          <FavoriteButton product={product} overlay className="product-card__fav" />
         )}
 
         {distance && <DistancePill distance={distance} className="product-card__distance" />}
 
-        {showAddToCart && <span className="product-card__cart">הוספה לסל</span>}
+        {showAddToCart && (
+          <button type="button" className="product-card__cart" onClick={handleAdd}>
+            {inCart ? 'נוסף לסל ✓' : 'הוספה לסל'}
+          </button>
+        )}
       </div>
 
       <div className="product-card__info">

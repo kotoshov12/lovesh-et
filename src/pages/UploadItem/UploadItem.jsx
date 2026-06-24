@@ -31,6 +31,7 @@ function UploadItem() {
     brand: '',
     description: '',
     price: '',
+    originalPrice: '',
     location: '',
     swap: false,
   })
@@ -70,6 +71,7 @@ function UploadItem() {
         name: form.name.trim(),
         category: form.category,
         price: form.price,
+        originalPrice: form.originalPrice,
         brand: form.brand,
         size: form.size === 'בחרי מידה' ? null : form.size,
         condition: form.condition,
@@ -169,13 +171,26 @@ function UploadItem() {
               onChange={(e) => set('price')(e.target.value)}
             />
             <Input
-              label="מיקום לאיסוף"
-              id="location"
-              placeholder="עיר / שכונה"
-              value={form.location}
-              onChange={(e) => set('location')(e.target.value)}
+              label="מחיר מקורי (לפני הנחה)"
+              id="original-price"
+              type="number"
+              prefix="₪"
+              placeholder="אופציונלי"
+              value={form.originalPrice}
+              onChange={(e) => set('originalPrice')(e.target.value)}
             />
           </div>
+          <p className="upload__discount-hint">
+            הזיני מחיר מקורי גבוה מהמחיר המבוקש כדי להציג מבצע (המחיר יוצג מחוק והפריט יסומן "מבצע").
+          </p>
+
+          <Input
+            label="מיקום לאיסוף"
+            id="location"
+            placeholder="עיר / שכונה"
+            value={form.location}
+            onChange={(e) => set('location')(e.target.value)}
+          />
 
           <Checkbox
             id="swap"

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header/Header.jsx'
 import ImageGallery from '../../components/ImageGallery/ImageGallery.jsx'
 import ProductInfo from '../../components/ProductInfo/ProductInfo.jsx'
@@ -8,11 +8,14 @@ import ActionBar from '../../components/ActionBar/ActionBar.jsx'
 import ProductCarousel from '../../components/ProductCarousel/ProductCarousel.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
+import { useCart } from '../../context/CartContext.jsx'
 import { fetchProduct, fetchSimilar } from '../../api/products.js'
 import './ProductDetail.css'
 
 function ProductDetail() {
   const { id } = useParams()
+  const navigate = useNavigate()
+  const { add } = useCart()
   const [product, setProduct] = useState(null)
   const [similar, setSimilar] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | missing | error
@@ -75,6 +78,11 @@ function ProductDetail() {
     distance: product.distance,
   }
 
+  function handleBuy() {
+    add(product)
+    navigate('/cart')
+  }
+
   return (
     <div className="page">
       <Header />
@@ -102,7 +110,7 @@ function ProductDetail() {
 
             <SellerCard seller={seller} boxed />
 
-            <ActionBar buyText="קנייה מאובטחת" messageText="שליחת הודעה למוכרת" />
+            <ActionBar buyText="קנייה מאובטחת" messageText="שליחת הודעה למוכרת" onBuy={handleBuy} />
           </div>
         </div>
 
@@ -116,7 +124,7 @@ function ProductDetail() {
       <Footer />
 
       <div className="detail__mobile-bar">
-        <ActionBar fixed buyText="קני עכשיו" messageText="שלחי הודעה" />
+        <ActionBar fixed buyText="קני עכשיו" messageText="שלחי הודעה" onBuy={handleBuy} />
       </div>
     </div>
   )

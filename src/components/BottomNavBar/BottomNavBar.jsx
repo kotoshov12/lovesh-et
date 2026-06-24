@@ -31,9 +31,13 @@ function BottomNavBar() {
         <Icon name="add" size="xl" />
       </Link>
 
-      <button type="button" className="bottom-nav__item" aria-label="מועדפים">
-        <Icon name="favorite" />
-      </button>
+      <Link
+        to="/cart"
+        className={`bottom-nav__item ${isActive('/cart') ? 'is-active' : ''}`}
+        aria-label="סל קניות"
+      >
+        <Icon name="shopping_bag" filled={isActive('/cart')} />
+      </Link>
 
       <Link
         to={user ? '/profile' : '/login'}

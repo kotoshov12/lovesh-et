@@ -8,24 +8,31 @@ import SectionHeader from '../../components/SectionHeader/SectionHeader.jsx'
 import ProductCard from '../../components/ProductCard/ProductCard.jsx'
 import Button from '../../components/Button/Button.jsx'
 import Input from '../../components/Input/Input.jsx'
+import Textarea from '../../components/Textarea/Textarea.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
-import { fetchMyProducts } from '../../api/products.js'
-import { updateFullName } from '../../api/auth.js'
+import { useFavorites } from '../../context/FavoritesContext.jsx'
+import { fetchMyProducts, uploadProductImage } from '../../api/products.js'
+import { updateProfile } from '../../api/auth.js'
 import './Profile.css'
 
 function Profile() {
   const { user, signOut } = useAuth()
+  const { items: favorites } = useFavorites()
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   const [items, setItems] = useState([])
-  const [status, setStatus] = useState('loading') // loading | ready | error
+  const [status, setStatus] = useState('loading')
 
-  const initialName = user?.user_metadata?.full_name || ''
+  const meta = user?.user_metadata || {}
   const [editing, setEditing] = useState(false)
-  const [name, setName] = useState(initialName)
-  const [savingName, setSavingName] = useState(false)
+  const [name, setName] = useState(meta.full_name || '')
+  const [bio, setBio] = useState(meta.bio || '')
+  const [avatarFile, setAvatarFile] = useState(null)
+  const [avatarPreview, setAvatarPreview] = useState(null)
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState(null)
 
   useEffect(() => {
     let active = true
@@ -40,14 +47,44 @@ function Profile() {
     }
   }, [user?.id])
 
-  async function handleSaveName() {
-    setSavingName(true)
-    const { error } = await updateFullName(name.trim())
-    setSavingName(false)
-    if (!error) setEditing(false)
+  useEffect(() => {
+    if (!avatarFile) {
+      setAvatarPreview(null)
+      return
+    }
+    const url = URL.createObjectURL(avatarFile)
+    setAvatarPreview(url)
+    return () => URL.revokeObjectURL(url)
+  }, [avatarFile])
+
+  async function handleSave() {
+    setSaving(true)
+    setSaveError(null)
+    try {
+      let avatarUrl = meta.avatar_url || null
+      if (avatarFile) avatarUrl = await uploadProductImage(avatarFile)
+      const { error } = await updateProfile({ fullName: name.trim(), avatarUrl, bio: bio.trim() })
+      if (error) throw error
+      setAvatarFile(null)
+      setEditing(false)
+    } catch (err) {
+      console.error(err)
+      setSaveError('שמירת הפרופיל נכשלה. ודאי שה-bucket לתמונות קיים ונסי שוב.')
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const displayName = initialName || user?.email
+  function cancelEdit() {
+    setName(meta.full_name || '')
+    setBio(meta.bio || '')
+    setAvatarFile(null)
+    setSaveError(null)
+    setEditing(false)
+  }
+
+  const displayName = meta.full_name || user?.email
+  const avatarUrl = avatarPreview || meta.avatar_url
 
   return (
     <div className="page">
@@ -57,9 +94,32 @@ function Profile() {
       <main className="profile">
         {/* Account header */}
         <section className="profile__account">
-          <div className="profile__avatar">
-            <Icon name="account_circle" size="xl" />
-          </div>
+          {editing ? (
+            <label className="profile__avatar profile__avatar--edit">
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="" />
+              ) : (
+                <Icon name="account_circle" size="xl" />
+              )}
+              <span className="profile__avatar-overlay">
+                <Icon name="photo_camera" size="md" />
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                className="profile__avatar-input"
+                onChange={(e) => setAvatarFile(e.target.files?.[0] ?? null)}
+              />
+            </label>
+          ) : (
+            <div className="profile__avatar">
+              {meta.avatar_url ? (
+                <img src={meta.avatar_url} alt="" />
+              ) : (
+                <Icon name="account_circle" size="xl" />
+              )}
+            </div>
+          )}
 
           <div className="profile__identity">
             {editing ? (
@@ -71,17 +131,20 @@ function Profile() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="השם שלך"
                 />
+                <Textarea
+                  id="bio"
+                  label="קצת עליי (ביו)"
+                  rows={3}
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="ספרי על עצמך, הסטייל שלך, מה את מוכרת…"
+                />
+                {saveError && <p className="profile__error">{saveError}</p>}
                 <div className="profile__edit-actions">
-                  <Button variant="primary" onClick={handleSaveName}>
-                    {savingName ? 'שומרת…' : 'שמירה'}
+                  <Button variant="primary" onClick={handleSave}>
+                    {saving ? 'שומרת…' : 'שמירה'}
                   </Button>
-                  <Button
-                    variant="text"
-                    onClick={() => {
-                      setName(initialName)
-                      setEditing(false)
-                    }}
-                  >
+                  <Button variant="text" onClick={cancelEdit}>
                     ביטול
                   </Button>
                 </div>
@@ -90,6 +153,7 @@ function Profile() {
               <>
                 <h1 className="profile__name">{displayName}</h1>
                 <p className="profile__email">{user?.email}</p>
+                {meta.bio && <p className="profile__bio">{meta.bio}</p>}
                 <div className="profile__account-actions">
                   <Button variant="outline" onClick={() => setEditing(true)}>
                     עריכת פרופיל
@@ -103,10 +167,23 @@ function Profile() {
           </div>
         </section>
 
-        {/* My listings */}
-        <section className="profile__listings">
-          <SectionHeader title="המוצרים שלי" eyebrow="MY LISTINGS" />
+        {/* Favorites */}
+        <section className="profile__block">
+          <SectionHeader title="המועדפים שלי" eyebrow="WISHLIST" />
+          {favorites.length === 0 ? (
+            <StateMessage>עדיין לא סימנת פריטים בלב.</StateMessage>
+          ) : (
+            <div className="profile__grid">
+              {favorites.map((product) => (
+                <ProductCard key={product.id} product={product} showFavorite />
+              ))}
+            </div>
+          )}
+        </section>
 
+        {/* My listings */}
+        <section className="profile__block">
+          <SectionHeader title="המוצרים שלי" eyebrow="MY LISTINGS" />
           {status === 'loading' && <StateMessage>טוען את הפריטים שלך…</StateMessage>}
           {status === 'error' && (
             <StateMessage variant="error">
@@ -116,7 +193,7 @@ function Profile() {
           {status === 'ready' && items.length === 0 && (
             <div className="profile__empty">
               <StateMessage>עדיין לא העלית פריטים למכירה.</StateMessage>
-              <Link to="/sell" className="profile__empty-cta">
+              <Link to="/sell">
                 <Button variant="primary" icon="add">
                   העלאת פריט ראשון
                 </Button>

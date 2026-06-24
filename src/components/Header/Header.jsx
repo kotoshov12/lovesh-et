@@ -5,6 +5,7 @@ import Icon from '../Icon/Icon.jsx'
 import IconButton from '../IconButton/IconButton.jsx'
 import CategoryMenu from '../CategoryMenu/CategoryMenu.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
+import { useCart } from '../../context/CartContext.jsx'
 import './Header.css'
 
 /**
@@ -13,6 +14,7 @@ import './Header.css'
  */
 function Header({ onMenu }) {
   const { user } = useAuth()
+  const { count } = useCart()
   const [catOpen, setCatOpen] = useState(false)
 
   return (
@@ -36,7 +38,7 @@ function Header({ onMenu }) {
             <span className="header__cats-label">קטגוריות</span>
           </button>
           <Link to="/shop?sale=1" className="header__link header__link--accent">
-            סייל
+            מבצע
           </Link>
         </nav>
 
@@ -54,7 +56,10 @@ function Header({ onMenu }) {
           >
             <Icon name={user ? 'account_circle' : 'person'} />
           </Link>
-          <IconButton name="shopping_bag" label="סל קניות" />
+          <Link to="/cart" className="header__action header__cart" aria-label="סל קניות">
+            <Icon name="shopping_bag" />
+            {count > 0 && <span className="header__cart-count">{count}</span>}
+          </Link>
         </div>
       </header>
 
