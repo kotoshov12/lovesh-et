@@ -1,0 +1,117 @@
+.conv {
+  padding-top: var(--header-height);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.conv__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: var(--border-thick) solid var(--color-secondary);
+  background: var(--color-background);
+}
+
+.conv__back {
+  color: var(--color-secondary);
+  display: inline-flex;
+}
+
+.conv__title {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h3);
+  color: var(--color-primary);
+}
+
+.conv__product {
+  width: var(--size-avatar-sm);
+  height: var(--size-avatar-sm);
+  background: var(--color-surface);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.conv__product img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.conv__thread {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+}
+
+.conv__bubble {
+  max-width: 75%;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  word-break: break-word;
+}
+
+.conv__bubble.is-mine {
+  align-self: flex-start;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.conv__bubble.is-theirs {
+  align-self: flex-end;
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface);
+}
+
+.conv__compose {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-top: var(--border-thin) solid var(--color-secondary);
+  background: var(--color-background);
+}
+
+.conv__input {
+  flex: 1;
+  background: var(--color-surface-container-lowest);
+  border: var(--border-thin) solid var(--color-secondary);
+  padding: var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-primary);
+}
+
+.conv__input:focus {
+  outline: none;
+  border-width: var(--border-thick);
+  border-color: var(--color-primary);
+}
+
+.conv__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch);
+  height: var(--size-touch);
+  flex-shrink: 0;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  cursor: pointer;
+}
+
+.conv__send:disabled {
+  opacity: 0.6;
+}

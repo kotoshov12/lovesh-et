@@ -28,6 +28,7 @@ function mapProduct(row) {
     eyebrow: row.eyebrow,
     description: row.description,
     sold: row.is_sold === true,
+    ownerId: row.user_id ?? null,
     seller: row.seller
       ? {
           name: row.seller.name,

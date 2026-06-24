@@ -9,13 +9,16 @@ import ProductCarousel from '../../components/ProductCarousel/ProductCarousel.js
 import Footer from '../../components/Footer/Footer.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { useCart } from '../../context/CartContext.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchProduct, fetchSimilar } from '../../api/products.js'
+import { getOrCreateConversation } from '../../api/messages.js'
 import './ProductDetail.css'
 
 function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { add } = useCart()
+  const { user } = useAuth()
   const [product, setProduct] = useState(null)
   const [similar, setSimilar] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | missing | error
@@ -83,6 +86,31 @@ function ProductDetail() {
     navigate('/cart')
   }
 
+  async function handleMessage() {
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    if (!product.ownerId) {
+      alert('זהו פריט הדגמה ללא מוכר/ת רשום/ה — נסי פריט שהועלה על ידי משתמש.')
+      return
+    }
+    if (product.ownerId === user.id) {
+      alert('זהו הפריט שלך :)')
+      return
+    }
+    try {
+      const conv = await getOrCreateConversation({
+        productId: product.id,
+        sellerId: product.ownerId,
+      })
+      navigate(`/messages/${conv.id}`)
+    } catch (err) {
+      console.error(err)
+      alert('לא ניתן לפתוח שיחה כרגע. ודאי שהרצת את מיגרציית ההודעות.')
+    }
+  }
+
   return (
     <div className="page">
       <Header />
@@ -110,7 +138,12 @@ function ProductDetail() {
 
             <SellerCard seller={seller} boxed />
 
-            <ActionBar buyText="קנייה מאובטחת" messageText="שליחת הודעה למוכרת" onBuy={handleBuy} />
+            <ActionBar
+              buyText="קנייה מאובטחת"
+              messageText="שליחת הודעה למוכרת"
+              onBuy={handleBuy}
+              onMessage={handleMessage}
+            />
           </div>
         </div>
 
@@ -124,7 +157,13 @@ function ProductDetail() {
       <Footer />
 
       <div className="detail__mobile-bar">
-        <ActionBar fixed buyText="קני עכשיו" messageText="שלחי הודעה" onBuy={handleBuy} />
+        <ActionBar
+          fixed
+          buyText="קני עכשיו"
+          messageText="שלחי הודעה"
+          onBuy={handleBuy}
+          onMessage={handleMessage}
+        />
       </div>
     </div>
   )

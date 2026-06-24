@@ -9,6 +9,8 @@ import UploadItem from './pages/UploadItem/UploadItem.jsx'
 import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
 import Profile from './pages/Profile/Profile.jsx'
+import Messages from './pages/Messages/Messages.jsx'
+import Conversation from './pages/Conversation/Conversation.jsx'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
 
 function App() {
@@ -35,6 +37,22 @@ function App() {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/messages"
+        element={
+          <ProtectedRoute>
+            <Messages />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/messages/:id"
+        element={
+          <ProtectedRoute>
+            <Conversation />
           </ProtectedRoute>
         }
       />

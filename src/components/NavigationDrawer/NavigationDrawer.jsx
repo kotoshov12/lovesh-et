@@ -6,6 +6,7 @@ import './NavigationDrawer.css'
 
 const MENU = [
   { label: 'הפרופיל שלי', icon: 'person', to: '/profile' },
+  { label: 'ההודעות שלי', icon: 'chat', to: '/messages' },
   { label: 'סל הקניות', icon: 'shopping_bag', to: '/cart' },
   { label: 'פריטים שאהבתי', icon: 'favorite', to: '/profile' },
   { label: 'שירות לקוחות', icon: 'support_agent', to: '/support' },
