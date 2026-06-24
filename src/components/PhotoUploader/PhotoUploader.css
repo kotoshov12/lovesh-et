@@ -1,0 +1,114 @@
+/* ---- Row layout (mobile) ---- */
+.uploader--row {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding-bottom: var(--space-md);
+}
+
+.uploader__add,
+.uploader__preview {
+  flex-shrink: 0;
+  width: var(--size-photo-slot);
+  height: var(--size-photo-slot);
+}
+
+.uploader__add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  background: var(--color-surface);
+  border: var(--border-thin) solid var(--color-secondary);
+  cursor: pointer;
+}
+
+.uploader__add-icon,
+.uploader__add-label {
+  color: var(--color-on-secondary-fixed-variant);
+}
+
+.uploader__add-label {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+}
+
+.uploader__preview {
+  position: relative;
+  background: var(--color-surface);
+}
+
+.uploader__preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uploader__remove {
+  position: absolute;
+  top: var(--space-xs);
+  inset-inline-end: var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xs);
+  background: var(--color-primary);
+  border: none;
+  color: var(--color-on-primary);
+}
+
+/* ---- Grid layout (desktop) ---- */
+.uploader--grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  gap: var(--space-md);
+  aspect-ratio: 16 / 9;
+}
+
+.uploader__primary {
+  grid-column: span 2;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  background: var(--color-surface-container-low);
+  border: var(--border-thick) dashed var(--color-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.uploader__primary:hover {
+  background: var(--color-surface-container);
+}
+
+.uploader__primary-icon {
+  color: var(--color-primary);
+}
+
+.uploader__primary-label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+.uploader__slot--dashed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-container-low);
+  border: var(--border-thick) dashed var(--color-secondary);
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.uploader__slot--dashed:hover {
+  background: var(--color-surface-container);
+}

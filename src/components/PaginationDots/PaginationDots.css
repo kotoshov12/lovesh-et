@@ -1,0 +1,24 @@
+.dots {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.dots__dot {
+  width: var(--space-sm);
+  height: var(--space-sm);
+  border-radius: var(--radius-full);
+  background: var(--color-background);
+  opacity: 0.3;
+}
+
+.dots__dot.is-active {
+  opacity: 1;
+}
+
+.dots--saffron .dots__dot.is-active {
+  background: var(--color-accent);
+}
+
+.dots--light .dots__dot.is-active {
+  background: var(--color-background);
+}

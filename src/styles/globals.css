@@ -1,0 +1,260 @@
+/* ==========================================================================
+   LOVEsh\et — Pomegranate Garden · Design Tokens
+   Source of truth: the DESIGN.md files in the stitch_ reference folders.
+   All component styles must reference these custom properties.
+   ========================================================================== */
+
+:root {
+  /* ---- Colors · curated 9-token brand system -------------------------- */
+  --color-primary: #7c1f26;          /* רימון — CTA, nav, SALE badge, sale prices */
+  --color-primary-hover: #5c161d;    /* darker pomegranate for button hover */
+  --color-secondary: #2b1810;        /* עץ כהה — body text, headings, borders */
+  --color-accent: #c8932b;           /* זעפרן — "new" badge, eyebrows, hover, logo slash */
+  --color-complementary: #5a6328;    /* זית — highlighted words, success states */
+  --color-background: #ece3d0;        /* קרם — main background */
+  --color-surface: #b5b0a6;           /* אבן — image placeholders, neutral areas */
+  --color-text-primary: #2b1810;      /* primary text */
+  --color-text-secondary: #6b5544;    /* חום עמום — captions, placeholders, meta */
+  --color-error: #c8243c;             /* validation, alerts */
+  --color-success: #5a6328;           /* confirmations (same as complementary) */
+
+  /* ---- Colors · extended Material palette (from DESIGN.md frontmatter) - */
+  --color-surface-dim: #e9d6d5;
+  --color-surface-bright: #fff8f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fff0ef;
+  --color-surface-container: #fee9e8;
+  --color-surface-container-high: #f8e4e3;
+  --color-surface-container-highest: #f2dedd;
+  --color-on-surface: #231919;
+  --color-on-surface-variant: #564241;
+  --color-inverse-surface: #392e2d;
+  --color-inverse-on-surface: #ffedec;
+  --color-outline: #897171;
+  --color-outline-variant: #ddc0bf;
+  --color-surface-tint: #a23c40;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #7c1f26;
+  --color-on-primary-container: #ff8d8e;
+  --color-inverse-primary: #ffb3b2;
+  --color-secondary-base: #73584e;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fcd8ca;
+  --color-on-secondary-container: #785d52;
+  --color-tertiary: #00322f;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #004a46;
+  --color-on-tertiary-container: #7db9b3;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-surface-variant: #f2dedd;
+  --color-primary-fixed: #ffdad9;
+  --color-primary-fixed-dim: #ffb3b2;
+  --color-on-primary-fixed: #410008;
+  --color-on-primary-fixed-variant: #83242a;
+  --color-secondary-fixed: #ffdbcd;
+  --color-secondary-fixed-dim: #e2bfb2;
+  --color-on-secondary-fixed: #2a170f;
+  --color-on-secondary-fixed-variant: #5a4137;
+  --color-tertiary-fixed: #b1eee8;
+  --color-tertiary-fixed-dim: #96d2cc;
+  --color-on-tertiary-fixed: #00201e;
+  --color-on-tertiary-fixed-variant: #0a4f4b;
+
+  /* ---- Typography · font families ------------------------------------- */
+  --font-display: 'Karantina', sans-serif;   /* headings & prices only */
+  --font-body: 'Assistant', sans-serif;       /* everything else */
+
+  /* ---- Typography · font sizes ---------------------------------------- */
+  --text-h1: 78px;        /* Hero */
+  --text-h2: 42px;        /* Section */
+  --text-h3: 22px;        /* Product / Price */
+  --text-body-lg: 16px;
+  --text-body: 14px;
+  --text-caption: 11px;
+  --text-label: 11px;
+
+  /* ---- Typography · font weights -------------------------------------- */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---- Typography · line heights -------------------------------------- */
+  --leading-h1: 0.9;
+  --leading-h2: 1.0;
+  --leading-h3: 1.05;
+  --leading-body-lg: 1.65;
+  --leading-body: 1.6;
+  --leading-caption: 1.5;
+  --leading-label: 1.5;
+
+  /* ---- Typography · letter spacing ------------------------------------ */
+  --tracking-caption: 0.6px;
+  --tracking-label: 2.5px;
+  --tracking-btn: 1.2px;
+  --tracking-link: 1.8px;
+  --tracking-badge: 1.5px;
+
+  /* ---- Spacing scale · 8px base --------------------------------------- */
+  --space-base: 8px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+  --space-5xl: 96px;
+
+  /* Numeric-step aliases (match DESIGN.md CSS Variables section) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ---- Border radius · sharp corners are part of the brand DNA -------- */
+  --radius: 0;
+  --radius-full: 9999px;   /* only for dots / circular FAB */
+
+  /* ---- Border widths -------------------------------------------------- */
+  --border-thin: 1px;
+  --border-thick: 1.5px;
+
+  /* ---- Extra-fine spacing (badges, dots) ------------------------------ */
+  --space-2xs: 2px;
+  --space-xxs: 6px;
+
+  /* ---- Layout dimensions ---------------------------------------------- */
+  --header-height: 64px;
+  --bottom-nav-height: 80px;
+  --drawer-width: 320px;
+  --container-max: 1400px;
+  --container-md: 1200px;
+  --container-narrow: 800px;
+  --container-form: 896px;
+
+  /* ---- Icon sizes ----------------------------------------------------- */
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+
+  /* ---- Imagery -------------------------------------------------------- */
+  --aspect-product: 3 / 4;
+
+  /* ---- Component sizing ----------------------------------------------- */
+  --size-photo-slot: 100px;     /* mobile upload thumbnails */
+  --size-carousel-card: 140px;  /* similar-items mini cards */
+  --size-thumb: 96px;           /* desktop gallery thumbnails */
+  --size-avatar-sm: 40px;
+  --size-avatar-md: 48px;
+  --size-avatar-lg: 64px;
+  --size-fab: 52px;             /* bottom-nav center action */
+  --size-touch: 40px;           /* circular tap target */
+  --size-hero-slide: 180px;     /* mobile hero banner height */
+  --size-action-bar: 56px;      /* detail page CTA button height */
+
+  /* ---- Display sizes not in the core scale ---------------------------- */
+  --text-logo: 30px;        /* nav wordmark — Karantina Bold 30px */
+  --text-product-sm: 18px;  /* compact product titles in dense grids */
+}
+
+/* ==========================================================================
+   Base / reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* Material Symbols icon font base */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utility: hide scrollbars on horizontal scrollers */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;family=Karantina:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#5a4137",
+                        "surface-tint": "#a23c40",
+                        "primary-fixed-dim": "#ffb3b2",
+                        "surface-stone": "#B5B0A6",
+                        "secondary": "#73584e",
+                        "inverse-on-surface": "#ffedec",
+                        "inverse-surface": "#392e2d",
+                        "on-tertiary-container": "#7db9b3",
+                        "surface-container": "#fee9e8",
+                        "surface-container-high": "#f8e4e3",
+                        "error-container": "#ffdad6",
+                        "background-cream": "#ECE3D0",
+                        "on-tertiary-fixed": "#00201e",
+                        "on-error-container": "#93000a",
+                        "error-red": "#C8243C",
+                        "outline-variant": "#ddc0bf",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#96d2cc",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#0a4f4b",
+                        "surface": "#fff8f7",
+                        "on-primary-container": "#ff8d8e",
+                        "on-surface-variant": "#564241",
+                        "secondary-container": "#fcd8ca",
+                        "on-secondary-fixed": "#2a170f",
+                        "text-muted": "#6B5544",
+                        "tertiary-container": "#004a46",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdad9",
+                        "on-secondary-container": "#785d52",
+                        "surface-container-low": "#fff0ef",
+                        "on-tertiary": "#ffffff",
+                        "accent-saffron": "#C8932B",
+                        "tertiary": "#00322f",
+                        "secondary-fixed-dim": "#e2bfb2",
+                        "tertiary-fixed": "#b1eee8",
+                        "on-secondary": "#ffffff",
+                        "outline": "#897171",
+                        "on-primary-fixed-variant": "#83242a",
+                        "primary-container": "#7c1f26",
+                        "surface-bright": "#fff8f7",
+                        "inverse-primary": "#ffb3b2",
+                        "complementary-olive": "#5A6328",
+                        "on-background": "#231919",
+                        "secondary-fixed": "#ffdbcd",
+                        "on-surface": "#231919",
+                        "on-primary-fixed": "#410008",
+                        "surface-container-highest": "#f2dedd",
+                        "background": "#fff8f7",
+                        "surface-variant": "#f2dedd",
+                        "primary": "#5d0612",
+                        "surface-dim": "#e9d6d5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "24px",
+                        "2xl": "32px",
+                        "xs": "4px",
+                        "4xl": "64px",
+                        "md": "12px",
+                        "5xl": "96px",
+                        "sm": "8px",
+                        "3xl": "48px",
+                        "lg": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "h3-product": ["Karantina"],
+                        "h2-section": ["Karantina"],
+                        "caption": ["Assistant"],
+                        "body-large": ["Assistant"],
+                        "label-eyebrow": ["Assistant"],
+                        "body-main": ["Assistant"],
+                        "h1-hero": ["Karantina"]
+                    },
+                    "fontSize": {
+                        "h3-product": ["22px", {"lineHeight": "1.05", "fontWeight": "700"}],
+                        "h2-section": ["42px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                        "caption": ["11px", {"lineHeight": "1.5", "letterSpacing": "0.6px", "fontWeight": "500"}],
+                        "body-large": ["16px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.5", "letterSpacing": "2.5px", "fontWeight": "600"}],
+                        "body-main": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h1-hero": ["78px", {"lineHeight": "0.9", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            background-color: #ECE3D0;
+            color: #231919;
+            font-family: 'Assistant', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-primary flex flex-row-reverse justify-between items-center px-lg h-16 shadow-none">
+<div class="flex items-center gap-4">
+<button class="relative hover:opacity-90 transition-opacity duration-200">
+<span class="material-symbols-outlined text-surface-container-lowest">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error-red rounded-full"></span>
+</button>
+<button class="hover:opacity-90 transition-opacity duration-200">
+<span class="material-symbols-outlined text-surface-container-lowest">search</span>
+</button>
+</div>
+<div class="font-h1-hero text-[32px] text-surface-container-lowest tracking-tight">
+            LOVEsh<span class="text-accent-saffron">\</span>et
+        </div>
+<button class="hover:opacity-90 transition-opacity duration-200">
+<span class="material-symbols-outlined text-surface-container-lowest">menu</span>
+</button>
+</header>
+<main class="pt-16">
+<!-- Hot Items Banner Swipe -->
+<section class="mt-lg">
+<div class="w-full bg-primary-container h-[180px] relative overflow-hidden flex items-stretch">
+<!-- Slide Content -->
+<div class="flex-1 p-xl flex flex-col justify-center text-right">
+<span class="text-accent-saffron font-label-eyebrow text-label-eyebrow tracking-[2.5px] mb-xs">HOT NOW</span>
+<h2 class="font-h2-section text-[26px] leading-tight text-surface-container-lowest">חולצת וינטג' <br/> נדירה מהניינטיז</h2>
+<div class="mt-md flex items-center gap-sm">
+<span class="text-accent-saffron font-h3-product text-h3-product">₪ 180</span>
+<span class="text-surface-container-lowest/50 line-through text-caption font-caption">₪ 240</span>
+</div>
+</div>
+<div class="w-1/2 relative h-full">
+<img alt="" class="absolute inset-0 w-full h-full object-cover grayscale-[20%]" data-alt="A high-fashion editorial close-up of a vintage graphic t-shirt with 90s aesthetic. The lighting is warm and sun-drenched, reflecting a Mediterranean coastal mood. The background is a minimalist Stone color, aligning with the brand's sophisticated and grounded visual identity. Shadows are sharp and brutalist, emphasizing the texture of the high-quality fabric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBI6LxxbzLQChy_18n-Dm2c9QwsLJdRNKpzmpYjAfoHED8z9HsrPsuZeDkTefuJusXyjq0EtRHLh69k1oIahxzvwdc9X6ulZkH94dUg2I1J_8ClvE6YTMeAK1jlYy4WN2jzblHqWrVQydoSvuNy0AfddlmDynTIt_1zyMwks9f1PFrBsHnkQObhGBQhusFW4gXKNeCylXXKFuc-XbMQC6xUl0uuDPtx76nvBJ69z4s1baxgU69u9Ix3hOLe47_JGwE1pQGSJWZNrA7"/>
+</div>
+<!-- Pagination Dots -->
+<div class="absolute bottom-4 right-xl flex gap-2">
+<div class="w-2 h-2 bg-accent-saffron rounded-full"></div>
+<div class="w-2 h-2 bg-surface-container-lowest/30 rounded-full"></div>
+<div class="w-2 h-2 bg-surface-container-lowest/30 rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Section Title -->
+<section class="px-lg mt-3xl">
+<div class="flex justify-between items-end mb-xl">
+<h2 class="font-h2-section text-[28px] text-primary">החדש בחנות</h2>
+<a class="font-label-eyebrow text-label-eyebrow text-secondary underline" href="#">צפה בהכל</a>
+</div>
+<!-- Product Feed Grid -->
+<div class="grid grid-cols-2 gap-md">
+<!-- Product Card 1 -->
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-stone relative group overflow-hidden">
+<img alt="" class="w-full h-full object-cover mix-blend-multiply" data-alt="A male model wearing a high-end vintage oversized t-shirt in a bright, sun-lit studio. The style is editorial brutalism with sharp edges and a minimalist stone-colored background. Lighting is high-contrast, Mediterranean inspired, highlighting the high-quality cotton texture. The overall mood is sophisticated, curated, and premium boutique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0Tb72Nuko3WjnpQCyF2xCS7k3kR9CmQ7hvKI3X2ov-MErcPRLOUGwE8nFzx-FYsmPVRy6TVNzrCm8_ctLNNSgiaY31LKHva_YlHH-Aj8wGwAjvU3X2emA3Q0-jPElmhe0L0oayuS0uveoE8sFG3YYjLGdtLoMRZpKNPjMaY29uw6IKHgz0ZsJebadti5RQMdmonjEM1Ve4mzIQUhkDmq1IZZ4HBdwCYiqBLnvThwsAOOplaJrXZ0D_Df4XZRPOswXtRSFTncsKMkY"/>
+<button class="absolute top-3 left-3 bg-white/10 backdrop-blur-sm p-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-container-lowest text-[20px]">favorite</span>
+</button>
+<div class="absolute top-3 right-0 bg-accent-saffron px-2 py-0.5 text-surface-container-lowest font-caption text-caption">
+                            SALE
+                        </div>
+<div class="absolute bottom-3 right-3 bg-primary/80 backdrop-blur-md px-2 py-0.5 text-surface-container-lowest font-caption text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">location_on</span>
+                            2.4 ק"מ
+                        </div>
+</div>
+<div class="mt-md text-right">
+<h3 class="font-h3-product text-[18px] text-primary">חולצת ראפ 90s</h3>
+<div class="flex items-center gap-2">
+<span class="font-h3-product text-[18px] text-error-red">₪ 45</span>
+<span class="text-caption font-caption text-text-muted line-through">₪ 80</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-stone relative group overflow-hidden">
+<img alt="" class="w-full h-full object-cover mix-blend-multiply" data-alt="A premium denim jacket laid flat on a textured stone surface under direct, harsh Mediterranean sunlight. The lighting creates sharp, brutalist shadows that define the garment's structure. The visual style is minimalist and editorial, using a sophisticated tonal palette of deep indigo and warm stone. The image feels curated for a high-end fashion boutique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYeMnREZ20p-JffX41-_FK87BHjUjrAz4eoYRaH_CjxvLjCRkN4zdqpE0ZPcpfz2oKzUrusAdMSrnqwgzIGijqRHf9egC8_z-6l5GlmjHHtVdvG_d1gxzuLt19R1Wwo65lFcLMtNrrf_TMfDqcIwMS7OpTTaDGpJMdJgScyXFChe3UCyN1zZCT9FgXl90N4DzmLU7DnD4_IIVqlQIsi8-n-3CPWlY_x0sawcIanKDPBGdzBFkB2AprhTOArHpJXNRgUC2CvQdKcqQW"/>
+<button class="absolute top-3 left-3 bg-white/10 backdrop-blur-sm p-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-container-lowest text-[20px]">favorite</span>
+</button>
+<div class="absolute bottom-3 right-3 bg-primary/80 backdrop-blur-md px-2 py-0.5 text-surface-container-lowest font-caption text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">location_on</span>
+                            1.2 ק"מ
+                        </div>
+</div>
+<div class="mt-md text-right">
+<h3 class="font-h3-product text-[18px] text-primary">ג'קט ג'ינס Levi's</h3>
+<span class="font-h3-product text-[18px] text-secondary">₪ 89</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-stone relative group overflow-hidden">
+<img alt="" class="w-full h-full object-cover mix-blend-multiply" data-alt="Modern high-end sneakers presented in a minimalist editorial style. The footwear is placed on a solid stone plinth with sharp geometric edges. The lighting is bright and airy, reflecting a high-key light-mode aesthetic. The composition is intentional and unrefined in its geometry, perfectly aligning with editorial brutalism. Tonal layering of beige and white dominates the frame." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv-s355htyJuGooCQIoT5L4LboTBb5HpmgzQeAkB2lMBwX3NUfRAMFjrR2530-D5GXG0F9mhz3gKYdLV4MK7iHIZaQunL7QnBngWD22r9LS6t529aOELh_Lkj72ZT39jfXrlRsJxKQlisqsbMRnbZplkhWwpaEy__QW69K4zld1wlx3L505_EFwwdF-5GKe9AXDv1MOuuVlKpP4wEguCi5r5kiMO-g_htLQdo8Lz1VOXkslz3PPdXqEXyH1PqcmRssXwTCSk8-k3o4"/>
+<button class="absolute top-3 left-3 bg-white/10 backdrop-blur-sm p-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-container-lowest text-[20px]">favorite</span>
+</button>
+<div class="absolute top-3 right-0 bg-secondary px-2 py-0.5 text-surface-container-lowest font-caption text-caption">
+                            חדש
+                        </div>
+<div class="absolute bottom-3 right-3 bg-primary/80 backdrop-blur-md px-2 py-0.5 text-surface-container-lowest font-caption text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">location_on</span>
+                            5.8 ק"מ
+                        </div>
+</div>
+<div class="mt-md text-right">
+<h3 class="font-h3-product text-[18px] text-primary">סניקרס New Balance</h3>
+<span class="font-h3-product text-[18px] text-secondary">₪ 120</span>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-stone relative group overflow-hidden">
+<img alt="" class="w-full h-full object-cover mix-blend-multiply" data-alt="A curated selection of vintage streetwear accessories displayed on a cream background. The layout is asymmetric and intentional, using tonal layering to create depth. The lighting is soft but distinct, creating a warm and sophisticated Mediterranean atmosphere. The color palette consists of pomegranate reds, saffron yellows, and dark woods, adhering to the brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-_iyYn8zLJ1B7MxHtu0jKMvD6Pouit1jEoakV6xUgQd0Srobhua0QwYuFXKtFUv4MiEp8jXn9Lrwgw2THBVLaECEgLOjqWSFioW3VB3X6Tt0aBeEtrLqJ-ZiGofN931xKRbB8ulJ7mM8NDDc2UxehCrcS5K-dCiXJ5RkndiXdXisg-GFp5G8Ey4R-1B3Fwd7yj7BNiFp7HzTeHScG4KQQsTAS4fvvvr9xhVXDavvN3XQxvQ4JhWZRmPh3uEkHNWAm9vybv_t1xDhg"/>
+<button class="absolute top-3 left-3 bg-white/10 backdrop-blur-sm p-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-container-lowest text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+<div class="absolute bottom-3 right-3 bg-primary/80 backdrop-blur-md px-2 py-0.5 text-surface-container-lowest font-caption text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">location_on</span>
+                            0.5 ק"מ
+                        </div>
+</div>
+<div class="mt-md text-right">
+<h3 class="font-h3-product text-[18px] text-primary">מעיל רוח וינטג'</h3>
+<span class="font-h3-product text-[18px] text-secondary">₪ 150</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-[#2B1810] h-20 px-4 pb-safe flex flex-row-reverse justify-around items-center shadow-none border-none">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center text-accent-saffron font-bold active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<div class="w-1 h-1 bg-accent-saffron rounded-full mt-1"></div>
+</button>
+<!-- Search -->
+<button class="flex flex-col items-center justify-center text-surface-container-lowest/60 hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+<!-- Center FAB (Add) -->
+<div class="relative -top-6">
+<button class="w-[52px] h-[52px] bg-primary-container text-surface-container-lowest flex items-center justify-center rounded-full shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+</div>
+<!-- Favorites -->
+<button class="flex flex-col items-center justify-center text-surface-container-lowest/60 hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center justify-center text-surface-container-lowest/60 hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+</body></html>

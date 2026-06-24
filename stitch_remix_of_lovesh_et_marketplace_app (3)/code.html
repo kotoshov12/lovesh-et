@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;family=Karantina:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#5a4137",
+                    "surface-tint": "#a23c40",
+                    "primary-fixed-dim": "#ffb3b2",
+                    "surface-stone": "#B5B0A6",
+                    "secondary": "#73584e",
+                    "inverse-on-surface": "#ffedec",
+                    "inverse-surface": "#392e2d",
+                    "on-tertiary-container": "#7db9b3",
+                    "surface-container": "#fee9e8",
+                    "surface-container-high": "#f8e4e3",
+                    "error-container": "#ffdad6",
+                    "background-cream": "#ECE3D0",
+                    "on-tertiary-fixed": "#00201e",
+                    "on-error-container": "#93000a",
+                    "error-red": "#C8243C",
+                    "outline-variant": "#ddc0bf",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#96d2cc",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#0a4f4b",
+                    "surface": "#fff8f7",
+                    "on-primary-container": "#ff8d8e",
+                    "on-surface-variant": "#564241",
+                    "secondary-container": "#fcd8ca",
+                    "on-secondary-fixed": "#2a170f",
+                    "text-muted": "#6B5544",
+                    "tertiary-container": "#004a46",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#ffdad9",
+                    "on-secondary-container": "#785d52",
+                    "surface-container-low": "#fff0ef",
+                    "on-tertiary": "#ffffff",
+                    "accent-saffron": "#C8932B",
+                    "tertiary": "#00322f",
+                    "secondary-fixed-dim": "#e2bfb2",
+                    "tertiary-fixed": "#b1eee8",
+                    "on-secondary": "#ffffff",
+                    "outline": "#897171",
+                    "on-primary-fixed-variant": "#83242a",
+                    "primary-container": "#7c1f26",
+                    "surface-bright": "#fff8f7",
+                    "inverse-primary": "#ffb3b2",
+                    "complementary-olive": "#5A6328",
+                    "on-background": "#231919",
+                    "secondary-fixed": "#ffdbcd",
+                    "on-surface": "#231919",
+                    "on-primary-fixed": "#410008",
+                    "surface-container-highest": "#f2dedd",
+                    "background": "#fff8f7",
+                    "surface-variant": "#f2dedd",
+                    "primary": "#5d0612",
+                    "surface-dim": "#e9d6d5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "24px",
+                    "2xl": "32px",
+                    "xs": "4px",
+                    "4xl": "64px",
+                    "md": "12px",
+                    "5xl": "96px",
+                    "sm": "8px",
+                    "3xl": "48px",
+                    "lg": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "h3-product": ["Karantina"],
+                    "h2-section": ["Karantina"],
+                    "caption": ["Assistant"],
+                    "body-large": ["Assistant"],
+                    "label-eyebrow": ["Assistant"],
+                    "body-main": ["Assistant"],
+                    "h1-hero": ["Karantina"]
+            },
+            "fontSize": {
+                    "h3-product": ["22px", {"lineHeight": "1.05", "fontWeight": "700"}],
+                    "h2-section": ["42px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                    "caption": ["11px", {"lineHeight": "1.5", "letterSpacing": "0.6px", "fontWeight": "500"}],
+                    "body-large": ["16px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                    "label-eyebrow": ["11px", {"lineHeight": "1.5", "letterSpacing": "2.5px", "fontWeight": "600"}],
+                    "body-main": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "h1-hero": ["78px", {"lineHeight": "0.9", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #ECE3D0;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased text-on-surface">
+<!-- Transparent Overlay Header -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-lg h-16 pointer-events-none">
+<div class="flex gap-4 pointer-events-auto">
+<button class="w-10 h-10 flex items-center justify-center bg-primary/20 backdrop-blur-sm text-surface-container-lowest">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="flex gap-lg pointer-events-auto">
+<button class="w-10 h-10 flex items-center justify-center bg-primary/20 backdrop-blur-sm text-surface-container-lowest">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center bg-primary/20 backdrop-blur-sm text-surface-container-lowest">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+</header>
+<main class="pb-32">
+<!-- Gallery Section -->
+<section class="relative w-full aspect-square bg-surface-stone overflow-hidden">
+<img class="w-full h-full object-cover grayscale-[20%] contrast-110" data-alt="A high-fashion editorial photograph of a vintage Levi's denim jacket from the 90s, presented in a minimalist studio setting. The lighting is warm and directional, creating soft shadows that emphasize the denim's texture against a muted Mediterranean Stone background. The jacket is styled with a contemporary, high-end aesthetic, fitting the brand's sophisticated and curated boutique personality. The overall mood is grounded, warm, and vintage-inspired." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFEyPUIGq3Yh_h5pr7wBsCn2ETzPiKjAT3CHEuYNTaDoIv62kzIhMlmArWg77EuVVZzMF9rDZ-0RLYHrLxgnrzMmGggm7IQ6fS3tlQKU5hKw_Lx-gCswIXrAIfgF5slhL5BiVobY3NjIIXbyUwfRfEHoRu-XPt0_gWB_n-xH_eCsxjgWhrtrEPWhu_6Q85oqe0XLPwWdC0XTP-UGvnbvvkaO21mPe8thr9HvbDbiZnKUwFqEtwtTiu9qi4dmXNpP6lOmrPP0C4YBDk"/>
+<!-- Pagination Dots -->
+<div class="absolute bottom-6 w-full flex justify-center gap-2">
+<div class="w-2 h-2 bg-surface-container-lowest"></div>
+<div class="w-2 h-2 bg-surface-container-lowest/40"></div>
+<div class="w-2 h-2 bg-surface-container-lowest/40"></div>
+</div>
+</section>
+<!-- Product Info Block -->
+<section class="px-xl py-xl bg-background-cream">
+<div class="space-y-2">
+<p class="font-label-eyebrow text-label-eyebrow text-accent-saffron uppercase tracking-[2.5px]">HARVEST · אספנות</p>
+<h1 class="font-h2-section text-[36px] leading-[0.95] text-primary">ג'קט ג'ינס Levi's וינטג' 90s</h1>
+<div class="flex items-baseline gap-3 mt-4">
+<span class="font-h3-product text-[28px] text-primary-container">89 ₪</span>
+<span class="font-body-main text-secondary line-through opacity-60">140 ₪</span>
+</div>
+</div>
+<div class="mt-lg flex flex-wrap gap-x-4 gap-y-2 py-4">
+<span class="font-body-main text-secondary flex items-center gap-1">
+                    Levi's
+                </span>
+<span class="text-secondary opacity-30">•</span>
+<span class="font-body-main text-secondary">מידה M</span>
+<span class="text-secondary opacity-30">•</span>
+<span class="font-body-main text-secondary">מצב מעולה</span>
+</div>
+</section>
+<!-- Seller Info -->
+<section class="px-xl py-xl border-t-[1.5px] border-secondary/20">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-lg">
+<div class="w-10 h-10 bg-surface-stone overflow-hidden border border-secondary">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a young woman named Maya with a stylish, minimalist Mediterranean look. She has a natural expression, softly lit by golden hour sunlight, against a warm cream-colored textured wall. The visual style is editorial and sophisticated, reflecting the premium boutique identity of LOVEsh\et. The lighting is soft and flattering, emphasizing a grounded and authentic personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeCBoJWy80yaTibWW2EAayR9qX7uwvzDgCg4B5fSxVn8dlbYvnsFJJDBVUKTsoPHuiHc6zSqQgudtgJe0vqisrAL92U_BplkFnvHiOUy2z-nl02Ls516tmlolHaGEl0Y1KhAuF1lL1TLD6k8EbB_Y9qnivkDBEUrCehIb9t3bx3Y7b2x4K2NXfyaBvjm6C4cX5fxX6zQMtVJqynkG0BrxGhIj7UgFf4qmB-yKHAI1RPrm2lfC1iPKTl8f4oxzMVkldfJMmJ-rxBeWr"/>
+</div>
+<div>
+<p class="font-body-large font-bold text-on-surface">מאיה ק.</p>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
+<span class="font-caption">2.4 ק"מ · תל אביב</span>
+</div>
+</div>
+</div>
+<a class="font-label-eyebrow text-label-eyebrow text-primary border-b border-primary pb-px" href="#">פרופיל המוכרת ←</a>
+</div>
+</section>
+<!-- Description -->
+<section class="px-xl py-xl border-t-[1.5px] border-secondary/20">
+<h2 class="font-h3-product text-h3-product text-primary mb-md">תיאור</h2>
+<p class="font-body-main text-body-main text-on-surface-variant leading-[1.7]">
+                ג׳קט ג׳ינס קלאסי משנות ה-90, במצב מושלם ללא פגמים. בד ג׳ינס עבה ואיכותי שרק משתבח עם השנים. הגזרה מעט אוברסייז ומתאימה בול לעונה. פריט חובה לכל חובבת וינטג׳ אמיתית. נמכר עקב מעבר דירה.
+            </p>
+</section>
+<!-- Similar Items -->
+<section class="py-xl border-t-[1.5px] border-secondary/20">
+<h2 class="font-h3-product text-h3-product text-primary px-xl mb-xl">פריטים דומים</h2>
+<div class="flex overflow-x-auto hide-scrollbar gap-lg px-xl">
+<!-- Card 1 -->
+<div class="min-w-[140px] flex-shrink-0">
+<div class="aspect-[3/4] bg-surface-stone mb-2">
+<img class="w-full h-full object-cover" data-alt="Editorial product shot of a light wash denim vest on a warm Mediterranean Stone background. High contrast, sharp edges, and professional lighting create a sophisticated look. The scene is bright and minimalist, maintaining the editorial brutalist aesthetic of the brand with no shadows or soft gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi8WZF_ceIHTJVeERK-fdrtAEtifm7jCLcdmg8qtoG2tjmVnDG9UHONI-MKVafaqOfJHWLh1gt5sNtSxQrwtVKZeER14Ac3ZR45K_qBu5Tj-L7LzpClXzZ5FhoBxJTr1BD2WvZepju3h5r43GbVW0QhKcsQmMXiZd6ti7XXOwSc6Z_k8318YKWtZtQI6XMKSv_1X5X1x2v2R6c27RDKQ1BpRd9PXAcmPVn2NneQUGMaoaxU1hQKp5w96puAo-TAKB3uEmNaSYgrLO9"/>
+</div>
+<p class="font-h3-product text-[18px] text-on-surface">ג'קט בהיר Levi's</p>
+<p class="font-body-main text-primary-container font-bold">120 ₪</p>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[140px] flex-shrink-0">
+<div class="aspect-[3/4] bg-surface-stone mb-2">
+<img class="w-full h-full object-cover" data-alt="A premium denim piece photographed in a curated Mediterranean boutique style. The lighting is high-key and editorial, showcasing the fabric texture against a neutral Stone background. The composition is clean and flat, emphasizing the brutalist minimalism of the LOVEsh\et brand identity. Colors are grounded in pomegranate reds and deep wood browns." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbIuZvXcuLI3qQI48lwGHvZZv35Yp_8mJcZfCAFWij0qvMUk0EiTYgvmyOYuOHZAN-MyLFYgpiIMYGtzfDXGh9wBS3O-U8iAKnbi0ToJOkrn5WSxprCX_j5Y6Yzm4QwDrwzVKLvVEL48fXhXmWtCwcacnJJC9kc-ysz-W-qM_tFmUzhe-1LBG2WElCqIDxHVp1VGYXOCi7ayph1J29em0IhzvUeNyhwDjHpbqnpnf1n8N_f2nCcpj1Isvt4_ySvTLHIKsNKZTsSb4e"/>
+</div>
+<p class="font-h3-product text-[18px] text-on-surface">ג'ינס 501 וינטג'</p>
+<p class="font-body-main text-primary-container font-bold">150 ₪</p>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[140px] flex-shrink-0">
+<div class="aspect-[3/4] bg-surface-stone mb-2">
+<img class="w-full h-full object-cover" data-alt="A vintage 90s denim jacket styled for a modern young audience. The editorial photography uses a flat design philosophy with tonal layering of Stone and Cream. The subject is centered and clearly defined by sharp outlines, creating an intentional and unrefined geometry consistent with editorial brutalism. The mood is sophisticated and warm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5IGy5GubTvFVOu6nQSVBgvr3wLweS7TXRMGe_a4gDRJ4mtZCjOMaTf5p3FGRfRQNyuAlgp5nOIII-kNcexY_hWldGEbYXXwvuinSW3l0M6spQQXH2jngIoI5vpngvcQcoL2_WkWu_syzMwR9OcKDQpS09YBkmxRCalzxaN6R7ET94-n7hDdQySxVVrZdqqmU5SDHKPH1SoO7T6-eZQrWA6boxcHor5f71lnB_NloCYCh6TbMRpEXo64c6HkS0YZIADeDLwoeavwPg"/>
+</div>
+<p class="font-h3-product text-[18px] text-on-surface">ג'קט שחור שטוף</p>
+<p class="font-body-main text-primary-container font-bold">95 ₪</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Bar -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-background-cream p-lg flex gap-lg items-center border-t border-secondary/10">
+<button class="w-[40%] h-14 border-[1.5px] border-secondary text-secondary font-body-large font-bold flex items-center justify-center bg-transparent active:bg-secondary active:text-on-secondary transition-colors">
+            שלחי הודעה
+        </button>
+<button class="w-[60%] h-14 bg-primary-container text-surface-container-lowest font-body-large font-bold flex items-center justify-center gap-2 active:opacity-90 transition-opacity">
+<span>קני עכשיו</span>
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+</footer>
+</body></html>

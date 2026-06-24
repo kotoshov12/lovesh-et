@@ -1,0 +1,105 @@
+.detail {
+  padding-top: calc(var(--header-height) + var(--space-2xl));
+  padding-bottom: var(--space-4xl);
+  max-width: var(--container-md);
+  margin: 0 auto;
+}
+
+.detail__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  padding: 0 var(--space-lg);
+}
+
+.detail__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.detail__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.detail__block-title {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-on-surface);
+}
+
+.detail__description {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+  color: var(--color-on-surface-variant);
+}
+
+.detail__similar {
+  margin-top: var(--space-5xl);
+  padding-top: var(--space-3xl);
+  border-top: var(--border-thick) solid var(--color-secondary);
+}
+
+/* The inline (stacked) ActionBar inside the sidebar only shows on desktop;
+   on mobile we use the fixed bar instead. */
+.detail__sidebar .action-bar--stacked {
+  display: none;
+}
+
+.detail__mobile-bar {
+  display: block;
+}
+
+.detail--missing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  min-height: 60vh;
+  text-align: center;
+}
+
+.detail__missing-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  color: var(--color-primary);
+}
+
+.detail__missing-link {
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-primary);
+  border-bottom: var(--border-thin) solid var(--color-primary);
+  padding-bottom: var(--space-2xs);
+}
+
+@media (min-width: 768px) {
+  .detail__layout {
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-4xl);
+    padding: 0 var(--space-lg);
+  }
+
+  .detail__sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-2xl));
+    align-self: start;
+  }
+
+  /* show the inline action bar, hide the fixed mobile one */
+  .detail__sidebar .action-bar--stacked {
+    display: flex;
+  }
+
+  .detail__mobile-bar {
+    display: none;
+  }
+}

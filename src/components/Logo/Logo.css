@@ -1,0 +1,31 @@
+.logo {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+.logo--sm {
+  font-size: var(--text-h3);
+}
+
+.logo--md {
+  font-size: var(--text-logo);
+}
+
+.logo--lg {
+  font-size: var(--text-h1);
+}
+
+.logo--on-dark {
+  color: var(--color-background);
+}
+
+.logo--on-light {
+  color: var(--color-primary);
+}
+
+.logo__slash {
+  color: var(--color-accent);
+}

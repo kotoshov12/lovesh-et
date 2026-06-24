@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;family=Karantina:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#5a4137",
+                    "surface-tint": "#a23c40",
+                    "primary-fixed-dim": "#ffb3b2",
+                    "surface-stone": "#B5B0A6",
+                    "secondary": "#73584e",
+                    "inverse-on-surface": "#ffedec",
+                    "inverse-surface": "#392e2d",
+                    "on-tertiary-container": "#7db9b3",
+                    "surface-container": "#fee9e8",
+                    "surface-container-high": "#f8e4e3",
+                    "error-container": "#ffdad6",
+                    "background-cream": "#ECE3D0",
+                    "on-tertiary-fixed": "#00201e",
+                    "on-error-container": "#93000a",
+                    "error-red": "#C8243C",
+                    "outline-variant": "#ddc0bf",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#96d2cc",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#0a4f4b",
+                    "surface": "#fff8f7",
+                    "on-primary-container": "#ff8d8e",
+                    "on-surface-variant": "#564241",
+                    "secondary-container": "#fcd8ca",
+                    "on-secondary-fixed": "#2a170f",
+                    "text-muted": "#6B5544",
+                    "tertiary-container": "#004a46",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#ffdad9",
+                    "on-secondary-container": "#785d52",
+                    "surface-container-low": "#fff0ef",
+                    "on-tertiary": "#ffffff",
+                    "accent-saffron": "#C8932B",
+                    "tertiary": "#00322f",
+                    "secondary-fixed-dim": "#e2bfb2",
+                    "tertiary-fixed": "#b1eee8",
+                    "on-secondary": "#ffffff",
+                    "outline": "#897171",
+                    "on-primary-fixed-variant": "#83242a",
+                    "primary-container": "#7c1f26",
+                    "surface-bright": "#fff8f7",
+                    "inverse-primary": "#ffb3b2",
+                    "complementary-olive": "#5A6328",
+                    "on-background": "#231919",
+                    "secondary-fixed": "#ffdbcd",
+                    "on-surface": "#231919",
+                    "on-primary-fixed": "#410008",
+                    "surface-container-highest": "#f2dedd",
+                    "background": "#fff8f7",
+                    "surface-variant": "#f2dedd",
+                    "primary": "#5d0612",
+                    "surface-dim": "#e9d6d5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "0px"
+            },
+            "spacing": {
+                    "xl": "24px",
+                    "2xl": "32px",
+                    "xs": "4px",
+                    "4xl": "64px",
+                    "md": "12px",
+                    "5xl": "96px",
+                    "sm": "8px",
+                    "3xl": "48px",
+                    "lg": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "h3-product": ["Karantina"],
+                    "h2-section": ["Karantina"],
+                    "caption": ["Assistant"],
+                    "body-large": ["Assistant"],
+                    "label-eyebrow": ["Assistant"],
+                    "body-main": ["Assistant"],
+                    "h1-hero": ["Karantina"]
+            },
+            "fontSize": {
+                    "h3-product": ["22px", {"lineHeight": "1.05", "fontWeight": "700"}],
+                    "h2-section": ["42px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                    "caption": ["11px", {"lineHeight": "1.5", "letterSpacing": "0.6px", "fontWeight": "500"}],
+                    "body-large": ["16px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                    "label-eyebrow": ["11px", {"lineHeight": "1.5", "letterSpacing": "2.5px", "fontWeight": "600"}],
+                    "body-main": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "h1-hero": ["78px", {"lineHeight": "0.9", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { display: none; }
+        input:focus, textarea:focus { outline: none !important; border-color: #7c1f26 !important; border-width: 1.5px !important; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-cream text-on-surface font-body-main selection:bg-accent-saffron selection:text-white min-h-screen">
+<!-- Header -->
+<nav class="fixed top-0 w-full z-50 bg-background-cream h-16 px-lg flex items-center justify-between border-b-[1.5px] border-secondary">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary cursor-pointer" data-icon="arrow_forward">arrow_forward</span>
+<h1 class="font-h3-product text-[24px] text-primary pt-1">העלאת פריט</h1>
+</div>
+<button class="font-label-eyebrow text-secondary uppercase underline decoration-1 underline-offset-4 tracking-[1.8px]">ביטול</button>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-16 pb-32 px-lg">
+<!-- Photo Upload Section -->
+<section class="mt-xl">
+<h2 class="font-label-eyebrow text-secondary uppercase mb-md tracking-[2.5px]">תמונות</h2>
+<div class="flex overflow-x-auto gap-md pb-md">
+<!-- Add Photo Slot -->
+<div class="flex-shrink-0 w-[100px] h-[100px] bg-surface-stone flex flex-col items-center justify-center cursor-pointer border-[1px] border-secondary/20">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant mb-xs" data-icon="camera_alt">camera_alt</span>
+<span class="font-caption text-on-secondary-fixed-variant">הוסיפי תמונה</span>
+</div>
+<!-- Existing Photos -->
+<div class="relative flex-shrink-0 w-[100px] h-[100px]">
+<img alt="Vintage Red Shirt Preview" class="w-full h-full object-cover" data-alt="A close-up shot of a vintage red silk shirt with delicate button detailing, captured in soft natural Mediterranean sunlight against a warm beige textured wall. The visual style is high-end editorial photography with rich saturation and crisp details. The overall mood is sophisticated and warm, reflecting a boutique fashion aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEjVRLcmezG5DJRXboaXrcRr9VF66-U-e6kN4GawyxeC_kOcf9VY2COAaijm1v-9nFFQSdO5jiwow1TnkVgOKmVY56idbHouWMVTtEXZErX5g1_gVbW1AcE53ON8sMm1BRb9gRFcacd6TuxpV__deNwCqSxJzwr4jAKayUBJZiLFIlDqs37mLehLPWdTTF6FTNi9f0czTTz0SlKS0xMrBHErHsutzAlCWgDcCz7AcSHdV8XWwvEzyWQ1L5J8Z12qJwp4ETxmFuNTdg"/>
+<button class="absolute top-1 right-1 bg-primary p-0.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px]" data-icon="close">close</span>
+</button>
+</div>
+<div class="relative flex-shrink-0 w-[100px] h-[100px]">
+<img alt="Fashion Detail Preview" class="w-full h-full object-cover" data-alt="A vertical editorial fashion photograph showcasing a stylish garment detail in a minimalist setting. The lighting is sharp and directional, creating bold shadows that emphasize the fabric texture and modern brutalist lines. The color palette is dominated by warm neutrals and pomegranate accents, maintaining a high-contrast Mediterranean editorial look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHVCu5AAAuZDUt-JvW32fWSKnlQOURscweZSAdKZSp_uEuVxopH9i3e6uj0Iayi2kWcnq-Fh--2zDdRKFVXpbsD8uoZQ5ACYzDNBcDjC_fJHGoWXGOagwBjthKmUSbL11PhrjUZq-3a5hI_EZmGp3W5hm2PcjAVjYM4V5oZQgXenia7z9gH0RSzEyiPpqEsqFKfCp8giipAPPgOwiAVqXBavAgER3HVkasw4vzXJjElURyOH7tZhwOyQkqLqJKnw1cOte3saxdFGKn"/>
+<button class="absolute top-1 right-1 bg-primary p-0.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px]" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Form Fields -->
+<div class="mt-2xl flex flex-col gap-xl">
+<!-- Item Name -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">שם הפריט</label>
+<input class="bg-background-cream border-[1px] border-secondary p-md font-body-large text-on-surface placeholder:text-secondary/50" placeholder="לדוגמה: חולצת וינטג' אדומה" type="text"/>
+</div>
+<!-- Category -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">קטגוריה</label>
+<div class="flex flex-wrap gap-sm">
+<button class="px-lg py-sm bg-primary-container text-white font-body-main">חולצות</button>
+<button class="px-lg py-sm border-[1.5px] border-secondary text-secondary font-body-main">מכנסיים</button>
+<button class="px-lg py-sm border-[1.5px] border-secondary text-secondary font-body-main">נעליים</button>
+<button class="px-lg py-sm border-[1.5px] border-secondary text-secondary font-body-main">אקססוריז</button>
+</div>
+</div>
+<!-- Size -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">מידה</label>
+<div class="flex flex-wrap gap-sm">
+<button class="px-md py-sm border-[1.5px] border-secondary text-secondary font-body-main min-w-[48px]">XS</button>
+<button class="px-md py-sm border-[1.5px] border-secondary text-secondary font-body-main min-w-[48px]">S</button>
+<button class="px-md py-sm bg-primary-container text-white font-body-main min-w-[48px]">M</button>
+<button class="px-md py-sm border-[1.5px] border-secondary text-secondary font-body-main min-w-[48px]">L</button>
+<button class="px-md py-sm border-[1.5px] border-secondary text-secondary font-body-main min-w-[48px]">XL</button>
+<button class="px-md py-sm border-[1.5px] border-secondary text-secondary font-body-main min-w-[48px]">XXL</button>
+</div>
+</div>
+<!-- Condition -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">מצב הפריט</label>
+<div class="flex flex-wrap gap-sm">
+<button class="px-lg py-sm bg-primary-container text-white font-body-main">כמו חדש</button>
+<button class="px-lg py-sm border-[1.5px] border-secondary text-secondary font-body-main">מצב מעולה</button>
+<button class="px-lg py-sm border-[1.5px] border-secondary text-secondary font-body-main">טוב</button>
+<button class="px-lg py-sm border-[1.5px] border-secondary text-secondary font-body-main">סביר</button>
+</div>
+</div>
+<!-- Brand -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">מותג</label>
+<input class="bg-background-cream border-[1px] border-secondary p-md font-body-large text-on-surface placeholder:text-secondary/50" placeholder="אופציונלי..." type="text"/>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">תיאור</label>
+<textarea class="bg-background-cream border-[1px] border-secondary p-md font-body-large text-on-surface placeholder:text-secondary/50 resize-none" placeholder="ספרי על הפריט..." rows="4"></textarea>
+</div>
+<!-- Price -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-eyebrow text-secondary uppercase tracking-[2.5px]">מחיר</label>
+<div class="flex items-center border-[1px] border-secondary bg-background-cream">
+<div class="px-md border-l-[1px] border-secondary font-h3-product text-primary">₪</div>
+<input class="flex-1 bg-transparent border-none p-md font-body-large text-on-surface placeholder:text-secondary/50" placeholder="0.00" type="number"/>
+</div>
+</div>
+<!-- Location -->
+<div class="flex items-center justify-between p-md border-[1.5px] border-secondary bg-background-cream/50 mt-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<span class="font-body-large text-on-surface">תל אביב</span>
+</div>
+<button class="font-label-eyebrow text-primary underline decoration-1 underline-offset-4 tracking-[1.8px]">שנה</button>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 w-full bg-background-cream border-t-[1.5px] border-secondary px-lg py-xl z-50">
+<button class="w-full bg-primary-container text-white py-lg flex items-center justify-center gap-md active:scale-[0.98] transition-transform">
+<span class="font-h3-product text-lg uppercase tracking-wider">העלי את הפריט</span>
+<span class="material-symbols-outlined rotate-180" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Padding for Fixed Bottom -->
+<div class="h-8"></div>
+</body></html>

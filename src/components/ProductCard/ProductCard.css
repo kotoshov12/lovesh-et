@@ -1,0 +1,94 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  color: inherit;
+}
+
+.product-card__media {
+  position: relative;
+  aspect-ratio: var(--aspect-product);
+  background: var(--color-surface);
+  overflow: hidden;
+  border: var(--border-thick) solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.product-card:hover .product-card__media {
+  border-color: var(--color-secondary);
+}
+
+.product-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-card__img {
+  transform: scale(1.05);
+}
+
+.product-card__badge {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+}
+
+.product-card__fav {
+  position: absolute;
+  top: var(--space-md);
+  inset-inline-start: var(--space-md);
+}
+
+.product-card__distance {
+  position: absolute;
+  bottom: var(--space-md);
+  inset-inline-end: var(--space-md);
+}
+
+/* Slide-up "add to cart" reveal */
+.product-card__cart {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-card__cart {
+  transform: translateY(0);
+}
+
+.product-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+.product-card__name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-product-sm);
+  line-height: var(--leading-h3);
+  color: var(--color-primary);
+}
+
+.product-card__caption {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-text-secondary);
+}

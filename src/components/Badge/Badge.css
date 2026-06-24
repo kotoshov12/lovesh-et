@@ -1,0 +1,28 @@
+.badge {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-badge);
+  line-height: var(--leading-caption);
+}
+
+/* "חדש" / NEW — saffron on dark wood */
+.badge--new {
+  background: var(--color-accent);
+  color: var(--color-secondary);
+}
+
+/* SALE — pomegranate on cream */
+.badge--sale {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
+/* "אחרון במלאי" — saffron on cream/white text */
+.badge--last {
+  background: var(--color-accent);
+  color: var(--color-on-primary);
+}

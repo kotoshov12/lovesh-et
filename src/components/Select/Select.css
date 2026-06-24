@@ -1,0 +1,31 @@
+.select {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select__control {
+  width: 100%;
+  appearance: none;
+  background: var(--color-background);
+  border: var(--border-thin) solid var(--color-secondary);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  padding-inline-start: var(--space-2xl);
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-primary);
+}
+
+.select__control:focus {
+  outline: none;
+  border-width: var(--border-thick);
+  border-color: var(--color-primary);
+}
+
+.select__chevron {
+  position: absolute;
+  inset-inline-start: var(--space-md);
+  pointer-events: none;
+  color: var(--color-secondary);
+}

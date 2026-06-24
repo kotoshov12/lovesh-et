@@ -1,0 +1,20 @@
+.fav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: var(--space-xs);
+  color: var(--color-secondary);
+  transition: opacity 0.2s ease;
+}
+
+.fav:hover {
+  opacity: 0.85;
+}
+
+/* Card-corner overlay over imagery */
+.fav--overlay {
+  background: var(--color-surface);
+  color: var(--color-background);
+}

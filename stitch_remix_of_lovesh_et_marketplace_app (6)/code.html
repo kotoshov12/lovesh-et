@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&amp;family=Karantina:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#fee9e8",
+                        "secondary-fixed-dim": "#e2bfb2",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#004a46",
+                        "surface-tint": "#a23c40",
+                        "inverse-primary": "#ffb3b2",
+                        "error-container": "#ffdad6",
+                        "complementary-olive": "#5A6328",
+                        "secondary-container": "#fcd8ca",
+                        "tertiary-fixed-dim": "#96d2cc",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#0a4f4b",
+                        "on-primary-fixed-variant": "#83242a",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#785d52",
+                        "primary": "#5d0612",
+                        "surface": "#fff8f7",
+                        "primary-container": "#7c1f26",
+                        "surface-variant": "#f2dedd",
+                        "surface-container-low": "#fff0ef",
+                        "surface-container-highest": "#f2dedd",
+                        "secondary": "#73584e",
+                        "on-tertiary-container": "#7db9b3",
+                        "on-secondary-fixed": "#2a170f",
+                        "outline-variant": "#ddc0bf",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#ffdbcd",
+                        "background": "#fff8f7",
+                        "on-surface-variant": "#564241",
+                        "on-primary-container": "#ff8d8e",
+                        "on-secondary-fixed-variant": "#5a4137",
+                        "text-muted": "#6B5544",
+                        "on-error": "#ffffff",
+                        "outline": "#897171",
+                        "tertiary-fixed": "#b1eee8",
+                        "surface-stone": "#B5B0A6",
+                        "inverse-on-surface": "#ffedec",
+                        "background-cream": "#ECE3D0",
+                        "on-surface": "#231919",
+                        "surface-container-high": "#f8e4e3",
+                        "primary-fixed-dim": "#ffb3b2",
+                        "surface-bright": "#fff8f7",
+                        "error-red": "#C8243C",
+                        "tertiary": "#00322f",
+                        "accent-saffron": "#C8932B",
+                        "primary-fixed": "#ffdad9",
+                        "on-background": "#231919",
+                        "on-tertiary-fixed": "#00201e",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#410008",
+                        "inverse-surface": "#392e2d",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#e9d6d5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "4xl": "64px",
+                        "xl": "24px",
+                        "md": "12px",
+                        "lg": "16px",
+                        "sm": "8px",
+                        "2xl": "32px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "5xl": "96px",
+                        "3xl": "48px"
+                    },
+                    "fontFamily": {
+                        "h1-hero": ["Karantina"],
+                        "h3-product": ["Karantina"],
+                        "body-main": ["Assistant"],
+                        "caption": ["Assistant"],
+                        "h2-section": ["Karantina"],
+                        "body-large": ["Assistant"],
+                        "label-eyebrow": ["Assistant"]
+                    },
+                    "fontSize": {
+                        "h1-hero": ["78px", {"lineHeight": "0.9", "fontWeight": "700"}],
+                        "h3-product": ["22px", {"lineHeight": "1.05", "fontWeight": "700"}],
+                        "body-main": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "caption": ["11px", {"lineHeight": "1.5", "letterSpacing": "0.6px", "fontWeight": "500"}],
+                        "h2-section": ["42px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                        "body-large": ["16px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.5", "letterSpacing": "2.5px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Assistant', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .brand-backslash { color: #C8932B; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-primary flex flex-row-reverse justify-between items-center px-lg h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="text-surface-container-lowest hover:opacity-90 transition-opacity duration-200">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+<div class="font-h1-hero text-h1-hero text-surface-container-lowest tracking-tight">
+            LOVEsh<span class="text-accent-saffron">\</span>et
+        </div>
+<button class="text-surface-container-lowest hover:opacity-90 transition-opacity duration-200">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</header>
+<main class="pt-32 pb-4xl max-w-4xl mx-auto px-lg">
+<!-- Header Section -->
+<div class="mb-3xl text-center">
+<h1 class="font-h2-section text-h2-section text-primary mb-md">העלאת פריט חדש</h1>
+<p class="font-body-large text-secondary">שתפי את הסטייל שלך עם הקהילה של LOVEsh\et</p>
+</div>
+<!-- Photo Upload Grid -->
+<section class="mb-4xl">
+<div class="grid grid-cols-4 gap-md aspect-[16/9] md:aspect-[21/9]">
+<div class="col-span-2 row-span-2 border-1.5 border-secondary border-dashed flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm" data-icon="add_a_photo">add_a_photo</span>
+<span class="font-label-eyebrow text-label-eyebrow text-secondary group-hover:text-primary">תמונה ראשית (3:4)</span>
+</div>
+<div class="border-1.5 border-secondary border-dashed flex items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary" data-icon="add">add</span>
+</div>
+<div class="border-1.5 border-secondary border-dashed flex items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary" data-icon="add">add</span>
+</div>
+<div class="border-1.5 border-secondary border-dashed flex items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary" data-icon="add">add</span>
+</div>
+<div class="border-1.5 border-secondary border-dashed flex items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-secondary" data-icon="add">add</span>
+</div>
+</div>
+<p class="mt-md font-caption text-secondary text-center">מומלץ להעלות לפחות 3 תמונות מזוויות שונות ובאור יום</p>
+</section>
+<!-- Form Layout -->
+<form class="space-y-3xl">
+<!-- Basic Info -->
+<div class="space-y-xl">
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">שם הפריט</label>
+<input class="w-full bg-surface-container-lowest border-secondary border-[1px] px-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large" placeholder="למשל: שמלת משי בוהו-שיק" type="text"/>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">קטגוריה</label>
+<div class="flex flex-wrap gap-sm">
+<button class="px-xl py-sm bg-primary text-on-primary font-body-main border-none" type="button">שמלות</button>
+<button class="px-xl py-sm border-[1.5px] border-secondary text-secondary font-body-main hover:bg-secondary hover:text-on-secondary transition-colors" type="button">חולצות</button>
+<button class="px-xl py-sm border-[1.5px] border-secondary text-secondary font-body-main hover:bg-secondary hover:text-on-secondary transition-colors" type="button">מכנסיים</button>
+<button class="px-xl py-sm border-[1.5px] border-secondary text-secondary font-body-main hover:bg-secondary hover:text-on-secondary transition-colors" type="button">חצאיות</button>
+<button class="px-xl py-sm border-[1.5px] border-secondary text-secondary font-body-main hover:bg-secondary hover:text-on-secondary transition-colors" type="button">נעליים</button>
+<button class="px-xl py-sm border-[1.5px] border-secondary text-secondary font-body-main hover:bg-secondary hover:text-on-secondary transition-colors" type="button">אקססוריז</button>
+</div>
+</div>
+</div>
+<!-- Details Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">מידה</label>
+<select class="w-full bg-surface-container-lowest border-secondary border-[1px] px-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large appearance-none">
+<option>בחרי מידה</option>
+<option>XS</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+</select>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">מצב הפריט</label>
+<select class="w-full bg-surface-container-lowest border-secondary border-[1px] px-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large appearance-none">
+<option>חדש עם תווית</option>
+<option>חדש ללא תווית</option>
+<option>כמו חדש</option>
+<option>משומש במצב טוב</option>
+</select>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">מותג</label>
+<input class="w-full bg-surface-container-lowest border-secondary border-[1px] px-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large" placeholder="למשל: Zara, Vintage" type="text"/>
+</div>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">תיאור הפריט</label>
+<textarea class="w-full bg-surface-container-lowest border-secondary border-[1px] px-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large resize-none" placeholder="ספרי לנו עוד על הבד, הגזרה וסיבת המכירה..." rows="4"></textarea>
+</div>
+<!-- Price and Location -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">מחיר מבוקש</label>
+<div class="relative">
+<span class="absolute right-md top-1/2 -translate-y-1/2 text-secondary font-body-large">₪</span>
+<input class="w-full bg-surface-container-lowest border-secondary border-[1px] pr-xl pl-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="font-label-eyebrow text-label-eyebrow text-secondary uppercase">מיקום לאיסוף</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-secondary" data-icon="location_on">location_on</span>
+<input class="w-full bg-surface-container-lowest border-secondary border-[1px] px-md py-md focus:border-primary focus:border-[1.5px] focus:ring-0 outline-none font-body-large" placeholder="עיר / שכונה" type="text"/>
+</div>
+</div>
+</div>
+<!-- Additional Options -->
+<div class="flex items-center gap-md py-md border-y-[1px] border-surface-variant">
+<input class="w-5 h-5 text-primary border-secondary focus:ring-primary" id="swap" type="checkbox"/>
+<label class="font-body-large text-on-background" for="swap">פתוחה להצעות החלפה (Swap)</label>
+</div>
+<!-- CTA -->
+<div class="pt-2xl flex flex-col items-center gap-xl">
+<button class="w-full md:w-80 bg-primary text-on-primary py-md font-h3-product text-h3-product hover:opacity-90 transition-all active:scale-[0.98]" type="submit">
+                    פרסמי פריט עכשיו
+                </button>
+<button class="text-secondary font-label-eyebrow underline tracking-[1.8px] hover:text-primary transition-colors" type="button">
+                    ביטול וחזרה
+                </button>
+</div>
+</form>
+</main>
+<!-- NavigationDrawer Placeholder (Hidden by default, structure provided) -->
+<aside class="hidden h-full w-80 fixed right-0 top-0 z-[60] bg-background-cream border-l-[1.5px] border-secondary flex flex-col text-right">
+<div class="p-xl flex items-center justify-end gap-md">
+<div class="text-right">
+<div class="font-h2-section text-h2-section text-primary">שלום, נועה</div>
+<div class="font-body-large text-secondary opacity-70">צפייה בפרופיל</div>
+</div>
+<div class="w-16 h-16 bg-surface-stone overflow-hidden">
+<img alt="פרופיל משתמש" class="w-full h-full object-cover" data-alt="A high-fashion portrait of a young Mediterranean woman with curly hair, wearing a minimalist pomegranate-colored linen top. The lighting is warm and sun-drenched, creating soft shadows against a cream-colored textured wall. The aesthetic is sophisticated, clean, and modern editorial, perfectly aligning with the brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOGKDjeelj16Y8Ugspdzdwky0_-o0ZZVaPIqYvlFlyMUSWZGreMVBnUIhkVPuAWXaqIHpDMMjhyRwJaAyl95WRvvBN-Uvbr5oVJB5tz0krwdFKmrgGvD9DMugDE-gKylUjy3677ZpZgVhkZhNO4d-4kAkXmHJGl1smgIPBpXdLWzaznJ9PLNN7qB-1kvl0K_MPLV5BDDuTYCIANoDSHbgjAPR6c4iS_oTUmTeyT-e0nQA1CXfvwxy3sj1U0BHmUkApMtNvESQPrme9"/>
+</div>
+</div>
+<nav class="flex-1 flex flex-col">
+<a class="px-xl py-lg font-body-large text-secondary hover:bg-surface-stone transition-colors flex items-center justify-end gap-md" href="#">
+                הפרופיל שלי
+                <span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+<a class="px-xl py-lg font-body-large text-secondary hover:bg-surface-stone transition-colors flex items-center justify-end gap-md" href="#">
+                ההזמנות שלי
+                <span class="material-symbols-outlined" data-icon="package_2">package_2</span>
+</a>
+<a class="px-xl py-lg font-body-large text-secondary hover:bg-surface-stone transition-colors flex items-center justify-end gap-md" href="#">
+                פריטים שאהבתי
+                <span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</a>
+<a class="px-xl py-lg font-body-large text-secondary hover:bg-surface-stone transition-colors flex items-center justify-end gap-md" href="#">
+                הגדרות
+                <span class="material-symbols-outlined" data-icon="settings">settings</span>
+</a>
+</nav>
+</aside>
+<!-- Global Footer Minimal -->
+<footer class="mt-4xl border-t-[1.5px] border-secondary py-3xl bg-surface-container-lowest">
+<div class="max-w-4xl mx-auto px-lg flex flex-col md:flex-row justify-between items-center gap-xl text-secondary">
+<div class="font-h3-product text-h3-product text-primary">LOVEsh\et</div>
+<div class="flex gap-xl font-label-eyebrow text-label-eyebrow">
+<a class="hover:text-primary" href="#">אודות</a>
+<a class="hover:text-primary" href="#">תקנון</a>
+<a class="hover:text-primary" href="#">פרטיות</a>
+<a class="hover:text-primary" href="#">צור קשר</a>
+</div>
+<div class="font-caption text-secondary">© 2024 LOVEsh\et. כל הזכויות שמורות.</div>
+</div>
+</footer>
+</body></html>

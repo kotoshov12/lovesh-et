@@ -1,0 +1,53 @@
+import Logo from '../Logo/Logo.jsx'
+import Icon from '../Icon/Icon.jsx'
+import './Footer.css'
+
+const CUSTOMER_LINKS = ['משלוחים והחזרות', 'צרו קשר', 'שאלות נפוצות']
+
+/**
+ * Site footer. Pomegranate background, three columns + bottom copyright.
+ */
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer__inner">
+        <div className="footer__brand">
+          <Logo size="sm" />
+          <p className="footer__tagline">
+            חנות הוינטג' והאופנה המובילה בישראל. אוצרות שנאספו באהבה מכל רחבי העולם.
+          </p>
+        </div>
+
+        <div className="footer__col">
+          <h4 className="footer__heading">שירות לקוחות</h4>
+          {CUSTOMER_LINKS.map((link) => (
+            <a key={link} href="#" className="footer__link">
+              {link}
+            </a>
+          ))}
+        </div>
+
+        <div className="footer__col">
+          <h4 className="footer__heading">עקבו אחרינו</h4>
+          <div className="footer__social">
+            <a href="#" aria-label="אינסטגרם" className="footer__social-link">
+              <Icon name="photo_camera" size="md" />
+            </a>
+            <a href="#" aria-label="שיתוף" className="footer__social-link">
+              <Icon name="share" size="md" />
+            </a>
+            <a href="#" aria-label="אימייל" className="footer__social-link">
+              <Icon name="alternate_email" size="md" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="footer__bottom">
+        <p>© 2024 LOVEsh\et. כל הזכויות שמורות.</p>
+      </div>
+    </footer>
+  )
+}
+
+export default Footer

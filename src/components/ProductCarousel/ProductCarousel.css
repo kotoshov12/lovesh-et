@@ -1,0 +1,50 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.carousel__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  color: var(--color-primary);
+  padding: 0 var(--space-xl);
+}
+
+.carousel__track {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  padding: 0 var(--space-xl);
+}
+
+.carousel__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: var(--size-carousel-card);
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.carousel__media {
+  aspect-ratio: var(--aspect-product);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.carousel__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel__name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-product-sm);
+  line-height: var(--leading-h3);
+  color: var(--color-on-surface);
+}

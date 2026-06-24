@@ -1,0 +1,19 @@
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  border-radius: var(--radius);
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.icon-button:hover {
+  opacity: 0.85;
+}
+
+.icon-button:active {
+  transform: scale(0.95);
+}

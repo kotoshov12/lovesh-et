@@ -1,0 +1,118 @@
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.hero__eyebrow--accent {
+  color: var(--color-accent);
+}
+
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Slide variant (mobile) ---------- */
+.hero--slide {
+  position: relative;
+  display: flex;
+  height: var(--size-hero-slide);
+  background: var(--color-primary-container);
+  overflow: hidden;
+}
+
+.hero__slide-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+}
+
+.hero__slide-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  color: var(--color-background);
+}
+
+.hero__price .price__current {
+  color: var(--color-accent);
+}
+
+.hero__slide-media {
+  width: 50%;
+}
+
+.hero__dots {
+  position: absolute;
+  bottom: var(--space-lg);
+  inset-inline-end: var(--space-xl);
+}
+
+/* ---------- Split variant (desktop) ---------- */
+.hero--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+  border-bottom: var(--border-thick) solid var(--color-secondary);
+}
+
+.hero__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: var(--space-5xl);
+  background: var(--color-background);
+}
+
+.hero__headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+  color: var(--color-primary);
+}
+
+.hero__body {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+  color: var(--color-secondary);
+  max-width: 42ch;
+}
+
+.hero__media {
+  position: relative;
+}
+
+.hero__tag {
+  position: absolute;
+  bottom: var(--space-lg);
+  inset-inline-end: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-accent);
+  color: var(--color-on-primary);
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h3);
+}
+
+@media (max-width: 768px) {
+  .hero--split {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__panel {
+    padding: var(--space-2xl);
+    order: 2;
+  }
+}

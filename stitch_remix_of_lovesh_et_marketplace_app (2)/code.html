@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&amp;family=Karantina:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#fee9e8",
+                      "secondary-fixed-dim": "#e2bfb2",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#004a46",
+                      "surface-tint": "#a23c40",
+                      "inverse-primary": "#ffb3b2",
+                      "error-container": "#ffdad6",
+                      "complementary-olive": "#5A6328",
+                      "secondary-container": "#fcd8ca",
+                      "tertiary-fixed-dim": "#96d2cc",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#0a4f4b",
+                      "on-primary-fixed-variant": "#83242a",
+                      "error": "#ba1a1a",
+                      "on-secondary-container": "#785d52",
+                      "primary": "#5d0612",
+                      "surface": "#fff8f7",
+                      "primary-container": "#7c1f26",
+                      "surface-variant": "#f2dedd",
+                      "surface-container-low": "#fff0ef",
+                      "surface-container-highest": "#f2dedd",
+                      "secondary": "#73584e",
+                      "on-tertiary-container": "#7db9b3",
+                      "on-secondary-fixed": "#2a170f",
+                      "outline-variant": "#ddc0bf",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#ffdbcd",
+                      "background": "#fff8f7",
+                      "on-surface-variant": "#564241",
+                      "on-primary-container": "#ff8d8e",
+                      "on-secondary-fixed-variant": "#5a4137",
+                      "text-muted": "#6B5544",
+                      "on-error": "#ffffff",
+                      "outline": "#897171",
+                      "tertiary-fixed": "#b1eee8",
+                      "surface-stone": "#B5B0A6",
+                      "inverse-on-surface": "#ffedec",
+                      "background-cream": "#ECE3D0",
+                      "on-surface": "#231919",
+                      "surface-container-high": "#f8e4e3",
+                      "primary-fixed-dim": "#ffb3b2",
+                      "surface-bright": "#fff8f7",
+                      "error-red": "#C8243C",
+                      "tertiary": "#00322f",
+                      "accent-saffron": "#C8932B",
+                      "primary-fixed": "#ffdad9",
+                      "on-background": "#231919",
+                      "on-tertiary-fixed": "#00201e",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#410008",
+                      "inverse-surface": "#392e2d",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#e9d6d5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "0px"
+              },
+              "spacing": {
+                      "4xl": "64px",
+                      "xl": "24px",
+                      "md": "12px",
+                      "lg": "16px",
+                      "sm": "8px",
+                      "2xl": "32px",
+                      "base": "8px",
+                      "xs": "4px",
+                      "5xl": "96px",
+                      "3xl": "48px"
+              },
+              "fontFamily": {
+                      "h1-hero": ["Karantina"],
+                      "h3-product": ["Karantina"],
+                      "body-main": ["Assistant"],
+                      "caption": ["Assistant"],
+                      "h2-section": ["Karantina"],
+                      "body-large": ["Assistant"],
+                      "label-eyebrow": ["Assistant"]
+              },
+              "fontSize": {
+                      "h1-hero": ["78px", {"lineHeight": "0.9", "fontWeight": "700"}],
+                      "h3-product": ["22px", {"lineHeight": "1.05", "fontWeight": "700"}],
+                      "body-main": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "caption": ["11px", {"lineHeight": "1.5", "letterSpacing": "0.6px", "fontWeight": "500"}],
+                      "h2-section": ["42px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                      "body-large": ["16px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                      "label-eyebrow": ["11px", {"lineHeight": "1.5", "letterSpacing": "2.5px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff8f7;
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Strict 0px radius override for any accidental browser defaults */
+        * { border-radius: 0 !important; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex flex-row-reverse justify-between items-center px-lg h-16 w-full bg-primary text-on-primary">
+<!-- Logo Section -->
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-primary cursor-pointer">menu</span>
+<div class="font-h1-hero text-h1-hero text-surface-container-lowest tracking-tight">
+                LOVEsh<span class="text-accent-saffron">\</span>et
+            </div>
+</div>
+<!-- Desktop Navigation Links -->
+<nav class="hidden md:flex flex-row-reverse gap-xl items-center">
+<a class="font-label-eyebrow text-label-eyebrow text-accent-saffron uppercase" href="#">סייל</a>
+<a class="font-label-eyebrow text-label-eyebrow text-surface-container-lowest uppercase hover:opacity-90 transition-opacity" href="#">חולצות</a>
+<a class="font-label-eyebrow text-label-eyebrow text-surface-container-lowest uppercase hover:opacity-90 transition-opacity" href="#">מכנסיים</a>
+<a class="font-label-eyebrow text-label-eyebrow text-surface-container-lowest uppercase hover:opacity-90 transition-opacity" href="#">נעליים</a>
+<a class="font-label-eyebrow text-label-eyebrow text-surface-container-lowest uppercase hover:opacity-90 transition-opacity" href="#">אקססוריז</a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-lg">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80">search</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80">shopping_bag</span>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Split Banner -->
+<section class="grid grid-cols-1 md:grid-cols-2 h-[870px] border-b-[1.5px] border-secondary">
+<div class="relative overflow-hidden bg-background-cream flex flex-col justify-center px-5xl text-right order-2 md:order-1">
+<div class="z-10">
+<span class="font-label-eyebrow text-label-eyebrow text-primary tracking-[4px] mb-md block">VINTAGE COLLECTION 2024</span>
+<h1 class="font-h1-hero text-[120px] leading-[0.85] text-primary mb-xl">HOT<br/>NOW</h1>
+<p class="font-body-large text-body-large text-secondary max-w-md mb-2xl">
+                        גלו את הקולקציה החדשה שנחתה היישר מרחובות מילאנו. פריטי וינטג' נדירים שנבחרו בקפידה עבור הסטייל האישי שלך.
+                    </p>
+<button class="bg-primary text-on-primary px-2xl py-md font-label-eyebrow text-label-eyebrow hover:bg-primary-container transition-colors">
+                        לרכישת הקולקציה
+                    </button>
+</div>
+<!-- Abstract Texture Overlay -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#73584e 0.5px, transparent 0.5px); background-size: 8px 8px;"></div>
+</div>
+<div class="relative order-1 md:order-2">
+<img class="w-full h-full object-cover" data-alt="A high-fashion editorial photograph of a vintage leather jacket draped over a minimalist stone pedestal. The setting is a sun-drenched Mediterranean villa with warm, textured cream walls and sharp geometric shadows. The lighting is bright and high-contrast, emphasizing the rich pomegranate and wood tones of the scene. The overall aesthetic is sophisticated, grounded, and unmistakably premium." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLF8BTRTCSpYJbwtWqmUD9NJQJlJUWYR5o5TD5BfuvDS3nRzwzUFC6M3NE616fGvQPckuGHX_Q_GS6bqhQprCwz3XmFz3h_JlbjxjiHWXEJGQ1ZFUqAaLV-U_Hn1RREBqVd-XfQfNvEbWGDsXItpBhnGBwOXDz1wEkY4uJga8xfFX5wHU2AKeuIv9741nijqELxYj4mjCHH7foLDf4xdvyf3FdeLjz3mJYwEjP4f2Bz3hFhVQJOShodtxZS-A3j6146RhvH_cXPPEo"/>
+<div class="absolute bottom-lg right-lg bg-accent-saffron text-on-primary px-lg py-sm font-h3-product text-h3-product">
+                    מהדורת פרימיום
+                </div>
+</div>
+</section>
+<!-- Product Grid Section -->
+<section class="max-w-[1400px] mx-auto px-xl py-4xl">
+<div class="flex justify-between items-end mb-3xl">
+<div class="text-right">
+<span class="font-label-eyebrow text-label-eyebrow text-secondary block mb-xs">POPULAR ITEMS</span>
+<h2 class="font-h2-section text-h2-section text-primary">הכי נמכרים השבוע</h2>
+</div>
+<a class="font-label-eyebrow text-label-eyebrow text-primary border-b border-primary pb-1 hover:opacity-70" href="#">צפו בכל הפריטים</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-xl">
+<!-- Product Card 1 -->
+<div class="flex flex-col group">
+<div class="relative aspect-[3/4] bg-surface-stone overflow-hidden border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover" data-alt="A studio photograph of a crisp white cotton shirt with unique architectural tailoring, displayed against a warm stone-colored background. The lighting is soft but directional, highlighting the fabric texture and the clean, sharp edges of the design. The aesthetic is minimal and editorial, following a Mediterranean boutique style with high contrast and natural materials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-yg0YtTPZsq0mNzze2QVszZ--X7XWh6LQHyaRqBWBOGSXmsK8FmRDIS1c0JSNxv-1-asp5fu3yNekhmpgum08YjZZJpvms0TT6jFKy9mDkq5aKTHkRelD5pDpCEFcWAVyorYvT_aHcy40PwQG32oZP01bWEXgR72raRZDfxpLGzvU1ioEsK9wa8NPjSe_appvqtKvwI0oRfwo21Ztbir612lJQRBT3RIOtGeGWY0THmreb4kwsb8g0UUA_QeUSTsAZ21ygDb3Oi4U"/>
+<div class="absolute top-0 right-0 bg-accent-saffron px-md py-xs font-caption text-caption text-on-primary">חדש</div>
+<button class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary py-md font-label-eyebrow text-label-eyebrow translate-y-full group-hover:translate-y-0 transition-transform">
+                            הוספה לסל
+                        </button>
+</div>
+<div class="mt-md text-right">
+<div class="flex justify-between items-start">
+<span class="font-h3-product text-h3-product text-primary">₪349</span>
+<h3 class="font-h3-product text-h3-product text-secondary uppercase tracking-tight">חולצת פשתן קלאסית</h3>
+</div>
+<p class="font-caption text-caption text-text-muted mt-xs">מרחק ממך: 2.4 ק״מ</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="flex flex-col group">
+<div class="relative aspect-[3/4] bg-surface-stone overflow-hidden border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover" data-alt="Close-up shot of a dark chocolate brown leather belt with a heavy brass buckle, laid on a rustic wooden surface. The lighting is warm and golden, evoking a sunset in a Mediterranean olive grove. The composition is artistic and bold, using the rich textures of leather and wood to create a luxurious, grounded feel with pomegranate accents in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIttsmJTjntyogPQXfBeL4aWNM5i9LE3ogzp-Mg6zLWYjQ5DDg5lJNCHnKiZVXk3S2Fugqv46VB7aCspRkPARfE4ove52RfqqzU3ZzeqrNMApCtZpo5wh0SoP2PiTOyXxOL_gvajG3uCSOf1e4diTeU7cOABEWE45sNSIgW-0rKePCJIzm-r34KzPcvjuMQW1idtGgyrXsiNf9GitRWzmY4WmPFxnG2xKvzS_dncjbTFOD7yXr36iyjR8DJJso785xg0hqlbyTWq5P"/>
+<div class="absolute top-0 right-0 bg-primary px-md py-xs font-caption text-caption text-on-primary">סייל</div>
+<button class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary py-md font-label-eyebrow text-label-eyebrow translate-y-full group-hover:translate-y-0 transition-transform">
+                            הוספה לסל
+                        </button>
+</div>
+<div class="mt-md text-right">
+<div class="flex justify-between items-start">
+<div class="flex flex-col items-end">
+<span class="font-h3-product text-h3-product text-primary-container">₪189</span>
+<span class="font-caption text-caption text-secondary line-through">₪249</span>
+</div>
+<h3 class="font-h3-product text-h3-product text-secondary uppercase tracking-tight">חגורת עור בעבודת יד</h3>
+</div>
+<p class="font-caption text-caption text-text-muted mt-xs">מרחק ממך: 0.8 ק״מ</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="flex flex-col group">
+<div class="relative aspect-[3/4] bg-surface-stone overflow-hidden border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover" data-alt="A pair of high-waisted tailored trousers in a warm sand color, neatly folded on a minimalist wooden bench. The background is a clean plaster wall with sharp geometric shadows from a nearby window. The lighting is bright and crisp, showcasing the elegant silhouette and editorial brutalist style of the Mediterranean-inspired design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7jCb-IF23v4g0oaXrIwcqTFH3hP9C10bcuuM_o5JOG0TxAd6348V9Jqgeo9DXKWzF7K_DCM3VsJUhtxjnN5PrZlliju7-JElUy9Ey_gTCZzN46Ie-ggxk_rCkD-XQvRX9xOmkTYMn-BxksapKU0eZ4uWsearX3JGqgvr_iGHuDGBypJ_NNBm0YCh6IuoCp9-gmyYxsvts-OIbhU5_1t9htwIYyjyhxxDXnOfu_iDmVI8_amd5jvaBkW4FDOQKdnSheZcgCfVRvqda"/>
+<button class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary py-md font-label-eyebrow text-label-eyebrow translate-y-full group-hover:translate-y-0 transition-transform">
+                            הוספה לסל
+                        </button>
+</div>
+<div class="mt-md text-right">
+<div class="flex justify-between items-start">
+<span class="font-h3-product text-h3-product text-primary">₪420</span>
+<h3 class="font-h3-product text-h3-product text-secondary uppercase tracking-tight">מכנסיים מחויטים</h3>
+</div>
+<p class="font-caption text-caption text-text-muted mt-xs">מרחק ממך: 5.1 ק״מ</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="flex flex-col group">
+<div class="relative aspect-[3/4] bg-surface-stone overflow-hidden border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover" data-alt="Stylized editorial product shot of luxury leather loafers in a deep pomegranate red, positioned on a slab of rough-hewn stone. The lighting is dramatic and directional, creating deep blacks and vibrant highlights. The setting reflects a high-end Mediterranean boutique aesthetic, with a color palette of wood, saffron, and cream." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChVZAANec5TQmM4AH9z5xCFnCL5vsuY8YnU5k61tgw8PYKIIDypKw8VZhgjXEJioOR2xtZiRlKEdsDZZYU_yt3cjRgAXEipRZ7EUYzxstS0kSrXjjAyRZRSJ8RSs2zvQdfm36CISRZzTIBg_T2aIsakkpHRz4UgavUg6D8shkbPSDmogz9IlSoCOjhmYOxpC8Jz6_Tyjz3e9rCihbUc12yzxyzqcM4jvBqXVHY0O85_QYEyPo6yQpuwlu3HnBphjzlIETiMpUMRqIy"/>
+<div class="absolute top-0 right-0 bg-accent-saffron px-md py-xs font-caption text-caption text-on-primary">אחרון במלאי</div>
+<button class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary py-md font-label-eyebrow text-label-eyebrow translate-y-full group-hover:translate-y-0 transition-transform">
+                            הוספה לסל
+                        </button>
+</div>
+<div class="mt-md text-right">
+<div class="flex justify-between items-start">
+<span class="font-h3-product text-h3-product text-primary">₪580</span>
+<h3 class="font-h3-product text-h3-product text-secondary uppercase tracking-tight">נעלי לופרס קלאסיות</h3>
+</div>
+<p class="font-caption text-caption text-text-muted mt-xs">מרחק ממך: 1.2 ק״מ</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / Footer-ish Section -->
+<section class="bg-secondary text-on-secondary py-5xl">
+<div class="max-w-[800px] mx-auto text-center px-xl">
+<h2 class="font-h2-section text-h2-section mb-md">הישארו מעודכנים</h2>
+<p class="font-body-large text-body-large mb-2xl text-secondary-fixed">הירשמו לניוזלטר שלנו וקבלו עדכונים על פריטי וינטג' חדשים לפני כולם</p>
+<form class="flex flex-col md:flex-row gap-0">
+<button class="bg-primary text-on-primary px-3xl py-md font-label-eyebrow text-label-eyebrow hover:bg-primary-container">הרשמה</button>
+<input class="flex-grow bg-background-cream text-on-surface border-none p-md text-right focus:ring-2 focus:ring-accent-saffron outline-none" placeholder="האימייל שלך" type="email"/>
+</form>
+</div>
+</section>
+</main>
+<!-- NavigationDrawer (Hidden by default, used for mobile/menu logic) -->
+<aside class="hidden h-full w-80 fixed right-0 top-0 z-[60] bg-background-cream text-secondary border-l-[1.5px] border-secondary flex flex-col h-full text-right shadow-2xl">
+<div class="p-xl border-b border-secondary flex justify-between items-center">
+<span class="material-symbols-outlined cursor-pointer">close</span>
+<div class="font-h2-section text-h2-section text-primary">תפריט</div>
+</div>
+<div class="p-xl space-y-xl">
+<a class="flex items-center justify-end gap-md font-body-large text-body-large text-secondary hover:bg-surface-stone p-sm" href="#">
+<span>הפרופיל שלי</span>
+<span class="material-symbols-outlined">person</span>
+</a>
+<a class="flex items-center justify-end gap-md font-body-large text-body-large text-secondary hover:bg-surface-stone p-sm" href="#">
+<span>ההזמנות שלי</span>
+<span class="material-symbols-outlined">package_2</span>
+</a>
+<a class="flex items-center justify-end gap-md font-body-large text-body-large text-secondary hover:bg-surface-stone p-sm" href="#">
+<span>פריטים שאהבתי</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</a>
+<a class="flex items-center justify-end gap-md font-body-large text-body-large text-secondary hover:bg-surface-stone p-sm" href="#">
+<span>הגדרות</span>
+<span class="material-symbols-outlined">settings</span>
+</a>
+</div>
+</aside>
+<footer class="bg-primary text-on-primary py-3xl border-t border-accent-saffron/20">
+<div class="max-w-[1400px] mx-auto px-xl grid grid-cols-1 md:grid-cols-3 gap-3xl text-right">
+<div>
+<div class="font-h1-hero text-h3-product text-surface-container-lowest tracking-tight mb-md">
+                    LOVEsh<span class="text-accent-saffron">\</span>et
+                </div>
+<p class="font-caption text-caption opacity-70">
+                    חנות הוינטג' והאופנה המובילה בישראל. אוצרות שנאספו באהבה מכל רחבי העולם.
+                </p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-eyebrow text-label-eyebrow mb-sm">שירות לקוחות</h4>
+<a class="font-caption text-caption hover:text-accent-saffron" href="#">משלוחים והחזרות</a>
+<a class="font-caption text-caption hover:text-accent-saffron" href="#">צרו קשר</a>
+<a class="font-caption text-caption hover:text-accent-saffron" href="#">שאלות נפוצות</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-eyebrow text-label-eyebrow mb-sm">עקבו אחרינו</h4>
+<div class="flex justify-end gap-md">
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-saffron">photo_camera</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-saffron">share</span>
+</div>
+</div>
+</div>
+<div class="text-center mt-3xl pt-xl border-t border-surface-container-low/10">
+<p class="font-caption text-caption opacity-50">© 2024 LOVEsh\et. כל הזכויות שמורות.</p>
+</div>
+</footer>
+</body></html>

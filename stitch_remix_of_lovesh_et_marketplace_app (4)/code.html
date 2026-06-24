@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&amp;family=Assistant:wght@200;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#fee9e8",
+                        "secondary-fixed-dim": "#e2bfb2",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#004a46",
+                        "surface-tint": "#a23c40",
+                        "inverse-primary": "#ffb3b2",
+                        "error-container": "#ffdad6",
+                        "complementary-olive": "#5A6328",
+                        "secondary-container": "#fcd8ca",
+                        "tertiary-fixed-dim": "#96d2cc",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#0a4f4b",
+                        "on-primary-fixed-variant": "#83242a",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#785d52",
+                        "primary": "#5d0612",
+                        "surface": "#fff8f7",
+                        "primary-container": "#7c1f26",
+                        "surface-variant": "#f2dedd",
+                        "surface-container-low": "#fff0ef",
+                        "surface-container-highest": "#f2dedd",
+                        "secondary": "#73584e",
+                        "on-tertiary-container": "#7db9b3",
+                        "on-secondary-fixed": "#2a170f",
+                        "outline-variant": "#ddc0bf",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#ffdbcd",
+                        "background": "#fff8f7",
+                        "on-surface-variant": "#564241",
+                        "on-primary-container": "#ff8d8e",
+                        "on-secondary-fixed-variant": "#5a4137",
+                        "text-muted": "#6B5544",
+                        "on-error": "#ffffff",
+                        "outline": "#897171",
+                        "tertiary-fixed": "#b1eee8",
+                        "surface-stone": "#B5B0A6",
+                        "inverse-on-surface": "#ffedec",
+                        "background-cream": "#ECE3D0",
+                        "on-surface": "#231919",
+                        "surface-container-high": "#f8e4e3",
+                        "primary-fixed-dim": "#ffb3b2",
+                        "surface-bright": "#fff8f7",
+                        "error-red": "#C8243C",
+                        "tertiary": "#00322f",
+                        "accent-saffron": "#C8932B",
+                        "primary-fixed": "#ffdad9",
+                        "on-background": "#231919",
+                        "on-tertiary-fixed": "#00201e",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#410008",
+                        "inverse-surface": "#392e2d",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#e9d6d5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "4xl": "64px",
+                        "xl": "24px",
+                        "md": "12px",
+                        "lg": "16px",
+                        "sm": "8px",
+                        "2xl": "32px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "5xl": "96px",
+                        "3xl": "48px"
+                    },
+                    "fontFamily": {
+                        "h1-hero": ["Karantina"],
+                        "h3-product": ["Karantina"],
+                        "body-main": ["Assistant"],
+                        "caption": ["Assistant"],
+                        "h2-section": ["Karantina"],
+                        "body-large": ["Assistant"],
+                        "label-eyebrow": ["Assistant"]
+                    },
+                    "fontSize": {
+                        "h1-hero": ["78px", {"lineHeight": "0.9", "fontWeight": "700"}],
+                        "h3-product": ["22px", {"lineHeight": "1.05", "fontWeight": "700"}],
+                        "body-main": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "caption": ["11px", {"lineHeight": "1.5", "letterSpacing": "0.6px", "fontWeight": "500"}],
+                        "h2-section": ["42px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                        "body-large": ["16px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                        "label-eyebrow": ["11px", {"lineHeight": "1.5", "letterSpacing": "2.5px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff8f7;
+            font-family: 'Assistant', sans-serif;
+        }
+        .editorial-shadow {
+            box-shadow: 0 0 0 0 transparent; /* Strict flat design */
+        }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-primary flex flex-row-reverse justify-between items-center px-lg h-16 w-full flat no shadows">
+<div class="flex items-center gap-lg">
+<span class="material-symbols-outlined text-surface-container-lowest hover:opacity-90 transition-opacity duration-200 cursor-pointer" data-icon="shopping_bag">shopping_bag</span>
+<span class="material-symbols-outlined text-surface-container-lowest hover:opacity-90 transition-opacity duration-200 cursor-pointer" data-icon="search">search</span>
+</div>
+<div class="font-h1-hero text-h1-hero text-surface-container-lowest tracking-tight">
+            LOVEsh<span class="text-accent-saffron">\</span>et
+        </div>
+<div class="flex items-center gap-lg">
+<span class="material-symbols-outlined text-surface-container-lowest hover:opacity-90 transition-opacity duration-200 cursor-pointer" data-icon="menu">menu</span>
+</div>
+</header>
+<main class="pt-24 pb-32 max-w-[1200px] mx-auto px-lg">
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4xl">
+<!-- Right Column: Product Gallery -->
+<div class="md:col-span-7 flex flex-row-reverse gap-md">
+<!-- Thumbnails -->
+<div class="flex flex-col gap-md w-24">
+<div class="aspect-[3/4] bg-surface-stone border-[1.5px] border-secondary cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A close-up fashion photography shot of a high-end linen shirt detail. The setting is a sun-drenched Mediterranean villa with warm, natural light casting sharp architectural shadows. The color palette features deep pomegranate reds and warm cream tones, reflecting a sophisticated editorial boutique aesthetic. High contrast and flat lighting emphasize the textile's premium texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1JQAACdzfDAdU2LQJ_mheA-g0vbgcsA5aJGJkLvaRXozKxxbUTvC8BYAn-4EJyDDZnFeyemeEJeDXD1ZFzD00mPHtrS6E1crosSWZnUST7LAQDKRvvw1OUxLgZv-AVQipR5BlnNLWJSY45i4unDRLXU325twUxBI6mgM6IR7sEU6kS-3mE08mpBZmC97AOFH5HWlHdVm0Y1vchbo4mAfbqiTS5ybhl9UGxDsXVH4TqGyz5HziUBMazG8voojh0dCKnelyimrr-NPX"/>
+</div>
+<div class="aspect-[3/4] bg-surface-stone cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Fashion editorial shot of a woman wearing a minimalist Mediterranean-style dress in a neutral stone color. The background is a textured plaster wall in a warm cream hue. The lighting is direct and bright, characteristic of a midday sun in Israel, creating sharp brutalist lines and zero soft shadows. The overall mood is upscale, clean, and intentional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCsWLHmy_qJm9lpK1NfIFM3xSlN5JpU-pHZ8hWqssyXdZM3gQ9TsmL0XPNTFhn7kRoSSTIifoQ_T8Dbz8NXYf2N8eVtw_yGSc71_edYShkbVOcT1ZU6g38dqZzk5XvAx0j21ed-uqhGZeL97yuPXCYf3qlMzbJvFPIYY-05jm5SJdw-xgqz9HkV_C5bQZ26h25JgDNbWMcNLTjW6YFQB3rl2Zn_y3sFKELWGQGiQc1FQ17Kbzlmk9HTkxMwX8YIAvjAy9D9CSIIxHd"/>
+</div>
+<div class="aspect-[3/4] bg-surface-stone cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="A striking minimalist product photo of high-fashion accessories displayed on a flat stone surface. The image uses a high-contrast palette of pomegranate red and dark wood tones. Lighting is sharp and editorial, avoiding any gradients or soft blurs to maintain the brutalist design language. The composition is balanced and elegant, fitting for a premium Israeli fashion label." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPQgA6oEqgxaN6mh9-cRbFIwjPityg5JhzMyLPp4zkEiiFR664Wttm3kuv9vxBzK31H_OA9UWHUjLKl_g-NQD2ixt11Nge_LeHQI2tbgbsMCgPszYqZ0C1NyFa5ix6DtlPwo4vROWj3Fdq3Yf4H0-sHoa7TaOWjSChy-YOBeIe8sgk682ZwlQke9PRppNbS-FsAtKUmz52X5tBSJ7vmhn2aMmwafygAkZ8YbG3bckrJu1VfBU0B8wS4eOqL-u73qwGBkZYuIoeHEJS"/>
+</div>
+</div>
+<!-- Main Image -->
+<div class="flex-1 aspect-[3/4] bg-surface-stone overflow-hidden border-[1.5px] border-secondary">
+<img class="w-full h-full object-cover" data-alt="A full-length fashion editorial shot of a model in a stunning pomegranate red linen ensemble. The setting is a minimalist courtyard with brutalist concrete elements and warm Mediterranean stone. The lighting is bright and direct, creating high-contrast highlights and deep, defined shadows. The color story is dominated by red, cream, and wood, delivering a sophisticated and grounded visual identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL4boAPNAnzfOIwANrnNByc9zCqniMfS7LLHIMICa3pqrIhhbUexLvdGJIO49sEjLLSxwfb0zonX7T0GelcAUI82GThOttQLTnHyPuGpgQpgh_-WBaaGVCI2QXZMJYnreeF_h3vFf6anA8-dNSQPo3xsxbico7_k6vQNV6zjEGLeU6qBSVNMUQ6PmCTlD9fYJxmB74YbtuXLTX68SG9i9_DUIVwvtLT3Y5-zWwQTDnlHuzb8VDr3WiNPle0CiRQHtw9ncWFQRFF--H"/>
+</div>
+</div>
+<!-- Left Column: Product Info -->
+<div class="md:col-span-5 flex flex-col">
+<div class="sticky top-24 flex flex-col gap-xl">
+<!-- Title and Price -->
+<div class="flex flex-col gap-sm">
+<span class="font-label-eyebrow text-label-eyebrow text-secondary uppercase tracking-[2.5px]">קולקציית קיץ 2024</span>
+<h1 class="font-h2-section text-h2-section text-on-surface leading-none">חולצת פשתן "טרה" - אדום רימון</h1>
+<div class="flex items-baseline gap-md">
+<span class="font-h2-section text-h2-section text-primary">₪420</span>
+<span class="font-body-main text-body-main text-secondary line-through opacity-60">₪580</span>
+</div>
+</div>
+<!-- Metadata -->
+<div class="grid grid-cols-2 border-y-[1.5px] border-secondary py-lg gap-lg">
+<div class="flex flex-col">
+<span class="font-label-eyebrow text-label-eyebrow text-secondary">מידה</span>
+<span class="font-body-large text-body-large font-bold">M (38-40)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-eyebrow text-label-eyebrow text-secondary">מצב הפריט</span>
+<span class="font-body-large text-body-large font-bold">חדש עם תווית</span>
+</div>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-md">
+<h3 class="font-label-eyebrow text-label-eyebrow text-on-surface">תיאור המוצר</h3>
+<p class="font-body-large text-body-large text-on-surface-variant">
+                            חולצת פשתן יוקרתית בגזרה נינוחה, עשויה מ-100% פשתן טבעי שנבחר בקפידה. הגוון האדום-רימון מעניק נוכחות חזקה אך מעודנת, מושלמת לערבי הקיץ הישראלי. פריט על-זמני שמשלב בין נוחות מקסימלית לבין אסתטיקה מוקפדת.
+                        </p>
+</div>
+<!-- Seller Card -->
+<div class="bg-background-cream p-lg border-[1.5px] border-secondary flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-stone border-[1.5px] border-secondary">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a stylish young woman with a warm and sophisticated appearance. She is set against a minimalist Mediterranean background with soft cream tones. The lighting is flattering and high-key, conveying trust and approachability. The style is aligned with an editorial fashion boutique, using a warm and grounded color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPajqoJxEG7vn3eLI4PcqaSSzIfhWgtDvP2Df02jjdL0-Qpei89snK2tcLSLLNMTWDMpXXmaaLwMq8zU1HWLLwLjOKSC2CGES0HLneEJrK5Rr7DpQXSaa1y1g5zytbB0dztAdxyFAN_Oz4uWw0VbjF7Iot7LgfbCHg5ZwMVQf7rAZVF8VtZk-ywE_KPTyBB0YBFPSzH-HSs1aUAvgCS4UfA1f7mcXr4nyv608GAp_Pt12Q5nG6WoKQp6BzQwUs3rocY-M-dIWTaD8l"/>
+</div>
+<div class="flex flex-col">
+<span class="font-body-large text-body-large font-bold">נועה לוין</span>
+<span class="font-caption text-caption text-secondary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+                                    תל אביב - 2.4 ק"מ ממך
+                                </span>
+</div>
+</div>
+<a class="font-label-eyebrow text-label-eyebrow text-on-surface underline decoration-[1.5px] underline-offset-4 hover:text-primary transition-colors" href="#">פרופיל המוכרת</a>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col gap-md">
+<button class="bg-primary text-on-primary py-[13px] px-[26px] font-label-eyebrow text-label-eyebrow hover:opacity-90 transition-opacity active:scale-[0.98]">קנייה מאובטחת</button>
+<button class="border-[1.5px] border-secondary text-secondary py-[13px] px-[26px] font-label-eyebrow text-label-eyebrow hover:bg-secondary hover:text-on-secondary transition-all active:scale-[0.98] flex items-center justify-center gap-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="chat_bubble">chat_bubble</span>
+                            שליחת הודעה למוכרת
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Similar Items Section -->
+<section class="mt-5xl border-t-[1.5px] border-secondary pt-3xl">
+<h2 class="font-h2-section text-h2-section mb-3xl text-right">פריטים נוספים שאהבנו</h2>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-xl">
+<!-- Product Card 1 -->
+<div class="flex flex-col gap-md group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-stone overflow-hidden relative border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<div class="absolute top-0 right-0 bg-accent-saffron text-on-surface px-md py-xs font-label-eyebrow text-label-eyebrow z-10">NEW</div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist editorial product shot of a light beige summer dress. The dress is displayed in a sunlit architectural space with sharp brutalist shadows and warm Mediterranean textures. The lighting is bright and clear, highlighting the high-quality fabric. The overall mood is sophisticated, clean, and perfectly aligned with a premium Israeli fashion brand's aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByQbu7Zr8D__DMehsYjGKIiHwuJy3UMUM60fAOgXpRvwrmvGYnwukGVcykB7Okef6VgUwb8bZDQ03MWU6vLdvDZDWW__Nh_f8wIdNUuiNn-APf7ZvQL0R7SwPgo090IQhDtBbRWRVI4jN3qnulFycWs8x2xOKfK9kQS1LdJRtr6isWgMfW7AkHsXkhqNrLdWrv12svoMGGjldtFzAt8NkSmlOYNKPDLlGcb1Nl2HpXH7wZToeJI8PD8LeQjyhkcL8gyUKAstJPlXL3"/>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3-product text-h3-product text-on-surface">שמלת קיץ "סנד"</h3>
+<span class="font-h3-product text-h3-product text-primary">₪380</span>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="flex flex-col gap-md group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-stone overflow-hidden relative border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Fashion-forward editorial shot of a tailored vest in a dark wood tone. The background is a clean, off-white plaster wall with sharp shadows from a nearby palm tree. The lighting is direct and high-contrast, characteristic of the Mediterranean sun. The color palette is earthy and grounded, creating a sense of sophisticated minimalism and artisanal quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_HmPv6h8MNU9UWT-8Tx9TNCttj24_gzD21DqCuw4RDHkZyTfYUo5EmVIAnsDdysSqm-T0OxbMPiN_Vqr7Mw_bqPyxVfnwGv38W0pcqYq4qn-ePxfiGIFVVhO5jiHB_uLUAt7eTrjPPvVXqvKB5OQofJYWIwRdQNvluYG-Fh7j4C2IG6Kny1N6ToNPFIRG3BZBtrIybBuayaLuiKGSj1zhrpUE7cqbSozeAEFr-IJCm1wm0-nKVOUbXIS20DYxKQ4xbXmKRF6RzouX"/>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3-product text-h3-product text-on-surface">וסט מחוייט חום</h3>
+<span class="font-h3-product text-h3-product text-primary">₪290</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="flex flex-col gap-md group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-stone overflow-hidden relative border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<div class="absolute top-0 right-0 bg-primary text-on-primary px-md py-xs font-label-eyebrow text-label-eyebrow z-10">SALE</div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Editorial fashion photography featuring a pleated skirt in a soft cream color. The image is set in a brutalist architectural environment with sharp concrete lines and bright, direct sunlight. The high-contrast lighting emphasizes the garment's texture and silhouette. The color story remains consistent with pomegranate accents and neutral stone tones for a unified brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFq1eh5rtCh4YBr3HHXyLo8o05pC6UXnrCpPruO0HUo2AGQv4L7XRHD20w60gr48-XLHfRajVqeht8smOi40C-f2BsMdvRGHDYug5u_2J-WVEz9vqvRaNbz0DXERvYFD9ZibLQeqP7vIoAuz-EBSmWfe2zeFCZ7yzDrc7d0NvlkcY6O3NUNvpPNnbwvoMY58wUsfRlpwa4JE1fKaUqYW21PTJA2Zc7gd0C1BLE012F1cYxcmEgSRgLxHxb--vOxBFZeCX-OCotCCws"/>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3-product text-h3-product text-on-surface">חצאית קפלים קרם</h3>
+<div class="flex gap-sm">
+<span class="font-h3-product text-h3-product text-primary">₪220</span>
+<span class="font-h3-product text-h3-product text-secondary line-through opacity-50">₪350</span>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="flex flex-col gap-md group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-stone overflow-hidden relative border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean, minimalist fashion product photo of a linen blazer in a soft olive tone. The lighting is sharp and architectural, casting direct shadows on a neutral background. The aesthetic is strictly Mediterranean-editorial, avoiding any soft effects or gradients. The sophisticated color palette of earth tones and high-contrast lighting reinforces the premium, curated nature of the brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOMbR4tm-KKAWoIAJaljhtpEi5hmNmrqFKni2zoyjkoMVBGVyd8MYf0yI_S551kRKgEXoOMfKFLtAfShJ509y0UHI0IJfjDGqF5xfCCfSY9O8v7ib_IF6708ATxF96sfb0bykkIZ5zmp8hcJCmsuqjExsMI7xC-Y1v-lDuLQadc6L4Zbl-zdXO3gsCknrm1gNKwmi9HP8FcW1bLJdXa1gynbgllQg6MAsE_mjKhIp8d4DWamTMsemfW57ZhG6zv_zwnB_1e_KP69WN"/>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3-product text-h3-product text-on-surface">ז'קט פשתן ירוק זית</h3>
+<span class="font-h3-product text-h3-product text-primary">₪540</span>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="flex flex-col gap-md group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-stone overflow-hidden relative border-[1.5px] border-transparent group-hover:border-secondary transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Editorial lifestyle photography of leather accessories in a dark wood finish. The scene is illuminated by warm, direct Mediterranean sunlight, creating high-contrast highlights and deep shadows. The composition is clean and minimalist, focusing on the artisanal quality and texture. The color palette of pomegranate and cream provides a sophisticated, grounded aesthetic for a modern Israeli boutique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1PE17UyI0r7MzB38myaKswxREYZqITfT3lqEWksTC0_5jYdxHd4-9109eOmfIk6DCQC82HmgUaY2odLiTgwZr3yubW-Vy-tDtrZ3K4bKflYhNC54_XwsHvwSflnqFBVsSXqhMlmktn6vDzxD-bm9PG9vGNiAAwzC__xhZa9wIPm7Gnq6Vg9shQhXdK5RMv8qkzWapdhU0PCCaktXXDO56p1etblnR5mbFLPmjfrGAVd6PyIDxPnyK9nDhNdkEaO8xf8qXpFj3AoC_"/>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3-product text-h3-product text-on-surface">תיק עור בעבודת יד</h3>
+<span class="font-h3-product text-h3-product text-primary">₪620</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Hidden on desktop as per request for TopAppBar layout, but included for system integrity) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface border-t-[1.5px] border-secondary flex flex-row-reverse justify-around items-center h-20 px-4 pb-safe w-full">
+<div class="flex flex-col items-center justify-center text-primary font-bold">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-eyebrow text-label-eyebrow">בית</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-label-eyebrow text-label-eyebrow">חיפוש</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="add_box">add_box</span>
+<span class="font-label-eyebrow text-label-eyebrow">העלאה</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-label-eyebrow text-label-eyebrow">מועדפים</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-eyebrow text-label-eyebrow">פרופיל</span>
+</div>
+</nav>
+<footer class="bg-primary text-on-primary py-4xl px-lg border-t-[1.5px] border-accent-saffron">
+<div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-3xl">
+<div class="flex flex-col gap-md">
+<div class="font-h1-hero text-h1-hero text-surface-container-lowest tracking-tight">
+                    LOVEsh<span class="text-accent-saffron">\</span>et
+                </div>
+<p class="font-body-main text-body-main opacity-80">
+                    בוטיק יד שנייה לאוצרוּת ישראלית מוקפדת. אנחנו מאמינים באופנה מודעת, איכותית ועל-זמנית.
+                </p>
+</div>
+<div class="flex flex-col gap-md">
+<h4 class="font-label-eyebrow text-label-eyebrow uppercase tracking-widest border-b-[1px] border-accent-saffron pb-sm">קישורים מהירים</h4>
+<nav class="flex flex-col gap-sm">
+<a class="font-body-main text-body-main hover:text-accent-saffron transition-colors" href="#">אודותינו</a>
+<a class="font-body-main text-body-main hover:text-accent-saffron transition-colors" href="#">מדיניות משלוחים</a>
+<a class="font-body-main text-body-main hover:text-accent-saffron transition-colors" href="#">תקנון האתר</a>
+<a class="font-body-main text-body-main hover:text-accent-saffron transition-colors" href="#">צור קשר</a>
+</nav>
+</div>
+<div class="flex flex-col gap-md">
+<h4 class="font-label-eyebrow text-label-eyebrow uppercase tracking-widest border-b-[1px] border-accent-saffron pb-sm">הצטרפו לקהילה</h4>
+<div class="flex gap-lg">
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-saffron transition-colors" data-icon="facebook">social_leaderboard</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-saffron transition-colors" data-icon="photo_camera">photo_camera</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-saffron transition-colors" data-icon="alternate_email">alternate_email</span>
+</div>
+<div class="mt-md">
+<span class="font-caption text-caption opacity-60">© 2024 LOVEsh\et - כל הזכויות שמורות.</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,22 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-top: var(--border-thin) solid var(--color-surface-variant);
+  border-bottom: var(--border-thin) solid var(--color-surface-variant);
+}
+
+.checkbox__input {
+  width: var(--space-xl);
+  height: var(--space-xl);
+  accent-color: var(--color-primary);
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.checkbox__label {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-on-background);
+}

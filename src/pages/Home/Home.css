@@ -1,0 +1,30 @@
+.home {
+  padding-top: var(--header-height);
+  /* leave room for the fixed mobile bottom nav */
+  padding-bottom: var(--bottom-nav-height);
+}
+
+.home__section {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+.home__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+}
+
+@media (min-width: 768px) {
+  .home {
+    padding-bottom: 0;
+  }
+
+  .home__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    margin-top: var(--space-3xl);
+  }
+}

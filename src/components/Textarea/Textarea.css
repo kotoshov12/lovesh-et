@@ -1,0 +1,22 @@
+.textarea {
+  width: 100%;
+  background: var(--color-background);
+  border: var(--border-thin) solid var(--color-secondary);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-primary);
+  resize: none;
+}
+
+.textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.textarea:focus {
+  outline: none;
+  border-width: var(--border-thick);
+  border-color: var(--color-primary);
+}
