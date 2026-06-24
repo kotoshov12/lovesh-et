@@ -5,6 +5,7 @@ import Cart from './pages/Cart/Cart.jsx'
 import Checkout from './pages/Checkout/Checkout.jsx'
 import Support from './pages/Support/Support.jsx'
 import ProductDetail from './pages/ProductDetail/ProductDetail.jsx'
+import SellerProfile from './pages/SellerProfile/SellerProfile.jsx'
 import UploadItem from './pages/UploadItem/UploadItem.jsx'
 import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
@@ -22,6 +23,7 @@ function App() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/support" element={<Support />} />
       <Route path="/product/:id" element={<ProductDetail />} />
+      <Route path="/seller/:id" element={<SellerProfile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route

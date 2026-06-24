@@ -1,17 +1,19 @@
+import { Link } from 'react-router-dom'
 import Icon from '../Icon/Icon.jsx'
 import './SellerCard.css'
 
 /**
  * Seller summary. `boxed` renders the bordered card style (desktop);
- * default is the borderless row (mobile detail).
+ * default is the borderless row (mobile detail). Links to the seller's public
+ * profile when the seller has an id.
  */
 function SellerCard({ seller, boxed = false }) {
-  const { name, avatar, location, distance } = seller
+  const { id, name, avatar, location, distance } = seller
   return (
     <div className={`seller ${boxed ? 'seller--boxed' : ''}`}>
       <div className="seller__identity">
         <div className="seller__avatar">
-          <img src={avatar} alt={name} />
+          {avatar ? <img src={avatar} alt={name} /> : <Icon name="account_circle" size="lg" />}
         </div>
         <div className="seller__meta">
           <span className="seller__name">{name}</span>
@@ -21,9 +23,11 @@ function SellerCard({ seller, boxed = false }) {
           </span>
         </div>
       </div>
-      <a href="#" className="seller__link">
-        פרופיל המוכרת ←
-      </a>
+      {id && (
+        <Link to={`/seller/${id}`} className="seller__link">
+          פרופיל המוכרת ←
+        </Link>
+      )}
     </div>
   )
 }

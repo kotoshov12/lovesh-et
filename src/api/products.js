@@ -31,6 +31,7 @@ function mapProduct(row) {
     ownerId: row.user_id ?? null,
     seller: row.seller
       ? {
+          id: row.seller.id,
           name: row.seller.name,
           avatar: row.seller.avatar,
           location: row.seller.location,
@@ -63,6 +64,28 @@ export async function fetchProduct(id) {
     .maybeSingle()
   if (error) throw error
   return mapProduct(data)
+}
+
+/** A seller's public profile (sellers table row). */
+export async function fetchSeller(id) {
+  const { data, error } = await supabase
+    .from('sellers')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle()
+  if (error) throw error
+  return data
+}
+
+/** A seller's available products (for their public profile). */
+export async function fetchProductsBySeller(id) {
+  const { data, error } = await supabase
+    .from('products')
+    .select(SELECT_WITH_SELLER)
+    .eq('seller_id', id)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data.map(mapProduct).filter((p) => !p.sold)
 }
 
 /** Mark one of the current user's products as sold. */
