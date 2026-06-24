@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
 import HeroBanner from '../../components/HeroBanner/HeroBanner.jsx'
@@ -13,6 +14,7 @@ import { heroSplit } from '../../data/content.js'
 import './Home.css'
 
 function Home() {
+  const navigate = useNavigate()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [products, setProducts] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | error
@@ -47,6 +49,7 @@ function Home() {
             eyebrow="POPULAR ITEMS"
             title="החדש בחנות"
             linkText="צפו בכל הפריטים"
+            onLink={() => navigate('/shop')}
           />
 
           {status === 'loading' && <StateMessage>טוען פריטים…</StateMessage>}

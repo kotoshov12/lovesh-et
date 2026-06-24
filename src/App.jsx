@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home.jsx'
+import Shop from './pages/Shop/Shop.jsx'
 import ProductDetail from './pages/ProductDetail/ProductDetail.jsx'
 import UploadItem from './pages/UploadItem/UploadItem.jsx'
 import Login from './pages/Login/Login.jsx'
@@ -11,6 +12,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/shop" element={<Shop />} />
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

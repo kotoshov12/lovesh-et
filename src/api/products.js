@@ -18,6 +18,7 @@ function mapProduct(row) {
     badge: row.badge_text ? { text: row.badge_text, variant: row.badge_variant } : undefined,
     distance: row.distance,
     caption: row.caption,
+    category: row.category,
     brand: row.brand,
     size: row.size,
     condition: row.condition,
@@ -109,6 +110,7 @@ export async function createProduct(input) {
   const row = {
     user_id: user?.id ?? null,
     name: input.name,
+    category: input.category || null,
     price: input.price ? Number(input.price) : 0,
     original_price: input.originalPrice ? Number(input.originalPrice) : null,
     brand: input.brand || null,

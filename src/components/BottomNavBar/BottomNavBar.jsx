@@ -19,9 +19,13 @@ function BottomNavBar() {
         {isActive('/') && <span className="bottom-nav__dot" />}
       </Link>
 
-      <button type="button" className="bottom-nav__item" aria-label="חיפוש">
-        <Icon name="search" />
-      </button>
+      <Link
+        to="/shop"
+        className={`bottom-nav__item ${isActive('/shop') ? 'is-active' : ''}`}
+        aria-label="חיפוש"
+      >
+        <Icon name="search" filled={isActive('/shop')} />
+      </Link>
 
       <Link to="/sell" className="bottom-nav__fab" aria-label="העלאת פריט">
         <Icon name="add" size="xl" />

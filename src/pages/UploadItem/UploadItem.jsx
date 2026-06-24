@@ -13,9 +13,9 @@ import Button from '../../components/Button/Button.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { createProduct, uploadProductImage } from '../../api/products.js'
+import { CATEGORIES } from '../../data/categories.js'
 import './UploadItem.css'
 
-const CATEGORIES = ['שמלות', 'חולצות', 'מכנסיים', 'חצאיות', 'נעליים', 'אקססוריז']
 const SIZES = ['בחרי מידה', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
 const CONDITIONS = ['חדש עם תווית', 'חדש ללא תווית', 'כמו חדש', 'מצב מעולה', 'משומש במצב טוב']
 
@@ -68,6 +68,7 @@ function UploadItem() {
 
       const created = await createProduct({
         name: form.name.trim(),
+        category: form.category,
         price: form.price,
         brand: form.brand,
         size: form.size === 'בחרי מידה' ? null : form.size,

@@ -3,14 +3,12 @@ import Logo from '../Logo/Logo.jsx'
 import Icon from '../Icon/Icon.jsx'
 import IconButton from '../IconButton/IconButton.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
+import { NAV_CATEGORIES } from '../../data/categories.js'
 import './Header.css'
 
 const NAV_LINKS = [
-  { label: 'סייל', accent: true },
-  { label: 'חולצות' },
-  { label: 'מכנסיים' },
-  { label: 'נעליים' },
-  { label: 'אקססוריז' },
+  { label: 'סייל', to: '/shop?sale=1', accent: true },
+  ...NAV_CATEGORIES.map((c) => ({ label: c, to: `/shop?category=${encodeURIComponent(c)}` })),
 ]
 
 /**
@@ -32,18 +30,20 @@ function Header({ onMenu }) {
 
       <nav className="header__nav">
         {NAV_LINKS.map((link) => (
-          <a
+          <Link
             key={link.label}
-            href="#"
+            to={link.to}
             className={`header__link ${link.accent ? 'header__link--accent' : ''}`}
           >
             {link.label}
-          </a>
+          </Link>
         ))}
       </nav>
 
       <div className="header__group header__actions">
-        <IconButton name="search" label="חיפוש" />
+        <Link to="/shop" className="header__action" aria-label="חיפוש">
+          <Icon name="search" />
+        </Link>
         <Link to="/sell" className="header__action" aria-label="העלאת פריט">
           <Icon name="add" />
         </Link>
