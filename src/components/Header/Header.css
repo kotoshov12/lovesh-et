@@ -28,6 +28,19 @@
   gap: var(--space-lg);
 }
 
+/* Navigational icon entries (sell, account) — links, not buttons */
+.header__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+  transition: opacity 0.2s ease;
+}
+
+.header__action:hover {
+  opacity: 0.85;
+}
+
 /* Desktop nav links — hidden on mobile */
 .header__nav {
   display: none;
