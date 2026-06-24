@@ -1,19 +1,29 @@
+import { Link } from 'react-router-dom'
 import Icon from '../Icon/Icon.jsx'
 import IconButton from '../IconButton/IconButton.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './NavigationDrawer.css'
 
 const MENU = [
-  { label: 'הפרופיל שלי', icon: 'person' },
-  { label: 'ההזמנות שלי', icon: 'package_2' },
-  { label: 'פריטים שאהבתי', icon: 'favorite' },
-  { label: 'הגדרות', icon: 'settings' },
+  { label: 'הפרופיל שלי', icon: 'person', to: '#' },
+  { label: 'ההזמנות שלי', icon: 'package_2', to: '#' },
+  { label: 'פריטים שאהבתי', icon: 'favorite', to: '#' },
+  { label: 'הגדרות', icon: 'settings', to: '#' },
 ]
 
 /**
  * Slide-in side menu. Controlled via `open` / `onClose`.
- * @param {object} [user] - { name, avatar }; when present, renders a profile header
+ * Auth-aware: shows the signed-in user + logout, or login/register links.
  */
-function NavigationDrawer({ open = false, onClose, user }) {
+function NavigationDrawer({ open = false, onClose }) {
+  const { user, signOut } = useAuth()
+  const displayName = user?.user_metadata?.full_name || user?.email
+
+  async function handleSignOut() {
+    await signOut()
+    onClose?.()
+  }
+
   return (
     <>
       <div
@@ -26,11 +36,11 @@ function NavigationDrawer({ open = false, onClose, user }) {
           {user ? (
             <div className="drawer__profile">
               <div className="drawer__avatar">
-                <img src={user.avatar} alt={user.name} />
+                <Icon name="account_circle" size="xl" />
               </div>
               <div className="drawer__profile-text">
-                <span className="drawer__greeting">שלום, {user.name}</span>
-                <span className="drawer__profile-link">צפייה בפרופיל</span>
+                <span className="drawer__greeting">שלום</span>
+                <span className="drawer__email">{displayName}</span>
               </div>
             </div>
           ) : (
@@ -39,14 +49,31 @@ function NavigationDrawer({ open = false, onClose, user }) {
           <IconButton name="close" label="סגירה" onClick={onClose} />
         </div>
 
-        <nav className="drawer__nav">
-          {MENU.map((item) => (
-            <a key={item.label} href="#" className="drawer__link">
-              <span>{item.label}</span>
-              <Icon name={item.icon} size="md" />
-            </a>
-          ))}
-        </nav>
+        {user ? (
+          <>
+            <nav className="drawer__nav">
+              {MENU.map((item) => (
+                <Link key={item.label} to={item.to} className="drawer__link" onClick={onClose}>
+                  <span>{item.label}</span>
+                  <Icon name={item.icon} size="md" />
+                </Link>
+              ))}
+            </nav>
+            <button type="button" className="drawer__logout" onClick={handleSignOut}>
+              <span>התנתקות</span>
+              <Icon name="logout" size="md" />
+            </button>
+          </>
+        ) : (
+          <div className="drawer__auth">
+            <Link to="/login" className="drawer__auth-primary" onClick={onClose}>
+              התחברות
+            </Link>
+            <Link to="/register" className="drawer__auth-secondary" onClick={onClose}>
+              הרשמה
+            </Link>
+          </div>
+        )}
       </aside>
     </>
   )

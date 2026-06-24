@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import Icon from '../Icon/Icon.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './BottomNavBar.css'
 
 /**
@@ -8,6 +9,7 @@ import './BottomNavBar.css'
  */
 function BottomNavBar() {
   const { pathname } = useLocation()
+  const { user } = useAuth()
   const isActive = (path) => pathname === path
 
   return (
@@ -29,9 +31,13 @@ function BottomNavBar() {
         <Icon name="favorite" />
       </button>
 
-      <button type="button" className="bottom-nav__item" aria-label="פרופיל">
-        <Icon name="person" />
-      </button>
+      <Link
+        to={user ? '/sell' : '/login'}
+        className={`bottom-nav__item ${isActive('/login') ? 'is-active' : ''}`}
+        aria-label={user ? 'החשבון שלי' : 'התחברות'}
+      >
+        <Icon name={user ? 'account_circle' : 'login'} />
+      </Link>
     </nav>
   )
 }

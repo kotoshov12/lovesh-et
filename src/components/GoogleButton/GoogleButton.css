@@ -1,0 +1,30 @@
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--color-surface-container-lowest);
+  color: var(--color-secondary);
+  border: var(--border-thick) solid var(--color-secondary);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  transition: background 0.2s ease;
+}
+
+.google-btn:hover {
+  background: var(--color-surface-container-low);
+}
+
+.google-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.google-btn__icon {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}

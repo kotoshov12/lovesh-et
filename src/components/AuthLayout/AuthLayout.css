@@ -1,0 +1,97 @@
+.auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  background: var(--color-background);
+}
+
+.auth__card {
+  width: 100%;
+  max-width: var(--container-auth);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding: var(--space-3xl) var(--space-2xl);
+  background: var(--color-surface-container-lowest);
+  border: var(--border-thick) solid var(--color-secondary);
+}
+
+.auth__logo {
+  align-self: center;
+}
+
+.auth__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+.auth__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  color: var(--color-primary);
+}
+
+.auth__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+.auth__footer {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+.auth__footer a {
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+  border-bottom: var(--border-thin) solid var(--color-primary);
+  padding-bottom: var(--space-2xs);
+}
+
+/* form + divider shared by Login / Register */
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.auth__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caption);
+}
+
+.auth__divider::before,
+.auth__divider::after {
+  content: '';
+  flex: 1;
+  height: var(--border-thin);
+  background: var(--color-outline-variant);
+}
+
+.auth__error {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-error);
+}
+
+.auth__note {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-success);
+}
