@@ -88,6 +88,40 @@ export async function fetchProductsBySeller(id) {
   return data.map(mapProduct).filter((p) => !p.sold)
 }
 
+/** Update fields on a product (owner only, enforced by RLS). */
+export async function updateProduct(id, input) {
+  const row = {}
+  if (input.name !== undefined) row.name = input.name
+  if (input.category !== undefined) row.category = input.category
+  if (input.price !== undefined) row.price = input.price ? Number(input.price) : 0
+  if (input.originalPrice !== undefined)
+    row.original_price = input.originalPrice ? Number(input.originalPrice) : null
+  if (input.brand !== undefined) row.brand = input.brand || null
+  if (input.size !== undefined) row.size = input.size || null
+  if (input.condition !== undefined) row.condition = input.condition || null
+  if (input.caption !== undefined) row.caption = input.caption || null
+  if (input.eyebrow !== undefined) row.eyebrow = input.eyebrow || null
+  if (input.description !== undefined) row.description = input.description || null
+  if (input.distance !== undefined) row.distance = input.distance || null
+  if (input.image !== undefined) row.image = input.image
+  if (input.gallery !== undefined) row.gallery = input.gallery
+
+  const { data, error } = await supabase
+    .from('products')
+    .update(row)
+    .eq('id', id)
+    .select(SELECT_WITH_SELLER)
+    .single()
+  if (error) throw error
+  return mapProduct(data)
+}
+
+/** Delete a product (owner only, enforced by RLS). */
+export async function deleteProduct(id) {
+  const { error } = await supabase.from('products').delete().eq('id', id)
+  if (error) throw error
+}
+
 /** Mark one of the current user's products as sold. */
 export async function markProductSold(id) {
   const { data, error } = await supabase

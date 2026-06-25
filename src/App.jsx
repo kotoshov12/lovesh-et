@@ -41,6 +41,14 @@ function App() {
           }
         />
         <Route
+          path="/sell/:id"
+          element={
+            <ProtectedRoute>
+              <UploadItem />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>

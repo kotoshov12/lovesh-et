@@ -33,6 +33,32 @@
   color: var(--color-on-surface);
 }
 
+.detail__offer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.detail__offer-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.detail__offer-ok {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-success);
+}
+
+.detail__offer-err {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-error);
+}
+
 .detail__description {
   font-family: var(--font-body);
   font-size: var(--text-body-lg);

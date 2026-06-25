@@ -89,7 +89,8 @@
   display: none;
 }
 
-.uploader__primary-preview {
+.uploader__primary-preview,
+.uploader__slot-img {
   width: 100%;
   height: 100%;
   object-fit: cover;

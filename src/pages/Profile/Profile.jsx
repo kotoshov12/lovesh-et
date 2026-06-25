@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { fetchIncomingOffers, respondOffer } from '../../api/offers.js'
+import { createNotification } from '../../api/notifications.js'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
@@ -14,7 +16,13 @@ import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import LocationMap from '../../components/LocationMap/LocationMap.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useFavorites } from '../../context/FavoritesContext.jsx'
-import { fetchMyProducts, uploadProductImage, markProductSold, formatPrice } from '../../api/products.js'
+import {
+  fetchMyProducts,
+  uploadProductImage,
+  markProductSold,
+  deleteProduct,
+  formatPrice,
+} from '../../api/products.js'
 import { fetchMyOrders } from '../../api/orders.js'
 import { updateProfile } from '../../api/auth.js'
 import './Profile.css'
@@ -27,6 +35,7 @@ function Profile() {
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading')
   const [orders, setOrders] = useState([])
+  const [offers, setOffers] = useState([])
 
   const meta = user?.user_metadata || {}
   const [editing, setEditing] = useState(false)
@@ -56,10 +65,40 @@ function Profile() {
     fetchMyOrders()
       .then((data) => active && setOrders(data))
       .catch((err) => console.error(err))
+    fetchIncomingOffers()
+      .then((data) => active && setOffers(data))
+      .catch((err) => console.error(err))
     return () => {
       active = false
     }
   }, [user?.id])
+
+  async function handleDelete(id) {
+    try {
+      await deleteProduct(id)
+      setItems((prev) => prev.filter((p) => p.id !== id))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  async function handleRespondOffer(offer, status) {
+    try {
+      await respondOffer(offer.id, status)
+      await createNotification({
+        userId: offer.buyer_id,
+        type: 'offer',
+        body:
+          status === 'accepted'
+            ? `הצעת המחיר שלך (₪${offer.amount}) התקבלה! 🎉`
+            : `הצעת המחיר שלך (₪${offer.amount}) נדחתה.`,
+        link: offer.product ? `/product/${offer.product.id}` : '/',
+      })
+      setOffers((prev) => prev.filter((o) => o.id !== offer.id))
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   useEffect(() => {
     if (!avatarFile) {
@@ -251,9 +290,46 @@ function Profile() {
           </section>
         )}
 
+        {/* Incoming price offers */}
+        {offers.length > 0 && (
+          <section className="profile__block">
+            <SectionHeader title="הצעות מחיר שקיבלתי" eyebrow="OFFERS" />
+            <ul className="profile__offers">
+              {offers.map((o) => (
+                <li key={o.id} className="profile__offer">
+                  <span className="profile__offer-text">
+                    {o.product?.name || 'פריט'} — <strong>₪{o.amount}</strong>
+                  </span>
+                  <span className="profile__offer-actions">
+                    <button
+                      type="button"
+                      className="profile__act-btn"
+                      onClick={() => handleRespondOffer(o, 'accepted')}
+                    >
+                      אישור
+                    </button>
+                    <button
+                      type="button"
+                      className="profile__act-btn profile__act-btn--danger"
+                      onClick={() => handleRespondOffer(o, 'rejected')}
+                    >
+                      דחייה
+                    </button>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {/* My listings */}
         <section className="profile__block">
           <SectionHeader title="המוצרים שלי" eyebrow="MY LISTINGS" />
+          {status === 'ready' && items.length > 0 && (
+            <p className="profile__stats">
+              {activeListings.length} פעילים · {soldListings.length} נמכרו
+            </p>
+          )}
           {status === 'loading' && <StateMessage>טוען את הפריטים שלך…</StateMessage>}
           {status === 'error' && (
             <StateMessage variant="error">
@@ -275,13 +351,25 @@ function Profile() {
               {activeListings.map((product) => (
                 <div key={product.id} className="profile__listing">
                   <ProductCard product={product} />
-                  <button
-                    type="button"
-                    className="profile__sold-btn"
-                    onClick={() => handleMarkSold(product.id)}
-                  >
-                    סמני כנמכר
-                  </button>
+                  <div className="profile__listing-actions">
+                    <Link to={`/sell/${product.id}`} className="profile__act-btn">
+                      עריכה
+                    </Link>
+                    <button
+                      type="button"
+                      className="profile__act-btn"
+                      onClick={() => handleMarkSold(product.id)}
+                    >
+                      נמכר
+                    </button>
+                    <button
+                      type="button"
+                      className="profile__act-btn profile__act-btn--danger"
+                      onClick={() => handleDelete(product.id)}
+                    >
+                      מחיקה
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

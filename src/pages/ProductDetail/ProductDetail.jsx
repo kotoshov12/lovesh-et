@@ -5,6 +5,8 @@ import ImageGallery from '../../components/ImageGallery/ImageGallery.jsx'
 import ProductInfo from '../../components/ProductInfo/ProductInfo.jsx'
 import SellerCard from '../../components/SellerCard/SellerCard.jsx'
 import ActionBar from '../../components/ActionBar/ActionBar.jsx'
+import Button from '../../components/Button/Button.jsx'
+import Input from '../../components/Input/Input.jsx'
 import ProductCarousel from '../../components/ProductCarousel/ProductCarousel.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
@@ -12,6 +14,8 @@ import { useCart } from '../../context/CartContext.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchProduct, fetchSimilar } from '../../api/products.js'
 import { getOrCreateConversation } from '../../api/messages.js'
+import { submitOffer } from '../../api/offers.js'
+import { createNotification } from '../../api/notifications.js'
 import './ProductDetail.css'
 
 function ProductDetail() {
@@ -22,6 +26,9 @@ function ProductDetail() {
   const [product, setProduct] = useState(null)
   const [similar, setSimilar] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | missing | error
+  const [offerOpen, setOfferOpen] = useState(false)
+  const [offerAmount, setOfferAmount] = useState('')
+  const [offerMsg, setOfferMsg] = useState(null)
 
   useEffect(() => {
     let active = true
@@ -111,6 +118,37 @@ function ProductDetail() {
     }
   }
 
+  async function handleSendOffer(e) {
+    e.preventDefault()
+    setOfferMsg(null)
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    const amount = Number(offerAmount)
+    if (!amount || amount <= 0) {
+      setOfferMsg({ type: 'error', text: 'יש להזין סכום תקין.' })
+      return
+    }
+    try {
+      await submitOffer({ productId: product.id, sellerId: product.ownerId, amount })
+      await createNotification({
+        userId: product.ownerId,
+        type: 'offer',
+        body: `הצעת מחיר חדשה: ₪${amount} על "${product.name}"`,
+        link: '/profile',
+      })
+      setOfferMsg({ type: 'ok', text: 'ההצעה נשלחה למוכר/ת!' })
+      setOfferAmount('')
+      setOfferOpen(false)
+    } catch (err) {
+      console.error(err)
+      setOfferMsg({ type: 'error', text: 'שליחת ההצעה נכשלה. ודאי שהרצת את migration_v3.' })
+    }
+  }
+
+  const canOffer = Boolean(product?.ownerId) && product?.ownerId !== user?.id
+
   return (
     <div className="page">
       <Header />
@@ -144,6 +182,40 @@ function ProductDetail() {
               onBuy={handleBuy}
               onMessage={handleMessage}
             />
+
+            {canOffer && (
+              <div className="detail__offer">
+                {offerOpen ? (
+                  <form className="detail__offer-form" onSubmit={handleSendOffer}>
+                    <Input
+                      id="offer"
+                      type="number"
+                      prefix="₪"
+                      placeholder="הסכום שלך"
+                      value={offerAmount}
+                      onChange={(e) => setOfferAmount(e.target.value)}
+                    />
+                    <Button type="submit" variant="primary" fullWidth>
+                      שליחת הצעה
+                    </Button>
+                  </form>
+                ) : (
+                  <Button
+                    variant="outline"
+                    fullWidth
+                    icon="local_offer"
+                    onClick={() => setOfferOpen(true)}
+                  >
+                    הציעו מחיר
+                  </Button>
+                )}
+                {offerMsg && (
+                  <p className={offerMsg.type === 'error' ? 'detail__offer-err' : 'detail__offer-ok'}>
+                    {offerMsg.text}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

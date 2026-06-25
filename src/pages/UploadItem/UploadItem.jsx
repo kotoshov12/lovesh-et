@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
 import PhotoUploader from '../../components/PhotoUploader/PhotoUploader.jsx'
@@ -12,7 +12,12 @@ import Checkbox from '../../components/Checkbox/Checkbox.jsx'
 import Button from '../../components/Button/Button.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
-import { createProduct, uploadProductImage } from '../../api/products.js'
+import {
+  createProduct,
+  updateProduct,
+  fetchProduct,
+  uploadProductImage,
+} from '../../api/products.js'
 import { CATEGORIES } from '../../data/categories.js'
 import './UploadItem.css'
 
@@ -21,8 +26,10 @@ const CONDITIONS = ['חדש עם תווית', 'חדש ללא תווית', 'כמ�
 
 function UploadItem() {
   const navigate = useNavigate()
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const { id } = useParams()
+  const editing = Boolean(id)
 
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [form, setForm] = useState({
     name: '',
     category: 'שמלות',
@@ -35,39 +42,61 @@ function UploadItem() {
     location: '',
     swap: false,
   })
-  const [file, setFile] = useState(null)
-  const [previewUrl, setPreviewUrl] = useState(null)
+  const [files, setFiles] = useState([])
+  const [previews, setPreviews] = useState([])
+  const [existingGallery, setExistingGallery] = useState([])
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
   const set = (key) => (value) => setForm((f) => ({ ...f, [key]: value }))
 
-  // Build (and clean up) an object URL for the chosen image preview.
+  // Edit mode: load the existing product into the form.
   useEffect(() => {
-    if (!file) {
-      setPreviewUrl(null)
+    if (!editing) return
+    fetchProduct(id)
+      .then((p) => {
+        if (!p) return
+        setForm({
+          name: p.name || '',
+          category: p.category || 'שמלות',
+          size: p.size || 'בחרי מידה',
+          condition: p.condition || CONDITIONS[0],
+          brand: p.brand || '',
+          description: p.description || '',
+          price: p.priceValue ?? '',
+          originalPrice: p.original ? String(p.original).replace(/[^\d]/g, '') : '',
+          location: p.distance || '',
+          swap: false,
+        })
+        setExistingGallery(p.gallery || [])
+      })
+      .catch((err) => console.error(err))
+  }, [id, editing])
+
+  // Previews: chosen files take priority, else existing images (edit).
+  useEffect(() => {
+    if (files.length === 0) {
+      setPreviews(existingGallery)
       return
     }
-    const url = URL.createObjectURL(file)
-    setPreviewUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [file])
+    const urls = files.map((f) => URL.createObjectURL(f))
+    setPreviews(urls)
+    return () => urls.forEach((u) => URL.revokeObjectURL(u))
+  }, [files, existingGallery])
 
   async function handleSubmit(e) {
     e.preventDefault()
     setError(null)
-
     if (!form.name.trim()) {
       setError('יש להזין שם פריט.')
       return
     }
-
     setSubmitting(true)
     try {
-      let imageUrl = null
-      if (file) imageUrl = await uploadProductImage(file)
+      let gallery = existingGallery
+      if (files.length > 0) gallery = await Promise.all(files.map((f) => uploadProductImage(f)))
 
-      const created = await createProduct({
+      const payload = {
         name: form.name.trim(),
         category: form.category,
         price: form.price,
@@ -76,18 +105,20 @@ function UploadItem() {
         size: form.size === 'בחרי מידה' ? null : form.size,
         condition: form.condition,
         description: form.description,
-        distance: form.location ? `${form.location}` : null,
+        distance: form.location || null,
         caption: [form.brand, form.size !== 'בחרי מידה' ? form.size : null, form.condition]
           .filter(Boolean)
           .join(' · '),
         eyebrow: form.category,
-        image: imageUrl,
-      })
+        image: gallery[0] || null,
+        gallery,
+      }
 
-      navigate(`/product/${created.id}`)
+      const result = editing ? await updateProduct(id, payload) : await createProduct(payload)
+      navigate(`/product/${result.id}`)
     } catch (err) {
       console.error(err)
-      setError('שגיאה בפרסום הפריט. ודאי שה-Supabase מחובר ונסי שוב.')
+      setError('שמירת הפריט נכשלה. ודאי שה-bucket לתמונות קיים ונסי שוב.')
       setSubmitting(false)
     }
   }
@@ -99,13 +130,15 @@ function UploadItem() {
 
       <main className="upload">
         <div className="upload__intro">
-          <h1 className="upload__title">העלאת פריט חדש</h1>
+          <h1 className="upload__title">{editing ? 'עריכת פריט' : 'העלאת פריט חדש'}</h1>
           <p className="upload__subtitle">שתפי את הסטייל שלך עם הקהילה של LOVEsh\et</p>
         </div>
 
         <section className="upload__photos">
-          <PhotoUploader layout="grid" emptySlots={4} previewUrl={previewUrl} onFileChange={setFile} />
-          <p className="upload__hint">מומלץ להעלות לפחות 3 תמונות מזוויות שונות ובאור יום</p>
+          <PhotoUploader layout="grid" emptySlots={4} previews={previews} onFilesChange={setFiles} />
+          <p className="upload__hint">
+            אפשר לבחור כמה תמונות יחד · מומלץ לפחות 3 מזוויות שונות ובאור יום
+          </p>
         </section>
 
         <form className="upload__form" onSubmit={handleSubmit}>
@@ -203,10 +236,10 @@ function UploadItem() {
 
           <div className="upload__actions">
             <Button type="submit" variant="primary">
-              {submitting ? 'מפרסמת…' : 'פרסמי פריט עכשיו'}
+              {submitting ? 'שומרת…' : editing ? 'שמירת שינויים' : 'פרסמי פריט עכשיו'}
             </Button>
-            <Button type="button" variant="text" onClick={() => navigate('/')}>
-              ביטול וחזרה
+            <Button type="button" variant="text" onClick={() => navigate(-1)}>
+              ביטול
             </Button>
           </div>
         </form>
