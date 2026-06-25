@@ -3,7 +3,9 @@
 מרקטפלייס ישראלי (RTL, עברית) לקנייה ומכירה של בגדי יד-שנייה — אופנה מעגלית, מחירים שפויים וקהילה.
 A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow, and review.
 
-**Live:** https://lovesh-et.vercel.app
+### 🔴 [**Live site → lovesh-et.vercel.app**](https://lovesh-et.vercel.app)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-lovesh--et.vercel.app-7C1F26?style=for-the-badge&logo=vercel&logoColor=white)](https://lovesh-et.vercel.app)
 
 ---
 
