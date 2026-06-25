@@ -22,6 +22,9 @@ function Shop() {
   const [all, setAll] = useState([])
   const [status, setStatus] = useState('loading')
   const [query, setQuery] = useState(q)
+  const [sort, setSort] = useState('new')
+  const [minP, setMinP] = useState('')
+  const [maxP, setMaxP] = useState('')
 
   useEffect(() => {
     let active = true
@@ -49,8 +52,16 @@ function Shop() {
         `${p.name} ${p.brand || ''} ${p.caption || ''}`.toLowerCase().includes(t)
       )
     }
+    const min = minP ? Number(minP) : null
+    const max = maxP ? Number(maxP) : null
+    if (min != null) list = list.filter((p) => (p.priceValue || 0) >= min)
+    if (max != null) list = list.filter((p) => (p.priceValue || 0) <= max)
+
+    list = [...list]
+    if (sort === 'price_asc') list.sort((a, b) => (a.priceValue || 0) - (b.priceValue || 0))
+    else if (sort === 'price_desc') list.sort((a, b) => (b.priceValue || 0) - (a.priceValue || 0))
     return list
-  }, [all, category, sale, q])
+  }, [all, category, sale, q, sort, minP, maxP])
 
   function updateParams(mutate) {
     const next = new URLSearchParams(params)
@@ -111,6 +122,36 @@ function Shop() {
               {c}
             </ChoiceChip>
           ))}
+        </div>
+
+        <div className="shop__toolbar">
+          <label className="shop__sort">
+            מיון
+            <select value={sort} onChange={(e) => setSort(e.target.value)}>
+              <option value="new">חדש ביותר</option>
+              <option value="price_asc">מחיר: מהנמוך לגבוה</option>
+              <option value="price_desc">מחיר: מהגבוה לנמוך</option>
+            </select>
+          </label>
+          <div className="shop__price">
+            <input
+              type="number"
+              className="shop__price-input"
+              placeholder="₪ מ-"
+              value={minP}
+              onChange={(e) => setMinP(e.target.value)}
+              aria-label="מחיר מינימלי"
+            />
+            <span className="shop__price-sep">–</span>
+            <input
+              type="number"
+              className="shop__price-input"
+              placeholder="₪ עד"
+              value={maxP}
+              onChange={(e) => setMaxP(e.target.value)}
+              aria-label="מחיר מקסימלי"
+            />
+          </div>
         </div>
 
         {status === 'loading' && <StateMessage>טוען פריטים…</StateMessage>}

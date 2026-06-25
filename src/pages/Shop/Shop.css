@@ -79,6 +79,63 @@
   flex-shrink: 0;
 }
 
+/* Toolbar: sort + price range */
+.shop__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+.shop__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-secondary);
+}
+
+.shop__sort select {
+  background: var(--color-surface-container-lowest);
+  border: var(--border-thin) solid var(--color-secondary);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+}
+
+.shop__price {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.shop__price-input {
+  width: var(--size-photo-slot);
+  background: var(--color-surface-container-lowest);
+  border: var(--border-thin) solid var(--color-secondary);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+}
+
+.shop__price-input:focus,
+.shop__sort select:focus {
+  outline: none;
+  border-width: var(--border-thick);
+  border-color: var(--color-primary);
+}
+
+.shop__price-sep {
+  color: var(--color-text-secondary);
+}
+
 /* Results grid */
 .shop__grid {
   display: grid;

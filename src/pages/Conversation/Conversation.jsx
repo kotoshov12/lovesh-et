@@ -10,6 +10,7 @@ import {
   sendMessage,
   subscribeToMessages,
 } from '../../api/messages.js'
+import { createNotification } from '../../api/notifications.js'
 import './Conversation.css'
 
 function Conversation() {
@@ -59,6 +60,17 @@ function Conversation() {
       const msg = await sendMessage({ conversationId: id, body })
       setMessages((prev) => (prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]))
       setDraft('')
+      // Notify the other participant.
+      const other =
+        conversation?.buyer_id === user?.id ? conversation?.seller_id : conversation?.buyer_id
+      if (other) {
+        createNotification({
+          userId: other,
+          type: 'message',
+          body: 'הודעה חדשה בצ׳אט',
+          link: `/messages/${id}`,
+        })
+      }
     } catch (err) {
       console.error(err)
     } finally {

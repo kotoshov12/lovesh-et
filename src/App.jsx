@@ -1,64 +1,79 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home/Home.jsx'
-import Shop from './pages/Shop/Shop.jsx'
-import Cart from './pages/Cart/Cart.jsx'
-import Checkout from './pages/Checkout/Checkout.jsx'
-import Support from './pages/Support/Support.jsx'
-import ProductDetail from './pages/ProductDetail/ProductDetail.jsx'
-import SellerProfile from './pages/SellerProfile/SellerProfile.jsx'
-import UploadItem from './pages/UploadItem/UploadItem.jsx'
-import Login from './pages/Login/Login.jsx'
-import Register from './pages/Register/Register.jsx'
-import Profile from './pages/Profile/Profile.jsx'
-import Messages from './pages/Messages/Messages.jsx'
-import Conversation from './pages/Conversation/Conversation.jsx'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
+
+// Route-level code splitting — each page is its own chunk, so the initial
+// bundle stays small and pages load on demand.
+const Home = lazy(() => import('./pages/Home/Home.jsx'))
+const Shop = lazy(() => import('./pages/Shop/Shop.jsx'))
+const Cart = lazy(() => import('./pages/Cart/Cart.jsx'))
+const Checkout = lazy(() => import('./pages/Checkout/Checkout.jsx'))
+const Support = lazy(() => import('./pages/Support/Support.jsx'))
+const ProductDetail = lazy(() => import('./pages/ProductDetail/ProductDetail.jsx'))
+const SellerProfile = lazy(() => import('./pages/SellerProfile/SellerProfile.jsx'))
+const UploadItem = lazy(() => import('./pages/UploadItem/UploadItem.jsx'))
+const Login = lazy(() => import('./pages/Login/Login.jsx'))
+const Register = lazy(() => import('./pages/Register/Register.jsx'))
+const Profile = lazy(() => import('./pages/Profile/Profile.jsx'))
+const Messages = lazy(() => import('./pages/Messages/Messages.jsx'))
+const Conversation = lazy(() => import('./pages/Conversation/Conversation.jsx'))
+const Notifications = lazy(() => import('./pages/Notifications/Notifications.jsx'))
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/shop" element={<Shop />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/support" element={<Support />} />
-      <Route path="/product/:id" element={<ProductDetail />} />
-      <Route path="/seller/:id" element={<SellerProfile />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route
-        path="/sell"
-        element={
-          <ProtectedRoute>
-            <UploadItem />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/messages"
-        element={
-          <ProtectedRoute>
-            <Messages />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/messages/:id"
-        element={
-          <ProtectedRoute>
-            <Conversation />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+    <Suspense fallback={<div className="route-loading">טוען…</div>}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/seller/:id" element={<SellerProfile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/sell"
+          element={
+            <ProtectedRoute>
+              <UploadItem />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages/:id"
+          element={
+            <ProtectedRoute>
+              <Conversation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Suspense>
   )
 }
 

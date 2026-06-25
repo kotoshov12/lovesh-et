@@ -9,15 +9,25 @@ import ProductCard from '../../components/ProductCard/ProductCard.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import LocationMap from '../../components/LocationMap/LocationMap.jsx'
+import Stars from '../../components/Stars/Stars.jsx'
+import Button from '../../components/Button/Button.jsx'
+import Textarea from '../../components/Textarea/Textarea.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchSeller, fetchProductsBySeller } from '../../api/products.js'
+import { fetchReviews, submitReview, averageRating } from '../../api/reviews.js'
 import './SellerProfile.css'
 
 function SellerProfile() {
   const { id } = useParams()
+  const { user } = useAuth()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [seller, setSeller] = useState(null)
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | missing | error
+  const [reviews, setReviews] = useState([])
+  const [rating, setRating] = useState(5)
+  const [reviewText, setReviewText] = useState('')
+  const [reviewBusy, setReviewBusy] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -41,6 +51,33 @@ function SellerProfile() {
       active = false
     }
   }, [id])
+
+  useEffect(() => {
+    let active = true
+    fetchReviews(id)
+      .then((data) => active && setReviews(data))
+      .catch((err) => console.error(err))
+    return () => {
+      active = false
+    }
+  }, [id])
+
+  async function handleSubmitReview(e) {
+    e.preventDefault()
+    setReviewBusy(true)
+    try {
+      await submitReview({ sellerId: id, rating, body: reviewText.trim() })
+      const fresh = await fetchReviews(id)
+      setReviews(fresh)
+      setReviewText('')
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setReviewBusy(false)
+    }
+  }
+
+  const avg = averageRating(reviews)
 
   return (
     <div className="page">
@@ -76,6 +113,14 @@ function SellerProfile() {
                   </p>
                 )}
                 <p className="seller-profile__count">{items.length} פריטים למכירה</p>
+                {reviews.length > 0 && (
+                  <p className="seller-profile__rating">
+                    <Stars value={avg} size="sm" />
+                    <span>
+                      {avg.toFixed(1)} ({reviews.length})
+                    </span>
+                  </p>
+                )}
               </div>
             </section>
 
@@ -96,6 +141,43 @@ function SellerProfile() {
                     <ProductCard key={product.id} product={product} showFavorite />
                   ))}
                 </div>
+              )}
+            </section>
+
+            <section className="seller-profile__block">
+              <SectionHeader title="ביקורות" eyebrow="REVIEWS" />
+
+              {user ? (
+                <form className="seller-profile__review-form" onSubmit={handleSubmitReview}>
+                  <div className="seller-profile__rate-row">
+                    <span>הדירוג שלך:</span>
+                    <Stars value={rating} onSelect={setRating} />
+                  </div>
+                  <Textarea
+                    id="review"
+                    label="הביקורת שלך"
+                    rows={3}
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    placeholder="איך הייתה החוויה עם המוכר/ת?"
+                  />
+                  <Button type="submit" variant="primary">
+                    {reviewBusy ? 'שולחת…' : 'פרסום ביקורת'}
+                  </Button>
+                </form>
+              ) : (
+                <StateMessage>התחברי כדי להשאיר ביקורת.</StateMessage>
+              )}
+
+              {reviews.length > 0 && (
+                <ul className="seller-profile__reviews">
+                  {reviews.map((r) => (
+                    <li key={r.id} className="seller-profile__review">
+                      <Stars value={r.rating} size="sm" />
+                      {r.body && <p className="seller-profile__review-body">{r.body}</p>}
+                    </li>
+                  ))}
+                </ul>
               )}
             </section>
           </>

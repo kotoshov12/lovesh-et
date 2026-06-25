@@ -253,6 +253,17 @@ button {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Route-level lazy-load fallback */
+.route-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-secondary);
+}
+
 /* Utility: hide scrollbars on horizontal scrollers */
 .hide-scrollbar {
   -ms-overflow-style: none;

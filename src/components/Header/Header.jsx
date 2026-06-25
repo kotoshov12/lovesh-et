@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../Logo/Logo.jsx'
 import Icon from '../Icon/Icon.jsx'
@@ -6,6 +6,7 @@ import IconButton from '../IconButton/IconButton.jsx'
 import CategoryMenu from '../CategoryMenu/CategoryMenu.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useCart } from '../../context/CartContext.jsx'
+import { fetchUnreadCount, subscribeToNotifications } from '../../api/notifications.js'
 import './Header.css'
 
 /**
@@ -16,6 +17,21 @@ function Header({ onMenu }) {
   const { user } = useAuth()
   const { count } = useCart()
   const [catOpen, setCatOpen] = useState(false)
+  const [unread, setUnread] = useState(0)
+
+  useEffect(() => {
+    if (!user) {
+      setUnread(0)
+      return
+    }
+    let active = true
+    fetchUnreadCount().then((c) => active && setUnread(c))
+    const unsub = subscribeToNotifications(user.id, () => setUnread((c) => c + 1))
+    return () => {
+      active = false
+      unsub()
+    }
+  }, [user?.id])
 
   return (
     <>
@@ -52,6 +68,12 @@ function Header({ onMenu }) {
           <Link to="/sell" className="header__action" aria-label="העלאת פריט">
             <Icon name="add" />
           </Link>
+          {user && (
+            <Link to="/notifications" className="header__action header__cart" aria-label="התראות">
+              <Icon name="notifications" />
+              {unread > 0 && <span className="header__cart-count">{unread}</span>}
+            </Link>
+          )}
           <Link
             to={user ? '/profile' : '/login'}
             className="header__action"

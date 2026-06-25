@@ -14,7 +14,8 @@ import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import LocationMap from '../../components/LocationMap/LocationMap.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useFavorites } from '../../context/FavoritesContext.jsx'
-import { fetchMyProducts, uploadProductImage, markProductSold } from '../../api/products.js'
+import { fetchMyProducts, uploadProductImage, markProductSold, formatPrice } from '../../api/products.js'
+import { fetchMyOrders } from '../../api/orders.js'
 import { updateProfile } from '../../api/auth.js'
 import './Profile.css'
 
@@ -25,6 +26,7 @@ function Profile() {
 
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading')
+  const [orders, setOrders] = useState([])
 
   const meta = user?.user_metadata || {}
   const [editing, setEditing] = useState(false)
@@ -44,6 +46,16 @@ function Profile() {
         console.error(err)
         if (active) setStatus('error')
       })
+    return () => {
+      active = false
+    }
+  }, [user?.id])
+
+  useEffect(() => {
+    let active = true
+    fetchMyOrders()
+      .then((data) => active && setOrders(data))
+      .catch((err) => console.error(err))
     return () => {
       active = false
     }
@@ -219,6 +231,25 @@ function Profile() {
             </div>
           )}
         </section>
+
+        {/* My orders */}
+        {orders.length > 0 && (
+          <section className="profile__block">
+            <SectionHeader title="ההזמנות שלי" eyebrow="ORDERS" />
+            <ul className="profile__orders">
+              {orders.map((o) => (
+                <li key={o.id} className="profile__order">
+                  <span className="profile__order-items">
+                    {o.items.map((i) => i.name).join(', ')}
+                  </span>
+                  <span className="profile__order-meta">
+                    {o.payment_method === 'bit' ? 'Bit' : 'תשלום במקום'} · {formatPrice(o.total)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* My listings */}
         <section className="profile__block">
