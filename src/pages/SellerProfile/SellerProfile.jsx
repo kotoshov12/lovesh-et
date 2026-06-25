@@ -10,6 +10,7 @@ import Icon from '../../components/Icon/Icon.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import LocationMap from '../../components/LocationMap/LocationMap.jsx'
 import Stars from '../../components/Stars/Stars.jsx'
+import FollowButton from '../../components/FollowButton/FollowButton.jsx'
 import Button from '../../components/Button/Button.jsx'
 import Textarea from '../../components/Textarea/Textarea.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
@@ -121,6 +122,7 @@ function SellerProfile() {
                     </span>
                   </p>
                 )}
+                <FollowButton sellerId={id} />
               </div>
             </section>
 

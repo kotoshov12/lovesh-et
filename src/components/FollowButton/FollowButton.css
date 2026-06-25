@@ -1,0 +1,44 @@
+.follow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.follow__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--color-primary);
+  color: var(--color-background);
+  border: var(--border-thick) solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-btn);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.follow__btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.follow__btn.is-following {
+  background: transparent;
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.follow__btn:disabled {
+  opacity: 0.6;
+}
+
+.follow__count {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-text-secondary);
+}
