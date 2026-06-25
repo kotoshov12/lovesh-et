@@ -2,25 +2,37 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Icon from '../Icon/Icon.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
-import { isFollowing, followSeller, unfollowSeller, countFollowers } from '../../api/follows.js'
+import { isFollowing, follow, unfollow, countFollowers } from '../../api/follows.js'
+
 import './FollowButton.css'
 
-/** Follow / unfollow a seller, with a live follower count. */
-function FollowButton({ sellerId }) {
+/**
+ * Follow / unfollow a seller or a user, with a live follower count.
+ * Pass exactly one of `sellerId` (sellers-table seller) or `userId` (auth user).
+ */
+function FollowButton({ sellerId, userId }) {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const target = sellerId ? { sellerId } : { userId }
+  const targetKey = sellerId || userId
+  const isSelf = userId && user?.id === userId
+
   const [following, setFollowing] = useState(false)
   const [count, setCount] = useState(0)
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
+    if (!targetKey) return
     let active = true
-    countFollowers(sellerId).then((c) => active && setCount(c))
-    if (user) isFollowing(sellerId).then((f) => active && setFollowing(f))
+    countFollowers(target).then((c) => active && setCount(c))
+    if (user) isFollowing(target).then((f) => active && setFollowing(f))
     return () => {
       active = false
     }
-  }, [sellerId, user?.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetKey, user?.id])
+
+  if (isSelf) return null
 
   async function toggle() {
     if (!user) {
@@ -30,11 +42,11 @@ function FollowButton({ sellerId }) {
     setBusy(true)
     try {
       if (following) {
-        await unfollowSeller(sellerId)
+        await unfollow(target)
         setFollowing(false)
         setCount((c) => Math.max(0, c - 1))
       } else {
-        await followSeller(sellerId)
+        await follow(target)
         setFollowing(true)
         setCount((c) => c + 1)
       }

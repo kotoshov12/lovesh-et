@@ -301,7 +301,11 @@ function Profile() {
             <SectionHeader title="עוקב/ת אחרי" eyebrow="FOLLOWING" />
             <div className="profile__following">
               {following.map((s) => (
-                <Link key={s.id} to={`/seller/${s.id}`} className="profile__follow-card">
+                <Link
+                  key={`${s.type}-${s.id}`}
+                  to={s.type === 'seller' ? `/seller/${s.id}` : `/user/${s.id}`}
+                  className="profile__follow-card"
+                >
                   <span className="profile__follow-avatar">
                     {s.avatar ? (
                       <img src={s.avatar} alt={s.name} />

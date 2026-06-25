@@ -7,6 +7,7 @@ import BottomNavBar from '../../components/BottomNavBar/BottomNavBar.jsx'
 import SectionHeader from '../../components/SectionHeader/SectionHeader.jsx'
 import ProductCard from '../../components/ProductCard/ProductCard.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
+import FollowButton from '../../components/FollowButton/FollowButton.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import LocationMap from '../../components/LocationMap/LocationMap.jsx'
 import { fetchProfile } from '../../api/profiles.js'
@@ -70,6 +71,7 @@ function UserProfile() {
                 )}
                 <p className="seller-profile__count">{items.length} פריטים למכירה</p>
                 {profile?.bio && <p className="seller-profile__loc">{profile.bio}</p>}
+                <FollowButton userId={id} />
               </div>
             </section>
 
