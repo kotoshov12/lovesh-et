@@ -52,12 +52,6 @@ function UserProfile() {
 
         {status === 'ready' && (
           <>
-            {profile?.cover_url && (
-              <div
-                className="seller-profile__cover"
-                style={{ backgroundImage: `url(${profile.cover_url})` }}
-              />
-            )}
             <section className="seller-profile__head">
               <div className="seller-profile__avatar">
                 {profile?.avatar_url ? (

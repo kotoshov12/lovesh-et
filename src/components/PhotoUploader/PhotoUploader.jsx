@@ -54,7 +54,7 @@ function PhotoUploader({
     <div className="uploader uploader--row hide-scrollbar">
       <div className="uploader__add">
         <Icon name="camera_alt" size="lg" className="uploader__add-icon" />
-        <span className="uploader__add-label">הוסיפי תמונה</span>
+        <span className="uploader__add-label">תוסיפ/י תמונה</span>
       </div>
       {photos.map((src, i) => (
         <div key={i} className="uploader__preview">

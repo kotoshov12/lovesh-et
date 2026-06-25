@@ -73,7 +73,7 @@ function Checkout() {
             <p className="checkout__done-text">
               {method === 'bit'
                 ? 'נשלח אליך אישור עם פרטי התשלום ב-Bit מול המוכר/ת.'
-                : 'תיאמי עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}
+                : 'תאמ/י עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}
             </p>
             <Link to="/shop">
               <Button variant="primary" icon="arrow_back">
@@ -94,7 +94,7 @@ function Checkout() {
 
             <div className="checkout__layout">
               <section className="checkout__methods">
-                <h2 className="checkout__subtitle">בחרי אמצעי תשלום</h2>
+                <h2 className="checkout__subtitle">תבחר/י אמצעי תשלום</h2>
                 {METHODS.map((m) => (
                   <button
                     key={m.id}

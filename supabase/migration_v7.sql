@@ -1,7 +1,8 @@
 -- =============================================================================
--- Migration v6: remove an unwanted seed product.
+-- Migration v7: track read state per conversation (for the messages badge).
 -- Run in the Supabase SQL editor (after the earlier migrations).
 -- =============================================================================
 
--- Remove the loafers seed product (requested).
-delete from public.products where name = 'נעלי לופרס קלאסיות';
+alter table public.conversations
+  add column if not exists buyer_last_read  timestamptz,
+  add column if not exists seller_last_read timestamptz;

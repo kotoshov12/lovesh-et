@@ -82,7 +82,7 @@ function Support() {
               >
                 <Input id="s-name" label="שם" placeholder="השם שלך" required />
                 <Input id="s-email" label="אימייל" type="email" placeholder="name@example.com" required />
-                <Textarea id="s-msg" label="במה נוכל לעזור?" rows={4} placeholder="כתבי לנו…" required />
+                <Textarea id="s-msg" label="במה נוכל לעזור?" rows={4} placeholder="תכתב/י לנו…" required />
                 <Button type="submit" variant="primary">
                   שליחת פנייה
                 </Button>

@@ -9,8 +9,8 @@ import {
   fetchMessages,
   sendMessage,
   subscribeToMessages,
+  markConversationRead,
 } from '../../api/messages.js'
-import { createNotification } from '../../api/notifications.js'
 import './Conversation.css'
 
 function Conversation() {
@@ -31,6 +31,7 @@ function Conversation() {
         setConversation(conv)
         setMessages(msgs)
         setStatus('ready')
+        markConversationRead(id)
       })
       .catch((err) => {
         console.error(err)
@@ -60,17 +61,6 @@ function Conversation() {
       const msg = await sendMessage({ conversationId: id, body })
       setMessages((prev) => (prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]))
       setDraft('')
-      // Notify the other participant.
-      const other =
-        conversation?.buyer_id === user?.id ? conversation?.seller_id : conversation?.buyer_id
-      if (other) {
-        createNotification({
-          userId: other,
-          type: 'message',
-          body: 'הודעה חדשה בצ׳אט',
-          link: `/messages/${id}`,
-        })
-      }
     } catch (err) {
       console.error(err)
     } finally {
@@ -87,7 +77,24 @@ function Conversation() {
           <Link to="/messages" className="conv__back" aria-label="חזרה">
             <Icon name="arrow_forward" size="md" />
           </Link>
-          <span className="conv__title">{conversation?.product?.name || 'שיחה'}</span>
+          <Link
+            to={conversation?.otherId ? `/user/${conversation.otherId}` : '#'}
+            className="conv__who"
+          >
+            <span className="conv__avatar">
+              {conversation?.other?.avatar_url ? (
+                <img src={conversation.other.avatar_url} alt="" />
+              ) : (
+                <Icon name="account_circle" size="lg" />
+              )}
+            </span>
+            <span className="conv__who-text">
+              <span className="conv__name">{conversation?.other?.full_name || 'משתמש'}</span>
+              {conversation?.product && (
+                <span className="conv__sub">על: {conversation.product.name}</span>
+              )}
+            </span>
+          </Link>
           {conversation?.product && (
             <Link to={`/product/${conversation.product.id}`} className="conv__product">
               <img src={conversation.product.image} alt="" />
@@ -99,11 +106,11 @@ function Conversation() {
           {status === 'loading' && <StateMessage>טוען שיחה…</StateMessage>}
           {status === 'error' && (
             <StateMessage variant="error">
-              שגיאה בטעינת השיחה. ודאי שהרצת את מיגרציית ההודעות.
+              שגיאה בטעינת השיחה. ודא/י שהרצת את מיגרציית ההודעות.
             </StateMessage>
           )}
           {status === 'ready' && messages.length === 0 && (
-            <StateMessage>אין עדיין הודעות — כתבי הודעה ראשונה.</StateMessage>
+            <StateMessage>אין עדיין הודעות — תכתב/י הודעה ראשונה.</StateMessage>
           )}
           {messages.map((m) => (
             <div
@@ -121,7 +128,7 @@ function Conversation() {
             className="conv__input"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            placeholder="כתבי הודעה…"
+            placeholder="תכתב/י הודעה…"
             aria-label="הודעה"
           />
           <button type="submit" className="conv__send" disabled={sending} aria-label="שליחה">

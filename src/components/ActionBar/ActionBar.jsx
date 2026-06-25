@@ -7,8 +7,8 @@ import './ActionBar.css'
  */
 function ActionBar({
   fixed = false,
-  buyText = 'קני עכשיו',
-  messageText = 'שלחי הודעה',
+  buyText = 'תקנ/י עכשיו',
+  messageText = 'תשלח/י הודעה',
   onBuy,
   onMessage,
 }) {

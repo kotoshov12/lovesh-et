@@ -21,7 +21,7 @@ import {
 import { CATEGORIES } from '../../data/categories.js'
 import './UploadItem.css'
 
-const SIZES = ['בחרי מידה', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
+const SIZES = ['תבחר/י מידה', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
 const CONDITIONS = ['חדש עם תווית', 'חדש ללא תווית', 'כמו חדש', 'מצב מעולה', 'משומש במצב טוב']
 
 function UploadItem() {
@@ -33,7 +33,7 @@ function UploadItem() {
   const [form, setForm] = useState({
     name: '',
     category: 'שמלות',
-    size: 'בחרי מידה',
+    size: 'תבחר/י מידה',
     condition: CONDITIONS[0],
     brand: '',
     description: '',
@@ -59,7 +59,7 @@ function UploadItem() {
         setForm({
           name: p.name || '',
           category: p.category || 'שמלות',
-          size: p.size || 'בחרי מידה',
+          size: p.size || 'תבחר/י מידה',
           condition: p.condition || CONDITIONS[0],
           brand: p.brand || '',
           description: p.description || '',
@@ -102,11 +102,11 @@ function UploadItem() {
         price: form.price,
         originalPrice: form.originalPrice,
         brand: form.brand,
-        size: form.size === 'בחרי מידה' ? null : form.size,
+        size: form.size === 'תבחר/י מידה' ? null : form.size,
         condition: form.condition,
         description: form.description,
         distance: form.location || null,
-        caption: [form.brand, form.size !== 'בחרי מידה' ? form.size : null, form.condition]
+        caption: [form.brand, form.size !== 'תבחר/י מידה' ? form.size : null, form.condition]
           .filter(Boolean)
           .join(' · '),
         eyebrow: form.category,
@@ -118,7 +118,7 @@ function UploadItem() {
       navigate(`/product/${result.id}`)
     } catch (err) {
       console.error(err)
-      setError('שמירת הפריט נכשלה. ודאי שה-bucket לתמונות קיים ונסי שוב.')
+      setError('שמירת הפריט נכשלה. ודא/י שה-bucket לתמונות קיים ונס/י שוב.')
       setSubmitting(false)
     }
   }
@@ -131,7 +131,7 @@ function UploadItem() {
       <main className="upload">
         <div className="upload__intro">
           <h1 className="upload__title">{editing ? 'עריכת פריט' : 'העלאת פריט חדש'}</h1>
-          <p className="upload__subtitle">שתפי את הסטייל שלך עם הקהילה של LOVEsh\et</p>
+          <p className="upload__subtitle">תשתפ/י את הסטייל שלך עם הקהילה של LOVEsh\et</p>
         </div>
 
         <section className="upload__photos">
@@ -187,7 +187,7 @@ function UploadItem() {
           <Textarea
             label="תיאור הפריט"
             id="description"
-            placeholder="ספרי לנו עוד על הבד, הגזרה וסיבת המכירה..."
+            placeholder="תספר/י לנו עוד על הבד, הגזרה וסיבת המכירה..."
             rows={4}
             value={form.description}
             onChange={(e) => set('description')(e.target.value)}
@@ -214,7 +214,7 @@ function UploadItem() {
             />
           </div>
           <p className="upload__discount-hint">
-            הזיני מחיר מקורי גבוה מהמחיר המבוקש כדי להציג מבצע (המחיר יוצג מחוק והפריט יסומן "מבצע").
+            תזין/י מחיר מקורי גבוה מהמחיר המבוקש כדי להציג מבצע (המחיר יוצג מחוק והפריט יסומן "מבצע").
           </p>
 
           <Input
@@ -236,7 +236,7 @@ function UploadItem() {
 
           <div className="upload__actions">
             <Button type="submit" variant="primary">
-              {submitting ? 'שומרת…' : editing ? 'שמירת שינויים' : 'פרסמי פריט עכשיו'}
+              {submitting ? 'שומר/ת…' : editing ? 'שמירת שינויים' : 'תפרסמ/י פריט עכשיו'}
             </Button>
             <Button type="button" variant="text" onClick={() => navigate(-1)}>
               ביטול

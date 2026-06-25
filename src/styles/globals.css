@@ -153,7 +153,7 @@
 
   /* ---- Component sizing ----------------------------------------------- */
   --size-photo-slot: 100px;     /* mobile upload thumbnails */
-  --size-carousel-card: 140px;  /* similar-items mini cards */
+  --size-carousel-card: 104px;  /* similar-items mini cards */
   --size-thumb: 96px;           /* desktop gallery thumbnails */
   --size-avatar-sm: 40px;
   --size-avatar-md: 48px;

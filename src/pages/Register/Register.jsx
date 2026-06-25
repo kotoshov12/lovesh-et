@@ -29,7 +29,7 @@ function Register() {
     setBusy(true)
     const { data, error } = await signUpWithEmail({ email, password, fullName })
     if (error) {
-      setError(error.message || 'ההרשמה נכשלה. נסי שוב.')
+      setError(error.message || 'ההרשמה נכשלה. נס/י שוב.')
       setBusy(false)
       return
     }
@@ -38,7 +38,7 @@ function Register() {
     if (data.session) {
       navigate('/', { replace: true })
     } else {
-      setNote('נשלח אליך מייל לאישור החשבון. אשרי אותו ואז התחברי.')
+      setNote('נשלח אליך מייל לאישור החשבון. אשרי אותו ואז תתחבר/י.')
       setBusy(false)
     }
   }
@@ -46,16 +46,16 @@ function Register() {
   async function handleGoogle() {
     setError(null)
     const { error } = await signInWithGoogle()
-    if (error) setError('ההרשמה עם Google נכשלה. ודאי שהספק מופעל ב-Supabase.')
+    if (error) setError('ההרשמה עם Google נכשלה. ודא/י שהספק מופעל ב-Supabase.')
   }
 
   return (
     <AuthLayout
       title="הרשמה"
-      subtitle="הצטרפי לקהילת האופנה של LOVEsh\et"
+      subtitle="תצטרף/י לקהילת האופנה של LOVEsh\et"
       footer={
         <span>
-          כבר רשומה? <Link to="/login">להתחברות</Link>
+          כבר רשומ/ה? <Link to="/login">להתחברות</Link>
         </span>
       }
     >
@@ -92,7 +92,7 @@ function Register() {
         {error && <p className="auth__error">{error}</p>}
         {note && <p className="auth__note">{note}</p>}
         <Button type="submit" variant="primary" fullWidth>
-          {busy ? 'נרשמת…' : 'יצירת חשבון'}
+          {busy ? 'נרשמ/ת…' : 'יצירת חשבון'}
         </Button>
       </form>
     </AuthLayout>

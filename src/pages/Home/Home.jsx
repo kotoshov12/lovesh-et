@@ -71,7 +71,7 @@ function Home() {
             <section className="home__section">
               <SectionHeader
                 eyebrow="NEW IN"
-                title="החדש בחנות"
+                title="חדש בחנות"
                 linkText="צפו בכל הפריטים"
                 onLink={() => navigate('/shop')}
               />
@@ -84,7 +84,7 @@ function Home() {
 
             <NewsletterSignup
               title="אל תפספסי את הדרופ הבא"
-              body="הירשמי לניוזלטר וקבלי עדכונים על פריטי יד-שנייה חדשים לפני כולם · בלי ספאם."
+              body="תירשמ/י לניוזלטר ותקבל/י עדכונים על פריטי יד-שנייה חדשים לפני כולם · בלי ספאם."
             />
           </>
         )}

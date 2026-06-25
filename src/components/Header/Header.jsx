@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Logo from '../Logo/Logo.jsx'
 import Icon from '../Icon/Icon.jsx'
 import CategoryMenu from '../CategoryMenu/CategoryMenu.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useCart } from '../../context/CartContext.jsx'
 import { fetchUnreadCount, subscribeToNotifications } from '../../api/notifications.js'
+import { fetchUnreadMessageCount } from '../../api/messages.js'
 import './Header.css'
 
 /**
@@ -17,8 +18,10 @@ import './Header.css'
 function Header() {
   const { user } = useAuth()
   const { count } = useCart()
+  const { pathname } = useLocation()
   const [catOpen, setCatOpen] = useState(false)
   const [unread, setUnread] = useState(0)
+  const [msgUnread, setMsgUnread] = useState(0)
 
   useEffect(() => {
     if (!user) {
@@ -33,6 +36,19 @@ function Header() {
       unsub()
     }
   }, [user?.id])
+
+  // Unread chat messages — refreshed on navigation (e.g. after reading a chat).
+  useEffect(() => {
+    if (!user) {
+      setMsgUnread(0)
+      return
+    }
+    let active = true
+    fetchUnreadMessageCount().then((c) => active && setMsgUnread(c))
+    return () => {
+      active = false
+    }
+  }, [user?.id, pathname])
 
   return (
     <>
@@ -63,8 +79,9 @@ function Header() {
             {count > 0 && <span className="header__badge">{count}</span>}
           </Link>
           {user && (
-            <Link to="/messages" className="header__action" aria-label="הודעות">
+            <Link to="/messages" className="header__action header__badge-host" aria-label="הודעות">
               <Icon name="forum" />
+              {msgUnread > 0 && <span className="header__badge">{msgUnread}</span>}
             </Link>
           )}
           {user && (

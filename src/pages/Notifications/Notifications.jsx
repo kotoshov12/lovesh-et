@@ -43,7 +43,7 @@ function Notifications() {
         {status === 'loading' && <StateMessage>טוען…</StateMessage>}
         {status === 'error' && (
           <StateMessage variant="error">
-            שגיאה בטעינת ההתראות. ודאי שהרצת את migration_v2.
+            שגיאה בטעינת ההתראות. ודא/י שהרצת את migration_v2.
           </StateMessage>
         )}
         {status === 'ready' && items.length === 0 && (

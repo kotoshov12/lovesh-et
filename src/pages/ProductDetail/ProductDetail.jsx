@@ -111,7 +111,7 @@ function ProductDetail() {
       return
     }
     if (!product.ownerId) {
-      alert('זהו פריט הדגמה ללא מוכר/ת רשום/ה — נסי פריט שהועלה על ידי משתמש.')
+      alert('זהו פריט הדגמה ללא מוכר/ת רשום/ה — נס/י פריט שהועלה על ידי משתמש.')
       return
     }
     if (product.ownerId === user.id) {
@@ -126,7 +126,7 @@ function ProductDetail() {
       navigate(`/messages/${conv.id}`)
     } catch (err) {
       console.error(err)
-      alert('לא ניתן לפתוח שיחה כרגע. ודאי שהרצת את מיגרציית ההודעות.')
+      alert('לא ניתן לפתוח שיחה כרגע. ודא/י שהרצת את מיגרציית ההודעות.')
     }
   }
 
@@ -155,7 +155,7 @@ function ProductDetail() {
       setOfferOpen(false)
     } catch (err) {
       console.error(err)
-      setOfferMsg({ type: 'error', text: 'שליחת ההצעה נכשלה. ודאי שהרצת את migration_v3.' })
+      setOfferMsg({ type: 'error', text: 'שליחת ההצעה נכשלה. ודא/י שהרצת את migration_v3.' })
     }
   }
 
@@ -243,8 +243,8 @@ function ProductDetail() {
       <div className="detail__mobile-bar">
         <ActionBar
           fixed
-          buyText="קני עכשיו"
-          messageText="שלחי הודעה"
+          buyText="תקנ/י עכשיו"
+          messageText="תשלח/י הודעה"
           onBuy={handleBuy}
           onMessage={handleMessage}
         />

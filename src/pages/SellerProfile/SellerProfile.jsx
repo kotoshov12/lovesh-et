@@ -170,11 +170,11 @@ function SellerProfile() {
                     placeholder="איך הייתה החוויה עם המוכר/ת?"
                   />
                   <Button type="submit" variant="primary">
-                    {reviewBusy ? 'שולחת…' : 'פרסום ביקורת'}
+                    {reviewBusy ? 'שולח/ת…' : 'פרסום ביקורת'}
                   </Button>
                 </form>
               ) : (
-                <StateMessage>התחברי כדי להשאיר ביקורת.</StateMessage>
+                <StateMessage>תתחבר/י כדי להשאיר ביקורת.</StateMessage>
               )}
 
               {reviews.length > 0 && (

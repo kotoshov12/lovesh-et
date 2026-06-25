@@ -40,7 +40,7 @@ function Messages() {
         {status === 'loading' && <StateMessage>טוען שיחות…</StateMessage>}
         {status === 'error' && (
           <StateMessage variant="error">
-            שגיאה בטעינת השיחות. ודאי שהרצת את מיגרציית ההודעות ב-Supabase.
+            שגיאה בטעינת השיחות. ודא/י שהרצת את מיגרציית ההודעות ב-Supabase.
           </StateMessage>
         )}
         {status === 'ready' && conversations.length === 0 && (
@@ -49,19 +49,30 @@ function Messages() {
         {status === 'ready' && conversations.length > 0 && (
           <ul className="messages__list">
             {conversations.map((c) => (
-              <li key={c.id}>
-                <Link to={`/messages/${c.id}`} className="messages__item">
-                  <span className="messages__thumb">
-                    {c.product?.image ? (
-                      <img src={c.product.image} alt="" />
+              <li key={c.id} className={`messages__row ${c.unread ? 'is-unread' : ''}`}>
+                {/* tapping the avatar/name opens the other user's profile */}
+                <Link
+                  to={c.otherId ? `/user/${c.otherId}` : '#'}
+                  className="messages__who"
+                  aria-label="פרופיל המשתמש"
+                >
+                  <span className="messages__avatar">
+                    {c.other?.avatar_url ? (
+                      <img src={c.other.avatar_url} alt="" />
                     ) : (
-                      <Icon name="chat" size="md" />
+                      <Icon name="account_circle" size="lg" />
                     )}
                   </span>
+                </Link>
+                <Link to={`/messages/${c.id}`} className="messages__item">
                   <span className="messages__meta">
-                    <span className="messages__name">{c.product?.name || 'שיחה'}</span>
+                    <span className="messages__name">
+                      {c.other?.full_name || 'משתמש'}
+                      {c.unread && <span className="messages__dot" />}
+                    </span>
                     <span className="messages__role">
-                      {c.seller_id === user?.id ? 'את המוכרת' : 'את הקונה'}
+                      {c.product?.name ? `על: ${c.product.name}` : 'שיחה'} ·{' '}
+                      {c.seller_id === user?.id ? 'את/ה המוכר/ת' : 'את/ה הקונה'}
                     </span>
                   </span>
                   <Icon name="chevron_left" size="md" className="messages__chev" />

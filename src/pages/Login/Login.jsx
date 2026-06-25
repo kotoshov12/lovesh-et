@@ -39,7 +39,7 @@ function Login() {
   async function handleGoogle() {
     setError(null)
     const { error } = await signInWithGoogle()
-    if (error) setError('ההתחברות עם Google נכשלה. ודאי שהספק מופעל ב-Supabase.')
+    if (error) setError('ההתחברות עם Google נכשלה. ודא/י שהספק מופעל ב-Supabase.')
   }
 
   return (
@@ -76,7 +76,7 @@ function Login() {
         />
         {error && <p className="auth__error">{error}</p>}
         <Button type="submit" variant="primary" fullWidth>
-          {busy ? 'מתחברת…' : 'התחברות'}
+          {busy ? 'מתחבר/ת…' : 'התחברות'}
         </Button>
       </form>
     </AuthLayout>
