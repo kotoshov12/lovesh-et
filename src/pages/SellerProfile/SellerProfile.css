@@ -154,6 +154,13 @@
   margin-top: var(--space-2xl);
 }
 
+.seller-profile__back {
+  padding-top: var(--space-3xl);
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+}
+
 .seller-profile__missing {
   display: flex;
   flex-direction: column;

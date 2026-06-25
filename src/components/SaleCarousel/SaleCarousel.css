@@ -1,0 +1,82 @@
+.sale-carousel__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.sale-carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  height: var(--size-hero-carousel-sm);
+  background: var(--color-surface);
+  overflow: hidden;
+  color: inherit;
+}
+
+.sale-carousel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sale-carousel__panel {
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-2xl);
+  background: var(--color-primary);
+  color: var(--color-background);
+  max-width: 85%;
+}
+
+.sale-carousel__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.sale-carousel__title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  color: var(--color-background);
+}
+
+.sale-carousel__price .price__current {
+  color: var(--color-background);
+}
+
+.sale-carousel__price .price__original {
+  color: var(--color-primary-fixed-dim);
+}
+
+.sale-carousel__cta {
+  margin-top: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-btn);
+  color: var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .sale-carousel__slide {
+    flex-basis: 60%;
+    height: var(--size-hero-carousel);
+    margin-inline-end: var(--space-md);
+  }
+  .sale-carousel__panel {
+    max-width: 60%;
+  }
+}

@@ -8,7 +8,8 @@ import './SellerCard.css'
  * profile when the seller has an id.
  */
 function SellerCard({ seller, boxed = false }) {
-  const { id, name, avatar, location, distance } = seller
+  const { id, userId, name, avatar, location, distance } = seller
+  const to = userId ? `/user/${userId}` : id ? `/seller/${id}` : null
   return (
     <div className={`seller ${boxed ? 'seller--boxed' : ''}`}>
       <div className="seller__identity">
@@ -23,9 +24,9 @@ function SellerCard({ seller, boxed = false }) {
           </span>
         </div>
       </div>
-      {id && (
-        <Link to={`/seller/${id}`} className="seller__link">
-          פרופיל המוכרת ←
+      {to && (
+        <Link to={to} className="seller__link">
+          פרופיל המוכר/ת ←
         </Link>
       )}
     </div>

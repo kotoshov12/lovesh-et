@@ -77,6 +77,18 @@ export async function fetchSeller(id) {
   return data
 }
 
+/** Products uploaded by a given user (for their public user profile). */
+export async function fetchProductsByUser(userId) {
+  if (!userId) return []
+  const { data, error } = await supabase
+    .from('products')
+    .select(SELECT_WITH_SELLER)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data.map(mapProduct).filter((p) => !p.sold)
+}
+
 /** A seller's available products (for their public profile). */
 export async function fetchProductsBySeller(id) {
   const { data, error } = await supabase

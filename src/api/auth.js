@@ -26,9 +26,24 @@ export function signOut() {
   return supabase.auth.signOut()
 }
 
-/** Update the signed-in user's profile fields (stored in user metadata). */
-export function updateProfile({ fullName, avatarUrl, bio, location }) {
-  return supabase.auth.updateUser({
+/** Update the signed-in user's profile (auth metadata + public profiles row). */
+export async function updateProfile({ fullName, avatarUrl, bio, location }) {
+  const res = await supabase.auth.updateUser({
     data: { full_name: fullName, avatar_url: avatarUrl, bio, location },
   })
+  // Mirror to the public profiles table so others see the name/photo.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (user) {
+    await supabase.from('profiles').upsert({
+      id: user.id,
+      full_name: fullName,
+      avatar_url: avatarUrl,
+      bio,
+      location,
+      updated_at: new Date().toISOString(),
+    })
+  }
+  return res
 }

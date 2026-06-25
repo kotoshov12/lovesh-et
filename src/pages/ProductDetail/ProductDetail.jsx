@@ -16,6 +16,7 @@ import { fetchProduct, fetchSimilar } from '../../api/products.js'
 import { getOrCreateConversation } from '../../api/messages.js'
 import { submitOffer } from '../../api/offers.js'
 import { createNotification } from '../../api/notifications.js'
+import { fetchProfile } from '../../api/profiles.js'
 import './ProductDetail.css'
 
 function ProductDetail() {
@@ -29,6 +30,7 @@ function ProductDetail() {
   const [offerOpen, setOfferOpen] = useState(false)
   const [offerAmount, setOfferAmount] = useState('')
   const [offerMsg, setOfferMsg] = useState(null)
+  const [ownerProfile, setOwnerProfile] = useState(null)
 
   useEffect(() => {
     let active = true
@@ -52,6 +54,15 @@ function ProductDetail() {
       active = false
     }
   }, [id])
+
+  // If the item has no sellers-table seller, show the uploader's public profile.
+  useEffect(() => {
+    if (product && !product.seller && product.ownerId) {
+      fetchProfile(product.ownerId)
+        .then(setOwnerProfile)
+        .catch(() => {})
+    }
+  }, [product])
 
   if (status === 'loading' || status === 'error' || status === 'missing') {
     return (
@@ -82,9 +93,10 @@ function ProductDetail() {
     Boolean
   )
   const seller = product.seller ?? {
-    name: 'מוכר/ת',
-    avatar: '',
-    location: '',
+    userId: product.ownerId || undefined,
+    name: ownerProfile?.full_name || 'מוכר/ת',
+    avatar: ownerProfile?.avatar_url || '',
+    location: ownerProfile?.location || '',
     distance: product.distance,
   }
 
@@ -221,7 +233,7 @@ function ProductDetail() {
 
         {similar.length > 0 && (
           <section className="detail__similar">
-            <ProductCarousel title="פריטים דומים שאהבנו" items={similar} />
+            <ProductCarousel title="פריטים דומים" items={similar} />
           </section>
         )}
       </main>
