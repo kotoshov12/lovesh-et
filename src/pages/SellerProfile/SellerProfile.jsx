@@ -124,25 +124,31 @@ function SellerProfile() {
               </div>
             </section>
 
-            {seller.location && (
-              <section className="seller-profile__block">
-                <SectionHeader title="אזור הפיזור" eyebrow="PICKUP" />
-                <LocationMap query={seller.location} title={`מיקום של ${seller.name}`} />
+            <div className="seller-profile__main">
+              <section className="seller-profile__listings-col">
+                <SectionHeader title={`הפריטים של ${seller.name}`} eyebrow="LISTINGS" />
+                {items.length === 0 ? (
+                  <StateMessage>אין כרגע פריטים זמינים.</StateMessage>
+                ) : (
+                  <div className="seller-profile__grid">
+                    {items.map((product) => (
+                      <ProductCard key={product.id} product={product} showFavorite />
+                    ))}
+                  </div>
+                )}
               </section>
-            )}
 
-            <section className="seller-profile__block">
-              <SectionHeader title={`הפריטים של ${seller.name}`} eyebrow="LISTINGS" />
-              {items.length === 0 ? (
-                <StateMessage>אין כרגע פריטים זמינים.</StateMessage>
-              ) : (
-                <div className="seller-profile__grid">
-                  {items.map((product) => (
-                    <ProductCard key={product.id} product={product} showFavorite />
-                  ))}
-                </div>
+              {seller.location && (
+                <aside className="seller-profile__map-col">
+                  <h3 className="seller-profile__aside-title">אזור הפיזור</h3>
+                  <p className="seller-profile__loc">
+                    <Icon name="location_on" size="sm" />
+                    {seller.location}
+                  </p>
+                  <LocationMap query={seller.location} title={`מיקום של ${seller.name}`} />
+                </aside>
               )}
-            </section>
+            </div>
 
             <section className="seller-profile__block">
               <SectionHeader title="ביקורות" eyebrow="REVIEWS" />
@@ -173,7 +179,12 @@ function SellerProfile() {
                 <ul className="seller-profile__reviews">
                   {reviews.map((r) => (
                     <li key={r.id} className="seller-profile__review">
-                      <Stars value={r.rating} size="sm" />
+                      <div className="seller-profile__review-head">
+                        <Stars value={r.rating} size="sm" />
+                        <span className="seller-profile__review-author">
+                          {r.author_name || 'משתמש'}
+                        </span>
+                      </div>
                       {r.body && <p className="seller-profile__review-body">{r.body}</p>}
                     </li>
                   ))}

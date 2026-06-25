@@ -164,6 +164,8 @@
   --size-action-bar: 56px;      /* detail page CTA button height */
   --size-cat-tile: 88px;        /* category menu circular tile */
   --size-map: 280px;            /* embedded location map height */
+  --size-map-sm: 200px;         /* compact map (seller profile aside) */
+  --seller-aside: 300px;        /* seller profile map column width */
 
   /* ---- Display sizes not in the core scale ---------------------------- */
   --text-logo: 30px;        /* nav wordmark — Karantina Bold 30px */
