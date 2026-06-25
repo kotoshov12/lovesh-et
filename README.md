@@ -35,6 +35,18 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
 - **Sentry** (errors + replay) · **Microsoft Clarity** (behaviour analytics)
 - Styling: plain CSS driven by **design tokens** ([src/styles/globals.css](src/styles/globals.css))
 
+## 🔌 External services
+
+| Service | Used for | Configured via |
+| --- | --- | --- |
+| **Supabase** | Postgres DB, Auth (email + Google), Storage (images), Realtime (chat) | `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` |
+| **Vercel** | Hosting, auto-deploy, Web Analytics | Vercel dashboard · [vercel.json](vercel.json) |
+| **Google OAuth** | "Sign in with Google" (through the Supabase provider) | Supabase → Auth → Providers · Google Cloud Console |
+| **Sentry** | Error monitoring + session replay | `VITE_SENTRY_DSN` |
+| **Microsoft Clarity** | Behaviour analytics (heatmaps, session recordings) | `VITE_CLARITY_ID` |
+| **Unsplash** | Product & avatar imagery (seed data) | image URLs in the seed SQL |
+| **Google Maps** | Seller pickup-location map | `<iframe>` embed (no key) |
+
 ## 📁 Project structure
 
 ```
@@ -101,6 +113,113 @@ Run these once, in order:
 Also: create a **public Storage bucket** named `product-images`, set the
 **Site URL** to the production URL, and enable the **Google** auth provider.
 Full step-by-step in [SETUP.md](SETUP.md).
+
+## 🗺️ Database (ERD)
+
+`auth_users` is Supabase's built-in auth table; all other tables live in the
+`public` schema.
+
+```mermaid
+erDiagram
+    auth_users    ||--|| profiles      : "has"
+    auth_users    ||--o{ products      : "uploads"
+    sellers       ||--o{ products      : "lists"
+    products      ||--o{ conversations : "about"
+    auth_users    ||--o{ conversations : "participates"
+    conversations ||--o{ messages      : "contains"
+    auth_users    ||--o{ messages      : "sends"
+    auth_users    ||--o{ orders        : "places"
+    products      ||--o{ offers        : "for"
+    auth_users    ||--o{ offers        : "buyer/seller"
+    auth_users    ||--o{ notifications : "receives"
+    sellers       ||--o{ reviews       : "about"
+    auth_users    ||--o{ reviews       : "writes/about"
+    auth_users    ||--o{ follows       : "follower"
+    sellers       ||--o{ follows       : "followed"
+
+    auth_users {
+      uuid id PK
+    }
+    profiles {
+      uuid id PK
+      text full_name
+      text avatar_url
+      text location
+      text bio
+    }
+    sellers {
+      uuid id PK
+      text name
+      text avatar
+      text location
+      text distance
+    }
+    products {
+      uuid id PK
+      text name
+      int price
+      int original_price
+      text category
+      bool is_sold
+      text image
+      text gallery
+      uuid seller_id FK
+      uuid user_id FK
+    }
+    conversations {
+      uuid id PK
+      uuid product_id FK
+      uuid buyer_id FK
+      uuid seller_id FK
+      timestamptz last_message_at
+      timestamptz buyer_last_read
+      timestamptz seller_last_read
+    }
+    messages {
+      uuid id PK
+      uuid conversation_id FK
+      uuid sender_id FK
+      text body
+      timestamptz created_at
+    }
+    orders {
+      uuid id PK
+      uuid buyer_id FK
+      jsonb items
+      int total
+      text payment_method
+      text status
+    }
+    offers {
+      uuid id PK
+      uuid product_id FK
+      uuid buyer_id FK
+      uuid seller_id FK
+      int amount
+      text status
+    }
+    reviews {
+      uuid id PK
+      uuid seller_id FK
+      uuid reviewed_user_id FK
+      uuid author_id FK
+      int rating
+      text body
+    }
+    notifications {
+      uuid id PK
+      uuid user_id FK
+      text type
+      text body
+      bool is_read
+    }
+    follows {
+      uuid id PK
+      uuid follower_id FK
+      uuid seller_id FK
+      uuid followed_user_id FK
+    }
+```
 
 ## ☁️ Deployment
 
