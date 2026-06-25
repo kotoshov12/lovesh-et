@@ -2,21 +2,20 @@ import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
+import HeroBanner from '../../components/HeroBanner/HeroBanner.jsx'
 import SaleCarousel from '../../components/SaleCarousel/SaleCarousel.jsx'
 import SectionHeader from '../../components/SectionHeader/SectionHeader.jsx'
 import ProductCard from '../../components/ProductCard/ProductCard.jsx'
-import ProductCarousel from '../../components/ProductCarousel/ProductCarousel.jsx'
 import NewsletterSignup from '../../components/NewsletterSignup/NewsletterSignup.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import BottomNavBar from '../../components/BottomNavBar/BottomNavBar.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { fetchProducts } from '../../api/products.js'
-import { useFavorites } from '../../context/FavoritesContext.jsx'
+import { heroSplit } from '../../data/content.js'
 import './Home.css'
 
 function Home() {
   const navigate = useNavigate()
-  const { items: favorites } = useFavorites()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [products, setProducts] = useState([])
   const [status, setStatus] = useState('loading')
@@ -40,36 +39,34 @@ function Home() {
 
   const saleItems = useMemo(() => products.filter((p) => p.original), [products])
 
-  // "For you": items from categories the user favorited; otherwise the newest.
-  const forYou = useMemo(() => {
-    const favIds = new Set(favorites.map((f) => f.id))
-    const favCats = new Set(favorites.map((f) => f.category).filter(Boolean))
-    let list = products.filter((p) => favCats.has(p.category) && !favIds.has(p.id))
-    if (list.length < 4) list = products.filter((p) => !favIds.has(p.id))
-    return list.slice(0, 8)
-  }, [products, favorites])
-
   return (
     <div className="page">
       <Header onMenu={() => setDrawerOpen(true)} />
       <NavigationDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
 
       <main className="home">
+        <HeroBanner variant="split" {...heroSplit} onCta={() => navigate('/shop')} />
+
         {status === 'loading' && <StateMessage>טוען…</StateMessage>}
         {status === 'error' && (
-          <StateMessage variant="error">
-            שגיאה בטעינת החנות. בדקי את החיבור ל-Supabase.
-          </StateMessage>
+          <StateMessage variant="error">שגיאה בטעינת החנות.</StateMessage>
         )}
 
         {status === 'ready' && (
           <>
-            <SaleCarousel items={saleItems} />
-
-            <section className="home__section">
-              <SectionHeader eyebrow="FOR YOU" title="מיועד עבורך" />
-              <ProductCarousel items={forYou} />
-            </section>
+            {saleItems.length > 0 && (
+              <section className="home__sale">
+                <div className="home__sale-head">
+                  <SectionHeader
+                    eyebrow="SALE"
+                    title="מבצעים"
+                    linkText="לכל המבצעים"
+                    onLink={() => navigate('/shop?sale=1')}
+                  />
+                </div>
+                <SaleCarousel items={saleItems} />
+              </section>
+            )}
 
             <section className="home__section">
               <SectionHeader
@@ -87,7 +84,7 @@ function Home() {
 
             <NewsletterSignup
               title="אל תפספסי את הדרופ הבא"
-              body="הירשמי לניוזלטר וקבלי עדכונים על פריטי וינטג׳ חדשים לפני כולם · בלי ספאם."
+              body="הירשמי לניוזלטר וקבלי עדכונים על פריטי יד-שנייה חדשים לפני כולם · בלי ספאם."
             />
           </>
         )}

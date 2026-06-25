@@ -46,6 +46,8 @@ function Profile() {
   const [location, setLocation] = useState(meta.location || '')
   const [avatarFile, setAvatarFile] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState(null)
+  const [coverFile, setCoverFile] = useState(null)
+  const [coverPreview, setCoverPreview] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState(null)
 
@@ -115,20 +117,34 @@ function Profile() {
     return () => URL.revokeObjectURL(url)
   }, [avatarFile])
 
+  useEffect(() => {
+    if (!coverFile) {
+      setCoverPreview(null)
+      return
+    }
+    const url = URL.createObjectURL(coverFile)
+    setCoverPreview(url)
+    return () => URL.revokeObjectURL(url)
+  }, [coverFile])
+
   async function handleSave() {
     setSaving(true)
     setSaveError(null)
     try {
       let avatarUrl = meta.avatar_url || null
       if (avatarFile) avatarUrl = await uploadProductImage(avatarFile)
+      let coverUrl = meta.cover_url || null
+      if (coverFile) coverUrl = await uploadProductImage(coverFile)
       const { error } = await updateProfile({
         fullName: name.trim(),
         avatarUrl,
+        coverUrl,
         bio: bio.trim(),
         location: location.trim(),
       })
       if (error) throw error
       setAvatarFile(null)
+      setCoverFile(null)
       setEditing(false)
     } catch (err) {
       console.error(err)
@@ -143,6 +159,7 @@ function Profile() {
     setBio(meta.bio || '')
     setLocation(meta.location || '')
     setAvatarFile(null)
+    setCoverFile(null)
     setSaveError(null)
     setEditing(false)
   }
@@ -161,6 +178,7 @@ function Profile() {
 
   const displayName = meta.full_name || user?.email
   const avatarUrl = avatarPreview || meta.avatar_url
+  const coverUrl = coverPreview || meta.cover_url
 
   return (
     <div className="page">
@@ -168,6 +186,32 @@ function Profile() {
       <NavigationDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
 
       <main className="profile">
+        {/* Cover banner */}
+        {editing ? (
+          <label
+            className="profile__cover profile__cover--edit"
+            style={coverUrl ? { backgroundImage: `url(${coverUrl})` } : undefined}
+          >
+            <span className="profile__cover-overlay">
+              <Icon name="add_a_photo" size="md" />
+              תמונת רקע
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              className="profile__cover-input"
+              onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)}
+            />
+          </label>
+        ) : (
+          meta.cover_url && (
+            <div
+              className="profile__cover"
+              style={{ backgroundImage: `url(${meta.cover_url})` }}
+            />
+          )
+        )}
+
         {/* Account header */}
         <section className="profile__account">
           {editing ? (

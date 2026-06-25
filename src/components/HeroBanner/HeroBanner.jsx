@@ -18,6 +18,7 @@ function HeroBanner({
   original,
   ctaText,
   tag,
+  onCta,
 }) {
   if (variant === 'split') {
     return (
@@ -26,7 +27,11 @@ function HeroBanner({
           <span className="hero__eyebrow">{eyebrow}</span>
           <h1 className="hero__headline">{title}</h1>
           {body && <p className="hero__body">{body}</p>}
-          {ctaText && <Button variant="primary">{ctaText}</Button>}
+          {ctaText && (
+            <Button variant="primary" onClick={onCta}>
+              {ctaText}
+            </Button>
+          )}
         </div>
         <div className="hero__media">
           <img src={image} alt="" className="hero__img" />

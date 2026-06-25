@@ -27,9 +27,9 @@ export function signOut() {
 }
 
 /** Update the signed-in user's profile (auth metadata + public profiles row). */
-export async function updateProfile({ fullName, avatarUrl, bio, location }) {
+export async function updateProfile({ fullName, avatarUrl, coverUrl, bio, location }) {
   const res = await supabase.auth.updateUser({
-    data: { full_name: fullName, avatar_url: avatarUrl, bio, location },
+    data: { full_name: fullName, avatar_url: avatarUrl, cover_url: coverUrl, bio, location },
   })
   // Mirror to the public profiles table so others see the name/photo.
   const {
@@ -40,6 +40,7 @@ export async function updateProfile({ fullName, avatarUrl, bio, location }) {
       id: user.id,
       full_name: fullName,
       avatar_url: avatarUrl,
+      cover_url: coverUrl,
       bio,
       location,
       updated_at: new Date().toISOString(),

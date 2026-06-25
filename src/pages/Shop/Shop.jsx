@@ -9,12 +9,13 @@ import ChoiceChip from '../../components/ChoiceChip/ChoiceChip.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { fetchProducts } from '../../api/products.js'
-import { CATEGORIES } from '../../data/categories.js'
+import { CATEGORIES, SUBCATEGORIES } from '../../data/categories.js'
 import './Shop.css'
 
 function Shop() {
   const [params, setParams] = useSearchParams()
   const category = params.get('category') || ''
+  const sub = params.get('sub') || ''
   const sale = params.get('sale') === '1'
   const q = params.get('q') || ''
 
@@ -45,6 +46,11 @@ function Shop() {
   const filtered = useMemo(() => {
     let list = all
     if (category) list = list.filter((p) => p.category === category)
+    if (sub) {
+      list = list.filter((p) =>
+        `${p.name} ${p.caption || ''} ${p.eyebrow || ''} ${p.description || ''}`.includes(sub)
+      )
+    }
     if (sale) list = list.filter((p) => p.original)
     if (q) {
       const t = q.trim().toLowerCase()
@@ -61,7 +67,7 @@ function Shop() {
     if (sort === 'price_asc') list.sort((a, b) => (a.priceValue || 0) - (b.priceValue || 0))
     else if (sort === 'price_desc') list.sort((a, b) => (b.priceValue || 0) - (a.priceValue || 0))
     return list
-  }, [all, category, sale, q, sort, minP, maxP])
+  }, [all, category, sub, sale, q, sort, minP, maxP])
 
   function updateParams(mutate) {
     const next = new URLSearchParams(params)
@@ -81,8 +87,16 @@ function Shop() {
   function selectCategory(value) {
     updateParams((n) => {
       n.delete('sale')
+      n.delete('sub')
       if (value) n.set('category', value)
       else n.delete('category')
+    })
+  }
+
+  function selectSub(value) {
+    updateParams((n) => {
+      if (value) n.set('sub', value)
+      else n.delete('sub')
     })
   }
 
@@ -123,6 +137,19 @@ function Shop() {
             </ChoiceChip>
           ))}
         </div>
+
+        {category && SUBCATEGORIES[category] && (
+          <div className="shop__filters shop__filters--sub hide-scrollbar">
+            <ChoiceChip selected={!sub} onClick={() => selectSub('')}>
+              הכל
+            </ChoiceChip>
+            {SUBCATEGORIES[category].map((s) => (
+              <ChoiceChip key={s} selected={sub === s} onClick={() => selectSub(s)}>
+                {s}
+              </ChoiceChip>
+            ))}
+          </div>
+        )}
 
         <div className="shop__toolbar">
           <label className="shop__sort">

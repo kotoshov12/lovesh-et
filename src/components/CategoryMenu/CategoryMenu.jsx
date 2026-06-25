@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Icon from '../Icon/Icon.jsx'
 import IconButton from '../IconButton/IconButton.jsx'
 import { fetchProducts } from '../../api/products.js'
-import { CATEGORIES } from '../../data/categories.js'
+import { CATEGORIES, SUBCATEGORIES } from '../../data/categories.js'
 import './CategoryMenu.css'
 
 /**
@@ -63,21 +63,35 @@ function CategoryMenu({ open, onClose }) {
 
           <div className="catmenu__grid">
             {CATEGORIES.map((category) => (
-              <Link
-                key={category}
-                to={`/shop?category=${encodeURIComponent(category)}`}
-                className="catmenu__tile"
-                onClick={onClose}
-              >
-                <span className="catmenu__thumb">
-                  {images[category] ? (
-                    <img src={images[category]} alt={category} />
-                  ) : (
-                    <Icon name="checkroom" size="lg" />
-                  )}
-                </span>
-                <span className="catmenu__label">{category}</span>
-              </Link>
+              <div key={category} className="catmenu__col">
+                <Link
+                  to={`/shop?category=${encodeURIComponent(category)}`}
+                  className="catmenu__tile"
+                  onClick={onClose}
+                >
+                  <span className="catmenu__thumb">
+                    {images[category] ? (
+                      <img src={images[category]} alt={category} />
+                    ) : (
+                      <Icon name="checkroom" size="lg" />
+                    )}
+                  </span>
+                  <span className="catmenu__label">{category}</span>
+                </Link>
+                <ul className="catmenu__subs">
+                  {(SUBCATEGORIES[category] || []).map((sub) => (
+                    <li key={sub}>
+                      <Link
+                        to={`/shop?category=${encodeURIComponent(category)}&sub=${encodeURIComponent(sub)}`}
+                        className="catmenu__sub"
+                        onClick={onClose}
+                      >
+                        {sub}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>

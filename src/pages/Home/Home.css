@@ -10,6 +10,16 @@
   padding: var(--space-4xl) var(--space-xl);
 }
 
+.home__sale {
+  padding-top: var(--space-4xl);
+}
+
+.home__sale-head {
+  max-width: var(--container-max);
+  margin: 0 auto var(--space-xl);
+  padding: 0 var(--space-xl);
+}
+
 .home__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

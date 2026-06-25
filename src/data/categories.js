@@ -13,3 +13,16 @@ export const CATEGORIES = [
 
 // Subset shown as links in the top header (matches the reference design).
 export const NAV_CATEGORIES = ['חולצות', 'מכנסיים', 'נעליים', 'אקססוריז']
+
+// Style / length sub-options per category — powers the advanced filter.
+// Filtering is keyword-based against the item's name / caption / description.
+export const SUBCATEGORIES = {
+  חולצות: ['טי-שירט', 'מכופתרת', 'סוודר', 'פרחונית', 'קרופ'],
+  מכנסיים: ["ג'ינס", 'מחויט', 'קצר', 'מאמא'],
+  שמלות: ['מיני', 'מידי', 'מקסי', 'ערב'],
+  חצאיות: ['מיני', 'מידי', 'מקסי', 'פליסה'],
+  נעליים: ['סניקרס', 'עקבים', 'מגפיים', 'כפכפים'],
+  מעילים: ["ג'ינס", 'בומבר', "טרנץ'", 'פוך'],
+  אקססוריז: ['תיקים', 'חגורות', 'תכשיטים', 'כובעים'],
+}
+

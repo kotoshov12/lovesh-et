@@ -5,6 +5,39 @@
   margin: 0 auto;
 }
 
+/* ---- Cover banner ---- */
+.profile__cover {
+  height: var(--size-map-sm);
+  margin: 0 var(--space-xl) var(--space-lg);
+  background-color: var(--color-surface);
+  background-size: cover;
+  background-position: center;
+  border: var(--border-thick) solid var(--color-secondary);
+}
+
+.profile__cover--edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.profile__cover-overlay {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-secondary);
+  color: var(--color-background);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+}
+
+.profile__cover-input {
+  display: none;
+}
+
 /* ---- Account header ---- */
 .profile__account {
   display: flex;

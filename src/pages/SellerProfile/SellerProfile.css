@@ -6,6 +6,15 @@
   margin: 0 auto;
 }
 
+.seller-profile__cover {
+  height: var(--size-map-sm);
+  margin-bottom: var(--space-lg);
+  background-color: var(--color-surface);
+  background-size: cover;
+  background-position: center;
+  border: var(--border-thick) solid var(--color-secondary);
+}
+
 .seller-profile__head {
   display: flex;
   align-items: center;

@@ -51,9 +51,6 @@ function Header() {
             <Icon name="grid_view" size="md" />
             <span className="header__cats-label">קטגוריות</span>
           </button>
-          <Link to="/support" className="header__link header__link--muted">
-            שירות לקוחות
-          </Link>
         </div>
 
         {/* Right edge — profile is the right-most item */}
@@ -65,6 +62,11 @@ function Header() {
             <Icon name="shopping_bag" />
             {count > 0 && <span className="header__badge">{count}</span>}
           </Link>
+          {user && (
+            <Link to="/messages" className="header__action" aria-label="הודעות">
+              <Icon name="forum" />
+            </Link>
+          )}
           {user && (
             <Link
               to="/notifications"

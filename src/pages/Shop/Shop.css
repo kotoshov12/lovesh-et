@@ -79,6 +79,15 @@
   flex-shrink: 0;
 }
 
+.shop__filters--sub {
+  margin-top: calc(-1 * var(--space-md));
+}
+
+.shop__filters--sub .chip {
+  font-size: var(--text-caption);
+  padding: var(--space-xs) var(--space-md);
+}
+
 /* Toolbar: sort + price range */
 .shop__toolbar {
   display: flex;
