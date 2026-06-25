@@ -55,7 +55,7 @@ function SellerProfile() {
 
   useEffect(() => {
     let active = true
-    fetchReviews(id)
+    fetchReviews({ sellerId: id })
       .then((data) => active && setReviews(data))
       .catch((err) => console.error(err))
     return () => {
@@ -68,7 +68,7 @@ function SellerProfile() {
     setReviewBusy(true)
     try {
       await submitReview({ sellerId: id, rating, body: reviewText.trim() })
-      const fresh = await fetchReviews(id)
+      const fresh = await fetchReviews({ sellerId: id })
       setReviews(fresh)
       setReviewText('')
     } catch (err) {

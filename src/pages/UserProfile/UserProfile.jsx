@@ -8,18 +8,28 @@ import SectionHeader from '../../components/SectionHeader/SectionHeader.jsx'
 import ProductCard from '../../components/ProductCard/ProductCard.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
 import FollowButton from '../../components/FollowButton/FollowButton.jsx'
+import Stars from '../../components/Stars/Stars.jsx'
+import Button from '../../components/Button/Button.jsx'
+import Textarea from '../../components/Textarea/Textarea.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import LocationMap from '../../components/LocationMap/LocationMap.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchProfile } from '../../api/profiles.js'
 import { fetchProductsByUser } from '../../api/products.js'
+import { fetchReviews, submitReview, averageRating } from '../../api/reviews.js'
 import '../SellerProfile/SellerProfile.css'
 
 function UserProfile() {
   const { id } = useParams()
+  const { user } = useAuth()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [profile, setProfile] = useState(null)
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading')
+  const [reviews, setReviews] = useState([])
+  const [rating, setRating] = useState(5)
+  const [reviewText, setReviewText] = useState('')
+  const [reviewBusy, setReviewBusy] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -40,7 +50,33 @@ function UserProfile() {
     }
   }, [id])
 
+  useEffect(() => {
+    let active = true
+    fetchReviews({ userId: id })
+      .then((data) => active && setReviews(data))
+      .catch((err) => console.error(err))
+    return () => {
+      active = false
+    }
+  }, [id])
+
+  async function handleSubmitReview(e) {
+    e.preventDefault()
+    setReviewBusy(true)
+    try {
+      await submitReview({ userId: id, rating, body: reviewText.trim() })
+      setReviews(await fetchReviews({ userId: id }))
+      setReviewText('')
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setReviewBusy(false)
+    }
+  }
+
   const name = profile?.full_name || 'משתמש'
+  const avg = averageRating(reviews)
+  const isSelf = user?.id === id
 
   return (
     <div className="page">
@@ -70,6 +106,14 @@ function UserProfile() {
                   </p>
                 )}
                 <p className="seller-profile__count">{items.length} פריטים למכירה</p>
+                {reviews.length > 0 && (
+                  <p className="seller-profile__rating">
+                    <Stars value={avg} size="sm" />
+                    <span>
+                      {avg.toFixed(1)} ({reviews.length})
+                    </span>
+                  </p>
+                )}
                 {profile?.bio && <p className="seller-profile__loc">{profile.bio}</p>}
                 <FollowButton userId={id} />
               </div>
@@ -96,6 +140,48 @@ function UserProfile() {
                 </aside>
               )}
             </div>
+
+            <section className="seller-profile__block">
+              <SectionHeader title={`ביקורות על ${name}`} eyebrow="REVIEWS" />
+
+              {user && !isSelf ? (
+                <form className="seller-profile__review-form" onSubmit={handleSubmitReview}>
+                  <div className="seller-profile__rate-row">
+                    <span>הדירוג שלך:</span>
+                    <Stars value={rating} onSelect={setRating} />
+                  </div>
+                  <Textarea
+                    id="review"
+                    label="הביקורת שלך"
+                    rows={3}
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    placeholder="איך הייתה החוויה עם המוכר/ת?"
+                  />
+                  <Button type="submit" variant="primary">
+                    {reviewBusy ? 'שולח/ת…' : 'פרסום ביקורת'}
+                  </Button>
+                </form>
+              ) : (
+                !user && <StateMessage>התחבר/י כדי להשאיר ביקורת.</StateMessage>
+              )}
+
+              {reviews.length > 0 && (
+                <ul className="seller-profile__reviews">
+                  {reviews.map((r) => (
+                    <li key={r.id} className="seller-profile__review">
+                      <div className="seller-profile__review-head">
+                        <Stars value={r.rating} size="sm" />
+                        <span className="seller-profile__review-author">
+                          {r.author_name || 'משתמש'}
+                        </span>
+                      </div>
+                      {r.body && <p className="seller-profile__review-body">{r.body}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
 
             <p className="seller-profile__back">
               <Link to="/shop">חזרה לחנות ←</Link>

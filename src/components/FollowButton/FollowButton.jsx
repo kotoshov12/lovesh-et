@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Icon from '../Icon/Icon.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { isFollowing, follow, unfollow, countFollowers } from '../../api/follows.js'
-
+import { createNotification } from '../../api/notifications.js'
 import './FollowButton.css'
 
 /**
@@ -49,6 +49,16 @@ function FollowButton({ sellerId, userId }) {
         await follow(target)
         setFollowing(true)
         setCount((c) => c + 1)
+        // Notify the followed user (only real users have an inbox).
+        if (userId) {
+          const me = user.user_metadata?.full_name || user.email || 'משתמש/ת'
+          createNotification({
+            userId,
+            type: 'follow',
+            body: `${me} התחיל/ה לעקוב אחריך`,
+            link: `/user/${user.id}`,
+          })
+        }
       }
     } catch (err) {
       console.error(err)

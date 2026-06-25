@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchIncomingOffers, respondOffer } from '../../api/offers.js'
-import { fetchMyFollows } from '../../api/follows.js'
 import { createNotification } from '../../api/notifications.js'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
@@ -37,7 +36,6 @@ function Profile() {
   const [status, setStatus] = useState('loading')
   const [orders, setOrders] = useState([])
   const [offers, setOffers] = useState([])
-  const [following, setFollowing] = useState([])
 
   const meta = user?.user_metadata || {}
   const [editing, setEditing] = useState(false)
@@ -69,9 +67,6 @@ function Profile() {
       .catch((err) => console.error(err))
     fetchIncomingOffers()
       .then((data) => active && setOffers(data))
-      .catch((err) => console.error(err))
-    fetchMyFollows()
-      .then((data) => active && setFollowing(data))
       .catch((err) => console.error(err))
     return () => {
       active = false
@@ -292,31 +287,6 @@ function Profile() {
                 </li>
               ))}
             </ul>
-          </section>
-        )}
-
-        {/* Sellers I follow */}
-        {following.length > 0 && (
-          <section className="profile__block">
-            <SectionHeader title="עוקב/ת אחרי" eyebrow="FOLLOWING" />
-            <div className="profile__following">
-              {following.map((s) => (
-                <Link
-                  key={`${s.type}-${s.id}`}
-                  to={s.type === 'seller' ? `/seller/${s.id}` : `/user/${s.id}`}
-                  className="profile__follow-card"
-                >
-                  <span className="profile__follow-avatar">
-                    {s.avatar ? (
-                      <img src={s.avatar} alt={s.name} />
-                    ) : (
-                      <Icon name="account_circle" size="lg" />
-                    )}
-                  </span>
-                  <span className="profile__follow-name">{s.name}</span>
-                </Link>
-              ))}
-            </div>
           </section>
         )}
 
