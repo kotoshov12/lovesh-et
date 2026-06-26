@@ -46,6 +46,7 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
 | **Google OAuth** | "Sign in with Google" (through the Supabase provider) | Supabase → Auth → Providers · Google Cloud Console |
 | **Sentry** | Error monitoring + session replay | `VITE_SENTRY_DSN` |
 | **Microsoft Clarity** | Behaviour analytics (heatmaps, session recordings) | `VITE_CLARITY_ID` |
+| **Resend** | Purchase-receipt emails (via a Supabase Edge Function) | `RESEND_API_KEY` secret · [supabase/functions/send-receipt](supabase/functions/send-receipt) |
 | **Unsplash** | Product & avatar imagery (seed data) | image URLs in the seed SQL |
 | **Google Maps** | Seller pickup-location map | `<iframe>` embed (no key) |
 
@@ -228,6 +229,10 @@ erDiagram
 Hosted on **Vercel** (connected to this GitHub repo). Pushing to `main`
 auto-deploys; a manual deploy is `vercel --prod`. SPA routing is handled by
 [vercel.json](vercel.json).
+
+**Receipt emails** are sent by the `send-receipt` Supabase Edge Function. To
+enable: `supabase secrets set RESEND_API_KEY=...` then
+`supabase functions deploy send-receipt`. Checkout requires a signed-in user.
 
 ## 🎨 Design system
 

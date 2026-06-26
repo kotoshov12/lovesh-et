@@ -8,8 +8,9 @@ import Input from '../../components/Input/Input.jsx'
 import Icon from '../../components/Icon/Icon.jsx'
 import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { useCart } from '../../context/CartContext.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import { formatPrice } from '../../api/products.js'
-import { createOrder } from '../../api/orders.js'
+import { createOrder, sendReceipt } from '../../api/orders.js'
 import { createNotification } from '../../api/notifications.js'
 import './Checkout.css'
 
@@ -31,6 +32,7 @@ const METHODS = [
 function Checkout() {
   const navigate = useNavigate()
   const { items, total, clear } = useCart()
+  const { user } = useAuth()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [method, setMethod] = useState('bit')
   const [bitPhone, setBitPhone] = useState('')
@@ -39,6 +41,8 @@ function Checkout() {
   async function handlePlaceOrder() {
     try {
       await createOrder({ items, total, paymentMethod: method })
+      // Email the buyer a receipt (best-effort).
+      await sendReceipt({ email: user?.email, items, total, paymentMethod: method })
       // Notify each item's seller (when the item has a registered owner).
       const owners = [...new Set(items.map((i) => i.ownerId).filter(Boolean))]
       await Promise.all(
@@ -74,6 +78,8 @@ function Checkout() {
               {method === 'bit'
                 ? 'נשלח אליך אישור עם פרטי התשלום ב-Bit מול המוכר/ת.'
                 : 'תאמ/י עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}
+              {' '}
+              קבלה נשלחה לאימייל שלך 🧾
             </p>
             <Link to="/shop">
               <Button variant="primary" icon="arrow_back">

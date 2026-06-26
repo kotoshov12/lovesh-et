@@ -17,6 +17,23 @@ export async function createOrder({ items, total, paymentMethod }) {
   return data
 }
 
+/** Email a receipt for the order (best-effort; needs the send-receipt function). */
+export async function sendReceipt({ email, items, total, paymentMethod }) {
+  if (!email) return
+  try {
+    await supabase.functions.invoke('send-receipt', {
+      body: {
+        email,
+        items: (items || []).map((i) => ({ name: i.name, price: i.price })),
+        total,
+        paymentMethod,
+      },
+    })
+  } catch (err) {
+    console.warn('[receipt] email failed', err)
+  }
+}
+
 /** The current user's orders, newest first. */
 export async function fetchMyOrders() {
   const {
