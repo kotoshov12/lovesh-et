@@ -17,6 +17,7 @@ import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchProfile } from '../../api/profiles.js'
 import { fetchProductsByUser } from '../../api/products.js'
 import { fetchReviews, submitReview, averageRating } from '../../api/reviews.js'
+import { getBlockStatus, blockUser, unblockUser } from '../../api/blocks.js'
 import '../SellerProfile/SellerProfile.css'
 
 function UserProfile() {
@@ -30,6 +31,7 @@ function UserProfile() {
   const [rating, setRating] = useState(5)
   const [reviewText, setReviewText] = useState('')
   const [reviewBusy, setReviewBusy] = useState(false)
+  const [iBlocked, setIBlocked] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -59,6 +61,32 @@ function UserProfile() {
       active = false
     }
   }, [id])
+
+  useEffect(() => {
+    let active = true
+    if (user && user.id !== id) {
+      getBlockStatus(id)
+        .then((bs) => active && setIBlocked(bs.iBlocked))
+        .catch((err) => console.error(err))
+    }
+    return () => {
+      active = false
+    }
+  }, [id, user])
+
+  async function toggleBlock() {
+    try {
+      if (iBlocked) {
+        await unblockUser(id)
+        setIBlocked(false)
+      } else {
+        await blockUser(id)
+        setIBlocked(true)
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   async function handleSubmitReview(e) {
     e.preventDefault()
@@ -116,6 +144,12 @@ function UserProfile() {
                 )}
                 {profile?.bio && <p className="seller-profile__loc">{profile.bio}</p>}
                 <FollowButton userId={id} />
+                {user && !isSelf && (
+                  <button type="button" className="seller-profile__block" onClick={toggleBlock}>
+                    <Icon name="block" size="sm" />
+                    {iBlocked ? 'בטל חסימה' : 'חסום משתמש/ת'}
+                  </button>
+                )}
               </div>
             </section>
 

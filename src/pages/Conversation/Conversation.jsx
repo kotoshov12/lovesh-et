@@ -12,6 +12,8 @@ import {
   markConversationRead,
 } from '../../api/messages.js'
 import { fetchConversationPurchase, respondPurchase } from '../../api/purchases.js'
+import { fetchConversationOffer, respondOffer } from '../../api/offers.js'
+import { getBlockStatus, blockUser, unblockUser } from '../../api/blocks.js'
 import { createNotification } from '../../api/notifications.js'
 import './Conversation.css'
 
@@ -24,19 +26,31 @@ function Conversation() {
   const [draft, setDraft] = useState('')
   const [sending, setSending] = useState(false)
   const [purchase, setPurchase] = useState(null)
+  const [offer, setOffer] = useState(null)
+  const [blocked, setBlocked] = useState({ iBlocked: false, blockedMe: false })
   const [responding, setResponding] = useState(false)
   const endRef = useRef(null)
 
   useEffect(() => {
     let active = true
-    Promise.all([fetchConversation(id), fetchMessages(id), fetchConversationPurchase(id)])
-      .then(([conv, msgs, req]) => {
+    Promise.all([
+      fetchConversation(id),
+      fetchMessages(id),
+      fetchConversationPurchase(id),
+      fetchConversationOffer(id),
+    ])
+      .then(async ([conv, msgs, req, off]) => {
         if (!active) return
         setConversation(conv)
         setMessages(msgs)
         setPurchase(req)
+        setOffer(off)
         setStatus('ready')
         markConversationRead(id)
+        if (conv?.otherId) {
+          const bs = await getBlockStatus(conv.otherId)
+          if (active) setBlocked(bs)
+        }
       })
       .catch((err) => {
         console.error(err)
@@ -86,6 +100,52 @@ function Conversation() {
     }
   }
 
+  async function respondToOffer(newStatus) {
+    if (!offer) return
+    setResponding(true)
+    try {
+      await respondOffer(offer.id, newStatus)
+      const body =
+        newStatus === 'accepted'
+          ? `קיבלתי את הצעת המחיר שלך (₪${offer.amount}) על "${offer.product_name}" ✅`
+          : `דחיתי את הצעת המחיר (₪${offer.amount}) על "${offer.product_name}".`
+      const msg = await sendMessage({ conversationId: id, body })
+      setMessages((prev) => (prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]))
+      await createNotification({
+        userId: offer.buyer_id,
+        type: 'offer',
+        body:
+          newStatus === 'accepted'
+            ? `הצעת המחיר שלך (₪${offer.amount}) התקבלה! 🎉`
+            : `הצעת המחיר שלך (₪${offer.amount}) נדחתה.`,
+        link: `/messages/${id}`,
+      })
+      setOffer({ ...offer, status: newStatus })
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setResponding(false)
+    }
+  }
+
+  async function toggleBlock() {
+    const other = conversation?.otherId
+    if (!other) return
+    try {
+      if (blocked.iBlocked) {
+        await unblockUser(other)
+        setBlocked((b) => ({ ...b, iBlocked: false }))
+      } else {
+        await blockUser(other)
+        setBlocked((b) => ({ ...b, iBlocked: true }))
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const isBlocked = blocked.iBlocked || blocked.blockedMe
+
   async function handleSend(e) {
     e.preventDefault()
     const body = draft.trim()
@@ -134,6 +194,17 @@ function Conversation() {
               <img src={conversation.product.image} alt="" />
             </Link>
           )}
+          {conversation?.otherId && (
+            <button
+              type="button"
+              className={`conv__block ${blocked.iBlocked ? 'is-on' : ''}`}
+              onClick={toggleBlock}
+              title={blocked.iBlocked ? 'בטל חסימה' : 'חסום משתמש/ת'}
+              aria-label={blocked.iBlocked ? 'בטל חסימה' : 'חסום משתמש/ת'}
+            >
+              <Icon name="block" size="md" />
+            </button>
+          )}
         </div>
 
         {purchase && (
@@ -179,6 +250,48 @@ function Conversation() {
           </div>
         )}
 
+        {offer && (
+          <div className={`conv__purchase conv__purchase--${offer.status}`}>
+            <div className="conv__purchase-info">
+              <Icon name="local_offer" size="sm" />
+              <span>
+                הצעת מחיר: <strong>{offer.product_name || 'פריט'}</strong> · ₪{offer.amount}
+              </span>
+            </div>
+
+            {offer.status === 'pending' &&
+              (conversation?.seller_id === user?.id ? (
+                <div className="conv__purchase-actions">
+                  <button
+                    type="button"
+                    className="conv__purchase-btn conv__purchase-btn--ok"
+                    disabled={responding}
+                    onClick={() => respondToOffer('accepted')}
+                  >
+                    קבלה
+                  </button>
+                  <button
+                    type="button"
+                    className="conv__purchase-btn conv__purchase-btn--no"
+                    disabled={responding}
+                    onClick={() => respondToOffer('rejected')}
+                  >
+                    דחייה
+                  </button>
+                </div>
+              ) : (
+                <span className="conv__purchase-status">ממתין לתשובת המוכר/ת…</span>
+              ))}
+
+            {offer.status === 'accepted' && (
+              <span className="conv__purchase-status conv__purchase-status--ok">התקבלה ✅</span>
+            )}
+            {offer.status === 'rejected' && (
+              <span className="conv__purchase-status conv__purchase-status--no">נדחתה</span>
+            )}
+          </div>
+        )}
+
         <div className="conv__thread">
           {status === 'loading' && <StateMessage>טוען שיחה…</StateMessage>}
           {status === 'error' && (
@@ -200,18 +313,26 @@ function Conversation() {
           <div ref={endRef} />
         </div>
 
-        <form className="conv__compose" onSubmit={handleSend}>
-          <input
-            className="conv__input"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            placeholder="תכתב/י הודעה…"
-            aria-label="הודעה"
-          />
-          <button type="submit" className="conv__send" disabled={sending} aria-label="שליחה">
-            <Icon name="send" size="md" />
-          </button>
-        </form>
+        {isBlocked ? (
+          <div className="conv__blocked-note">
+            {blocked.iBlocked
+              ? 'חסמת את המשתמש/ת. בטל/י את החסימה כדי לכתוב שוב.'
+              : 'אינך יכול/ה לכתוב בשיחה זו.'}
+          </div>
+        ) : (
+          <form className="conv__compose" onSubmit={handleSend}>
+            <input
+              className="conv__input"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder="תכתב/י הודעה…"
+              aria-label="הודעה"
+            />
+            <button type="submit" className="conv__send" disabled={sending} aria-label="שליחה">
+              <Icon name="send" size="md" />
+            </button>
+          </form>
+        )}
       </main>
     </div>
   )

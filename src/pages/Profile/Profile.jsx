@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { fetchIncomingOffers, respondOffer } from '../../api/offers.js'
 import { fetchMyPurchases } from '../../api/purchases.js'
-import { createNotification } from '../../api/notifications.js'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
@@ -36,7 +34,6 @@ function Profile() {
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading')
   const [orders, setOrders] = useState([])
-  const [offers, setOffers] = useState([])
   const [myPurchases, setMyPurchases] = useState([]) // outgoing (as a buyer)
 
   const meta = user?.user_metadata || {}
@@ -67,9 +64,6 @@ function Profile() {
     fetchMyOrders()
       .then((data) => active && setOrders(data))
       .catch((err) => console.error(err))
-    fetchIncomingOffers()
-      .then((data) => active && setOffers(data))
-      .catch((err) => console.error(err))
     fetchMyPurchases()
       .then((data) => active && setMyPurchases(data))
       .catch((err) => console.error(err))
@@ -82,24 +76,6 @@ function Profile() {
     try {
       await deleteProduct(id)
       setItems((prev) => prev.filter((p) => p.id !== id))
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  async function handleRespondOffer(offer, status) {
-    try {
-      await respondOffer(offer.id, status)
-      await createNotification({
-        userId: offer.buyer_id,
-        type: 'offer',
-        body:
-          status === 'accepted'
-            ? `הצעת המחיר שלך (₪${offer.amount}) התקבלה! 🎉`
-            : `הצעת המחיר שלך (₪${offer.amount}) נדחתה.`,
-        link: offer.product ? `/product/${offer.product.id}` : '/',
-      })
-      setOffers((prev) => prev.filter((o) => o.id !== offer.id))
     } catch (err) {
       console.error(err)
     }
@@ -288,38 +264,6 @@ function Profile() {
                   </span>
                   <span className="profile__order-meta">
                     {o.payment_method === 'bit' ? 'Bit' : 'תשלום במקום'} · {formatPrice(o.total)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {/* Incoming price offers */}
-        {offers.length > 0 && (
-          <section className="profile__block">
-            <SectionHeader title="הצעות מחיר שקיבלתי" eyebrow="OFFERS" />
-            <ul className="profile__offers">
-              {offers.map((o) => (
-                <li key={o.id} className="profile__offer">
-                  <span className="profile__offer-text">
-                    {o.product?.name || 'פריט'} — <strong>₪{o.amount}</strong>
-                  </span>
-                  <span className="profile__offer-actions">
-                    <button
-                      type="button"
-                      className="profile__act-btn"
-                      onClick={() => handleRespondOffer(o, 'accepted')}
-                    >
-                      אישור
-                    </button>
-                    <button
-                      type="button"
-                      className="profile__act-btn profile__act-btn--danger"
-                      onClick={() => handleRespondOffer(o, 'rejected')}
-                    >
-                      דחייה
-                    </button>
                   </span>
                 </li>
               ))}

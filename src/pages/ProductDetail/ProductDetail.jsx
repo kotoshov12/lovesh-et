@@ -13,7 +13,7 @@ import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { useCart } from '../../context/CartContext.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchProduct, fetchSimilar } from '../../api/products.js'
-import { getOrCreateConversation } from '../../api/messages.js'
+import { getOrCreateConversation, sendMessage } from '../../api/messages.js'
 import { submitOffer } from '../../api/offers.js'
 import { createNotification } from '../../api/notifications.js'
 import { fetchProfile } from '../../api/profiles.js'
@@ -143,19 +143,35 @@ function ProductDetail() {
       return
     }
     try {
-      await submitOffer({ productId: product.id, sellerId: product.ownerId, amount })
+      // Reuse the existing buyer⇄seller conversation for this product (or open it),
+      // so the offer lives in the same chat as the messages.
+      const conv = await getOrCreateConversation({
+        productId: product.id,
+        sellerId: product.ownerId,
+      })
+      await sendMessage({
+        conversationId: conv.id,
+        body: `הצעת מחיר: ₪${amount} על "${product.name}" 💰`,
+      })
+      await submitOffer({
+        productId: product.id,
+        productName: product.name,
+        sellerId: product.ownerId,
+        amount,
+        conversationId: conv.id,
+      })
       await createNotification({
         userId: product.ownerId,
         type: 'offer',
         body: `הצעת מחיר חדשה: ₪${amount} על "${product.name}"`,
-        link: '/profile',
+        link: `/messages/${conv.id}`,
       })
-      setOfferMsg({ type: 'ok', text: 'ההצעה נשלחה למוכר/ת!' })
       setOfferAmount('')
       setOfferOpen(false)
+      navigate(`/messages/${conv.id}`)
     } catch (err) {
       console.error(err)
-      setOfferMsg({ type: 'error', text: 'שליחת ההצעה נכשלה. ודא/י שהרצת את migration_v3.' })
+      setOfferMsg({ type: 'error', text: 'שליחת ההצעה נכשלה. ודא/י שהרצת את המיגרציות.' })
     }
   }
 

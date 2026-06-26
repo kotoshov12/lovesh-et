@@ -213,3 +213,17 @@
     margin-top: var(--space-3xl);
   }
 }
+
+.seller-profile__block {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  background: transparent;
+  border: var(--border-thin) solid var(--color-error);
+  color: var(--color-error);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+}

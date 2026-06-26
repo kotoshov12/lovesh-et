@@ -92,8 +92,14 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
   offers received) and **public profiles** for sellers and users.
 - **Seller tools** — upload items with multiple photos, edit / delete, mark as
   sold (sold items are hidden from the shop and shown blurred on the profile).
-- **Messaging** — realtime buyer⇄seller chat (Supabase Realtime).
-- **Notifications** — orders, accepted/rejected offers, new followers, system.
+- **Messaging** — realtime buyer⇄seller chat (Supabase Realtime). Messaging a
+  seller, **price offers**, and **purchase requests** all share **one
+  conversation per product** — no duplicate chats are opened. The seller
+  **accepts/declines offers and approves/declines purchases inside the chat**.
+- **Block users** — either side can block the other from a conversation or a
+  user's profile; blocked users can no longer message one another.
+- **Notifications** — orders, offers (in chat), purchase requests, new followers,
+  system.
 - **Follow** — follow sellers and users; follower counts.
 - **Reviews & ratings** — star reviews on sellers and users.
 - **Inclusive Hebrew** copy (תכתב/י, תשלח/י…), fully responsive, and a friendly
@@ -210,7 +216,8 @@ Run these once, in order:
 15. `migration_v10_security.sql` — tighten insert policies (auth + ownership)
 16. `migration_v11_purchases.sql` — purchase requests (seller approval)
 17. `migration_v12_purchase_chat.sql` — link purchase requests to the chat
-18. `seed_fix.sql` — verified product images + seed reviews
+18. `migration_v13_offers_blocks.sql` — offers in chat + block users
+19. `seed_fix.sql` — verified product images + seed reviews
 
 Also: create a **public Storage bucket** named `product-images`, set the
 **Site URL** to the production URL, and enable the **Google** auth provider.
@@ -233,6 +240,8 @@ erDiagram
     auth_users    ||--o{ orders        : "places"
     products      ||--o{ offers        : "for"
     auth_users    ||--o{ offers        : "buyer/seller"
+    conversations ||--o{ offers        : "in"
+    auth_users    ||--o{ blocks        : "blocker/blocked"
     auth_users    ||--o{ notifications : "receives"
     sellers       ||--o{ reviews       : "about"
     auth_users    ||--o{ reviews       : "writes/about"
@@ -300,8 +309,14 @@ erDiagram
       uuid product_id FK
       uuid buyer_id FK
       uuid seller_id FK
+      uuid conversation_id FK
       int amount
       text status
+    }
+    blocks {
+      uuid id PK
+      uuid blocker_id FK
+      uuid blocked_id FK
     }
     reviews {
       uuid id PK

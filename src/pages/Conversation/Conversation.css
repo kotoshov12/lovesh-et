@@ -154,6 +154,32 @@
   font-weight: var(--weight-bold);
 }
 
+.conv__block {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-secondary);
+  cursor: pointer;
+  padding: var(--space-xs);
+}
+
+.conv__block.is-on {
+  color: var(--color-error);
+}
+
+.conv__blocked-note {
+  padding: var(--space-md) var(--space-lg);
+  border-top: var(--border-thin) solid var(--color-secondary);
+  background: var(--color-background);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
 .conv__thread {
   flex: 1;
   overflow-y: auto;
