@@ -6,6 +6,7 @@
 
 -- Products: only signed-in users may add an item, and only as themselves.
 drop policy if exists "products public insert" on public.products;
+drop policy if exists "products owner insert" on public.products;
 create policy "products owner insert" on public.products
   for insert to authenticated with check (user_id = auth.uid());
 
@@ -14,6 +15,7 @@ drop policy if exists "sellers public insert" on public.sellers;
 
 -- Storage: only signed-in users may upload product/profile images.
 drop policy if exists "product images public upload" on storage.objects;
+drop policy if exists "product images auth upload" on storage.objects;
 create policy "product images auth upload" on storage.objects
   for insert to authenticated with check (bucket_id = 'product-images');
 
