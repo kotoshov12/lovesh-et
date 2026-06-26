@@ -1,3 +1,14 @@
+<div align="center">
+
+<!-- מלא/י את פרטי הקורס: -->
+**מוסד אקדמי:** _(מלא/י)_ · **פקולטה:** _(מלא/י)_
+**קורס:** _(מלא/י)_ · **מרצה:** _(מלא/י)_ · **סמסטר:** _(מלא/י)_
+**מגישה:** maria kotoshov
+
+</div>
+
+---
+
 # LOVEsh\et — חנות יד-שנייה אונליין 🛍️
 
 מרקטפלייס ישראלי (RTL, עברית) לקנייה ומכירה של בגדי יד-שנייה — אופנה מעגלית, מחירים שפויים וקהילה.
@@ -8,6 +19,57 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-lovesh--et.vercel.app-7C1F26?style=for-the-badge&logo=vercel&logoColor=white)](https://lovesh-et.vercel.app)
 
 ---
+
+## 📝 סקירה כללית (Overview)
+
+<div dir="rtl">
+
+**LOVEsh\et** היא פלטפורמת מרקטפלייס לקנייה ומכירה של בגדי **יד-שנייה** — אופנה מעגלית
+(circular fashion) במקום צריכה מתכלה. כל משתמש/ת יכול/ה להעלות פריטים למכירה עם תמונות,
+לנהל את החנות האישית, לשוחח בצ'אט בזמן אמת עם קונים/מוכרים, לעקוב אחרי מוכרים, להשאיר
+דירוגים וביקורות, ולבצע רכישה שמאושרת על ידי המוכר/ת **בתוך השיחה** לפני סגירתה. הממשק
+כולו בעברית, מימין-לשמאל (RTL), ומותאם לדסקטופ ולנייד.
+
+</div>
+
+## 🎯 הבעיה שאנחנו פותרים (The Pain)
+
+<div dir="rtl">
+
+תעשיית ה-Fast Fashion יוצרת בזבוז עצום ועלויות גבוהות, בעוד שוק היד-שנייה הקיים מבוזר
+ולא נוח: קבוצות פייסבוק עמוסות וללא סדר, אין דירוגי אמון למוכרים, אין ניהול מלאי, ואין
+דרך בטוחה לתאם תשלום ואיסוף. הקונה לא יודע למי הוא קונה, והמוכר מתקשה לחשוף את הפריטים שלו
+לקהל ממוקד. **LOVEsh\et** הופכת את התהליך למסודר, אמין ומהנה.
+
+</div>
+
+## 👥 קהל היעד (Target Audience)
+
+<div dir="rtl">
+
+1. **צעירים/ות מודעי-סביבה** שמחפשים אופנה משתלמת ומקיימת, ואוהבים פריטים ייחודיים.
+2. **מוכרים/ות פרטיים** שרוצים לפנות את הארון, לתת לבגדים חיים שניים ולהרוויח בדרך.
+
+</div>
+
+## ⚔️ מתחרים ובידול (Competitors & Differentiation)
+
+| הכאב (Pain) | קטגוריה | מתחרה |
+| --- | --- | --- |
+| לא מסודר, ללא דירוג/אמון | קבוצות יד-שנייה | קבוצות פייסבוק / וואטסאפ |
+| כללי מדי, לא ממוקד אופנה | מרקטפלייס כללי | יד2 · Facebook Marketplace |
+| מוגבל גאוגרפית, מלאי קטן | חנויות וינטג' פיזיות | חנויות יד-שנייה מקומיות |
+
+### 🚀 ה-Wow Factor
+
+<div dir="rtl">
+
+1. **חוויית עברית מלאה (RTL)** ומערכת עיצוב אחידה — לא תרגום של מוצר לועזי.
+2. **צ'אט בזמן אמת עם אישור עסקה בתוך השיחה** — המוכר/ת מאשר/ת את ה-Bit/המפגש לפני סגירה,
+   ושני הצדדים יודעים בדיוק עם מי הם מתקשרים.
+3. **קהילה ואמון** — מעקב אחרי מוכרים, דירוגים וביקורות, ומפת מיקום לאיסוף.
+
+</div>
 
 ## ✨ Features
 
@@ -30,6 +92,33 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
 - **Reviews & ratings** — star reviews on sellers and users.
 - **Inclusive Hebrew** copy (תכתב/י, תשלח/י…), fully responsive, and a friendly
   Sentry error screen.
+
+## 🎨 UI/UX Design
+
+- **Design system as source of truth** — colours, typography, spacing and component
+  patterns come from `DESIGN.md` tokens, translated into CSS custom properties in
+  [src/styles/globals.css](src/styles/globals.css); components reference variables
+  (e.g. `var(--color-primary)`), never hard-coded values.
+- **Right-to-left (RTL)** Hebrew layout throughout, with gender-inclusive copy
+  (תכתב/י, תשלח/י…).
+- **Mobile-first & responsive** — verified on desktop (1280px) and phone (390px)
+  with no horizontal scroll; a bottom nav bar on mobile.
+- **High design fidelity** — screens built to match the exported Stitch references
+  (`code.html` + `screen.png`).
+- **Clear states** — loading, empty and error states for every async screen.
+
+## 🧩 Frontend & Functionality
+
+- **React SPA** (Vite) with **route-level code-splitting** (`React.lazy` + `Suspense`)
+  for fast first load.
+- **Component-driven** — pages are composed from small, reusable components
+  (one component per folder), never monolithic.
+- **State via Context** — Auth, Cart and Favorites providers; cart/favorites persist
+  in `localStorage`.
+- **Realtime** — chat messages and notifications update live via Supabase Realtime
+  channels.
+- **Resilient** — best-effort flows that don't block the user, and a friendly Sentry
+  error-boundary screen on unexpected crashes.
 
 ## 🧱 Tech stack
 
@@ -246,6 +335,58 @@ erDiagram
 Hosted on **Vercel** (connected to this GitHub repo). Pushing to `main`
 auto-deploys; a manual deploy is `vercel --prod`. SPA routing is handled by
 [vercel.json](vercel.json). Checkout requires a signed-in user.
+
+## 🖼️ Screenshots
+
+<div align="center">
+
+<img src="docs/screenshots/home-desktop.png" alt="דף הבית" width="800" /><br/>
+<em>דף הבית — הירו, קרוסלת מבצעים ו"חדש בחנות"</em>
+
+<br/><br/>
+
+<img src="docs/screenshots/shop-desktop.png" alt="החנות" width="800" /><br/>
+<em>החנות — קטגוריות, חיפוש, מיון וסינון מחיר</em>
+
+<br/><br/>
+
+<img src="docs/screenshots/product-desktop.png" alt="עמוד מוצר" width="800" /><br/>
+<em>עמוד מוצר — גלריה, כרטיס מוכר/ת, מפת איסוף ופריטים דומים</em>
+
+<br/><br/>
+
+<img src="docs/screenshots/login-desktop.png" alt="התחברות" width="800" /><br/>
+<em>התחברות / הרשמה — אימייל + Google</em>
+
+</div>
+
+## 📱 Mobile Responsiveness
+
+<div dir="rtl">
+
+האתר תוכנן Mobile-first ונבדק במסך טלפון (390px) ללא גלילה אופקית, עם סרגל ניווט תחתון.
+
+</div>
+
+<div align="center">
+
+<img src="docs/screenshots/home-mobile.png" alt="דף הבית בנייד" width="280" />
+&nbsp;&nbsp;
+<img src="docs/screenshots/shop-mobile.png" alt="החנות בנייד" width="280" />
+
+</div>
+
+## 🎁 Excellence, Vibe Coding & AI
+
+<div dir="rtl">
+
+- **בנייה בשיתוף AI** — הפרויקט פותח ב"Vibe Coding" יחד עם **Claude Code** (Anthropic):
+  תכנון סכמת ה-Supabase, ה-RLS, רכיבי ה-React והזרימות העסקיות נבנו בעבודה משותפת עם הסוכן.
+- **שלמות מוצרית** — מערכת עיצוב אחידה, מצבי טעינה/ריקנות/שגיאה, נגישות ו-RTL מלא.
+- **תשתית אמיתית** — Auth, Storage, Realtime ו-RLS על כל טבלה; ניטור עם Sentry, Vercel
+  Analytics ו-Microsoft Clarity; פריסה אוטומטית ל-Vercel.
+
+</div>
 
 ## 🎨 Design system
 
