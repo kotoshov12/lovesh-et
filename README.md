@@ -1,4 +1,5 @@
 <div align="center">
+<img width="368" height="98" alt="image" src="https://github.com/user-attachments/assets/f2df9755-d8a2-4975-985b-a220d7e31262" />
 
 **הקריה האקדמית אונו** · הפקולטה למנהל עסקים (מערכות מידע)
 
