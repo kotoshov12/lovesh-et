@@ -7,6 +7,7 @@ export async function createPurchaseRequest({
   sellerId,
   amount,
   paymentMethod,
+  conversationId,
 }) {
   const {
     data: { user },
@@ -21,9 +22,24 @@ export async function createPurchaseRequest({
       seller_id: sellerId,
       amount,
       payment_method: paymentMethod,
+      conversation_id: conversationId,
     })
     .select('*')
     .single()
+  if (error) throw error
+  return data
+}
+
+/** The latest purchase request attached to a conversation (or null). */
+export async function fetchConversationPurchase(conversationId) {
+  if (!conversationId) return null
+  const { data, error } = await supabase
+    .from('purchase_requests')
+    .select('*')
+    .eq('conversation_id', conversationId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
   if (error) throw error
   return data
 }

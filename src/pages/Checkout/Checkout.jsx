@@ -10,8 +10,9 @@ import StateMessage from '../../components/StateMessage/StateMessage.jsx'
 import { useCart } from '../../context/CartContext.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { formatPrice } from '../../api/products.js'
-import { createOrder, sendReceipt } from '../../api/orders.js'
+import { createOrder } from '../../api/orders.js'
 import { createPurchaseRequest } from '../../api/purchases.js'
+import { getOrCreateConversation, sendMessage } from '../../api/messages.js'
 import { createNotification } from '../../api/notifications.js'
 import './Checkout.css'
 
@@ -47,33 +48,35 @@ function Checkout() {
     const sellerItems = items.filter((i) => i.ownerId)
     const demoItems = items.filter((i) => !i.ownerId)
     try {
-      // Real listings → ask the seller to approve the Bit/meeting first.
+      // Real listings → open a chat with the seller and ask them to approve the
+      // Bit/meeting before the purchase is final.
       for (const i of sellerItems) {
+        const conv = await getOrCreateConversation({ productId: i.id, sellerId: i.ownerId })
         await createPurchaseRequest({
           productId: i.id,
           productName: i.name,
           sellerId: i.ownerId,
           amount: i.priceValue || 0,
           paymentMethod: method,
+          conversationId: conv.id,
+        })
+        const payLabel = method === 'bit' ? 'תשלום ב-Bit' : 'מפגש לאיסוף ותשלום'
+        await sendMessage({
+          conversationId: conv.id,
+          body: `היי! אשמח לרכוש את "${i.name}" (₪${i.priceValue || 0}) ב${payLabel}. ממתין/ה לאישורך 🙏`,
         })
         await createNotification({
           userId: i.ownerId,
           type: 'purchase',
-          body: `בקשת רכישה חדשה: ${i.name} — מחכה לאישורך`,
-          link: '/profile',
+          body: `בקשת רכישה חדשה: ${i.name} — מחכה לאישורך בצ'אט`,
+          link: `/messages/${conv.id}`,
         })
       }
 
-      // Demo items → complete immediately and email a receipt.
+      // Demo items (no registered seller) → complete immediately.
       if (demoItems.length) {
         const demoTotal = demoItems.reduce((s, i) => s + (i.priceValue || 0), 0)
         await createOrder({ items: demoItems, total: demoTotal, paymentMethod: method })
-        await sendReceipt({
-          email: user?.email,
-          items: demoItems,
-          total: demoTotal,
-          paymentMethod: method,
-        })
       }
     } catch (err) {
       console.error(err)
@@ -98,23 +101,31 @@ function Checkout() {
             <p className="checkout__done-text">
               {needsApproval ? (
                 <>
-                  המוכר/ת צריכ/ה לאשר את ה{method === 'bit' ? 'תשלום ב-Bit' : 'מפגש'} לפני
-                  שהרכישה תסתיים. נעדכן אותך בהתראה ובאימייל ברגע שתאושר 🧾
+                  פתחנו עבורך שיחה עם המוכר/ת. עליו/ה לאשר את ה
+                  {method === 'bit' ? 'תשלום ב-Bit' : 'מפגש'} לפני שהרכישה תסתיים — תקבל/י
+                  התראה ותוכל/י להמשיך בצ'אט 💬
                 </>
               ) : (
                 <>
                   {method === 'bit'
                     ? 'נשלח אליך אישור עם פרטי התשלום ב-Bit מול המוכר/ת.'
-                    : 'תאמ/י עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}{' '}
-                  קבלה נשלחה לאימייל שלך 🧾
+                    : 'תאמ/י עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}
                 </>
               )}
             </p>
-            <Link to="/shop">
-              <Button variant="primary" icon="arrow_back">
-                להמשך קנייה
-              </Button>
-            </Link>
+            {needsApproval ? (
+              <Link to="/messages">
+                <Button variant="primary" icon="chat_bubble">
+                  למעבר לשיחות
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/shop">
+                <Button variant="primary" icon="arrow_back">
+                  להמשך קנייה
+                </Button>
+              </Link>
+            )}
           </div>
         ) : items.length === 0 ? (
           <div className="checkout__empty">

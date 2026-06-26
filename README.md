@@ -16,8 +16,9 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
 - **Product page** — image gallery, seller card + Google-Maps pickup location,
   ratings, similar items, add-to-cart, **make an offer**, and message the seller.
 - **Cart & checkout** — cart with totals; checkout (sign-in required) with Bit /
-  pay-in-person. Buying a listing creates a **purchase request the seller must
-  approve** before it's final; on approval the buyer gets a receipt email.
+  pay-in-person. Buying a listing opens a chat with the seller and creates a
+  **purchase request the seller approves/declines inside the conversation**
+  before it's final.
 - **Auth** — email/password + **Google** sign-in (Supabase Auth).
 - **Profiles** — private profile (avatar, bio, location, my listings, orders,
   offers received) and **public profiles** for sellers and users.
@@ -47,7 +48,6 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
 | **Google OAuth** | "Sign in with Google" (through the Supabase provider) | Supabase → Auth → Providers · Google Cloud Console |
 | **Sentry** | Error monitoring + session replay | `VITE_SENTRY_DSN` |
 | **Microsoft Clarity** | Behaviour analytics (heatmaps, session recordings) | `VITE_CLARITY_ID` |
-| **Resend** | Purchase-receipt emails (via a Supabase Edge Function) | `RESEND_API_KEY` secret · [supabase/functions/send-receipt](supabase/functions/send-receipt) |
 | **Unsplash** | Product & avatar imagery (seed data) | image URLs in the seed SQL |
 | **Google Maps** | Seller pickup-location map | `<iframe>` embed (no key) |
 
@@ -114,7 +114,8 @@ Run these once, in order:
 14. `migration_v9.sql` — reviews on any user
 15. `migration_v10_security.sql` — tighten insert policies (auth + ownership)
 16. `migration_v11_purchases.sql` — purchase requests (seller approval)
-17. `seed_fix.sql` — verified product images + seed reviews
+17. `migration_v12_purchase_chat.sql` — link purchase requests to the chat
+18. `seed_fix.sql` — verified product images + seed reviews
 
 Also: create a **public Storage bucket** named `product-images`, set the
 **Site URL** to the production URL, and enable the **Google** auth provider.
@@ -144,6 +145,7 @@ erDiagram
     sellers       ||--o{ follows       : "followed"
     products      ||--o{ purchase_requests : "for"
     auth_users    ||--o{ purchase_requests : "buyer/seller"
+    conversations ||--o{ purchase_requests : "in"
 
     auth_users {
       uuid id PK
@@ -232,6 +234,7 @@ erDiagram
       uuid product_id FK
       uuid buyer_id FK
       uuid seller_id FK
+      uuid conversation_id FK
       int amount
       text payment_method
       text status
@@ -242,11 +245,7 @@ erDiagram
 
 Hosted on **Vercel** (connected to this GitHub repo). Pushing to `main`
 auto-deploys; a manual deploy is `vercel --prod`. SPA routing is handled by
-[vercel.json](vercel.json).
-
-**Receipt emails** are sent by the `send-receipt` Supabase Edge Function. To
-enable: `supabase secrets set RESEND_API_KEY=...` then
-`supabase functions deploy send-receipt`. Checkout requires a signed-in user.
+[vercel.json](vercel.json). Checkout requires a signed-in user.
 
 ## 🎨 Design system
 

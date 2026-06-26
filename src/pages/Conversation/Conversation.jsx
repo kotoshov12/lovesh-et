@@ -11,6 +11,8 @@ import {
   subscribeToMessages,
   markConversationRead,
 } from '../../api/messages.js'
+import { fetchConversationPurchase, respondPurchase } from '../../api/purchases.js'
+import { createNotification } from '../../api/notifications.js'
 import './Conversation.css'
 
 function Conversation() {
@@ -21,15 +23,18 @@ function Conversation() {
   const [status, setStatus] = useState('loading')
   const [draft, setDraft] = useState('')
   const [sending, setSending] = useState(false)
+  const [purchase, setPurchase] = useState(null)
+  const [responding, setResponding] = useState(false)
   const endRef = useRef(null)
 
   useEffect(() => {
     let active = true
-    Promise.all([fetchConversation(id), fetchMessages(id)])
-      .then(([conv, msgs]) => {
+    Promise.all([fetchConversation(id), fetchMessages(id), fetchConversationPurchase(id)])
+      .then(([conv, msgs, req]) => {
         if (!active) return
         setConversation(conv)
         setMessages(msgs)
+        setPurchase(req)
         setStatus('ready')
         markConversationRead(id)
       })
@@ -51,6 +56,35 @@ function Conversation() {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  async function respondToPurchase(newStatus) {
+    if (!purchase) return
+    setResponding(true)
+    try {
+      await respondPurchase(purchase.id, newStatus)
+      const payLabel = purchase.payment_method === 'bit' ? 'תשלום ב-Bit' : 'מפגש לאיסוף'
+      const body =
+        newStatus === 'approved'
+          ? `אישרתי את הרכישה של "${purchase.product_name}" ✅ בוא/י נתאם ${payLabel}.`
+          : `דחיתי את בקשת הרכישה של "${purchase.product_name}".`
+      const msg = await sendMessage({ conversationId: id, body })
+      setMessages((prev) => (prev.some((m) => m.id === msg.id) ? prev : [...prev, msg]))
+      await createNotification({
+        userId: purchase.buyer_id,
+        type: 'purchase',
+        body:
+          newStatus === 'approved'
+            ? `הרכישה של "${purchase.product_name}" אושרה! 🎉`
+            : `בקשת הרכישה של "${purchase.product_name}" נדחתה.`,
+        link: `/messages/${id}`,
+      })
+      setPurchase({ ...purchase, status: newStatus })
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setResponding(false)
+    }
+  }
 
   async function handleSend(e) {
     e.preventDefault()
@@ -101,6 +135,49 @@ function Conversation() {
             </Link>
           )}
         </div>
+
+        {purchase && (
+          <div className={`conv__purchase conv__purchase--${purchase.status}`}>
+            <div className="conv__purchase-info">
+              <Icon name="shopping_bag" size="sm" />
+              <span>
+                בקשת רכישה: <strong>{purchase.product_name}</strong> · ₪{purchase.amount} ·{' '}
+                {purchase.payment_method === 'bit' ? 'Bit' : 'תשלום במקום'}
+              </span>
+            </div>
+
+            {purchase.status === 'pending' &&
+              (conversation?.seller_id === user?.id ? (
+                <div className="conv__purchase-actions">
+                  <button
+                    type="button"
+                    className="conv__purchase-btn conv__purchase-btn--ok"
+                    disabled={responding}
+                    onClick={() => respondToPurchase('approved')}
+                  >
+                    אישור
+                  </button>
+                  <button
+                    type="button"
+                    className="conv__purchase-btn conv__purchase-btn--no"
+                    disabled={responding}
+                    onClick={() => respondToPurchase('declined')}
+                  >
+                    דחייה
+                  </button>
+                </div>
+              ) : (
+                <span className="conv__purchase-status">ממתין לאישור המוכר/ת…</span>
+              ))}
+
+            {purchase.status === 'approved' && (
+              <span className="conv__purchase-status conv__purchase-status--ok">אושר ✅</span>
+            )}
+            {purchase.status === 'declined' && (
+              <span className="conv__purchase-status conv__purchase-status--no">נדחה</span>
+            )}
+          </div>
+        )}
 
         <div className="conv__thread">
           {status === 'loading' && <StateMessage>טוען שיחה…</StateMessage>}
