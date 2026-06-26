@@ -17,13 +17,15 @@ export async function createOrder({ items, total, paymentMethod }) {
   return data
 }
 
-/** Email a receipt for the order (best-effort; needs the send-receipt function). */
-export async function sendReceipt({ email, items, total, paymentMethod }) {
-  if (!email) return
+/** Email a receipt (best-effort; needs the send-receipt function). Pass either
+ *  an explicit `email`, or a `buyerId` for the function to look the address up. */
+export async function sendReceipt({ email, buyerId, items, total, paymentMethod }) {
+  if (!email && !buyerId) return
   try {
     await supabase.functions.invoke('send-receipt', {
       body: {
         email,
+        buyerId,
         items: (items || []).map((i) => ({ name: i.name, price: i.price })),
         total,
         paymentMethod,

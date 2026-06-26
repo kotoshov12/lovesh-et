@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchIncomingOffers, respondOffer } from '../../api/offers.js'
+import {
+  fetchIncomingPurchases,
+  fetchMyPurchases,
+  respondPurchase,
+} from '../../api/purchases.js'
 import { createNotification } from '../../api/notifications.js'
 import Header from '../../components/Header/Header.jsx'
 import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer.jsx'
@@ -23,7 +28,7 @@ import {
   deleteProduct,
   formatPrice,
 } from '../../api/products.js'
-import { fetchMyOrders } from '../../api/orders.js'
+import { fetchMyOrders, sendReceipt } from '../../api/orders.js'
 import { updateProfile } from '../../api/auth.js'
 import './Profile.css'
 
@@ -36,6 +41,8 @@ function Profile() {
   const [status, setStatus] = useState('loading')
   const [orders, setOrders] = useState([])
   const [offers, setOffers] = useState([])
+  const [purchases, setPurchases] = useState([]) // incoming (as a seller)
+  const [myPurchases, setMyPurchases] = useState([]) // outgoing (as a buyer)
 
   const meta = user?.user_metadata || {}
   const [editing, setEditing] = useState(false)
@@ -68,6 +75,12 @@ function Profile() {
     fetchIncomingOffers()
       .then((data) => active && setOffers(data))
       .catch((err) => console.error(err))
+    fetchIncomingPurchases()
+      .then((data) => active && setPurchases(data))
+      .catch((err) => console.error(err))
+    fetchMyPurchases()
+      .then((data) => active && setMyPurchases(data))
+      .catch((err) => console.error(err))
     return () => {
       active = false
     }
@@ -95,6 +108,34 @@ function Profile() {
         link: offer.product ? `/product/${offer.product.id}` : '/',
       })
       setOffers((prev) => prev.filter((o) => o.id !== offer.id))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  async function handleRespondPurchase(req, status) {
+    try {
+      await respondPurchase(req.id, status)
+      const payLabel = req.payment_method === 'bit' ? 'תשלום ב-Bit' : 'מפגש לתשלום'
+      await createNotification({
+        userId: req.buyer_id,
+        type: 'purchase',
+        body:
+          status === 'approved'
+            ? `הרכישה של "${req.product_name}" אושרה! אפשר להתקדם ל${payLabel} מול המוכר/ת 🎉`
+            : `בקשת הרכישה של "${req.product_name}" נדחתה.`,
+        link: req.product_id ? `/product/${req.product_id}` : '/',
+      })
+      if (status === 'approved') {
+        // Email the buyer a receipt (the function resolves their address by id).
+        await sendReceipt({
+          buyerId: req.buyer_id,
+          items: [{ name: req.product_name, price: `₪${req.amount}` }],
+          total: req.amount,
+          paymentMethod: req.payment_method,
+        })
+      }
+      setPurchases((prev) => prev.filter((p) => p.id !== req.id))
     } catch (err) {
       console.error(err)
     }
@@ -315,6 +356,63 @@ function Profile() {
                     >
                       דחייה
                     </button>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Incoming purchase requests (as a seller) */}
+        {purchases.length > 0 && (
+          <section className="profile__block">
+            <SectionHeader title="בקשות רכישה" eyebrow="PURCHASE REQUESTS" />
+            <ul className="profile__offers">
+              {purchases.map((p) => (
+                <li key={p.id} className="profile__offer">
+                  <span className="profile__offer-text">
+                    {p.product_name || 'פריט'} — <strong>₪{p.amount}</strong>{' '}
+                    <span className="profile__order-meta">
+                      ({p.payment_method === 'bit' ? 'Bit' : 'תשלום במקום'})
+                    </span>
+                  </span>
+                  <span className="profile__offer-actions">
+                    <button
+                      type="button"
+                      className="profile__act-btn"
+                      onClick={() => handleRespondPurchase(p, 'approved')}
+                    >
+                      אישור
+                    </button>
+                    <button
+                      type="button"
+                      className="profile__act-btn profile__act-btn--danger"
+                      onClick={() => handleRespondPurchase(p, 'declined')}
+                    >
+                      דחייה
+                    </button>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* My purchase requests (as a buyer) */}
+        {myPurchases.length > 0 && (
+          <section className="profile__block">
+            <SectionHeader title="הרכישות שלי" eyebrow="MY PURCHASES" />
+            <ul className="profile__orders">
+              {myPurchases.map((p) => (
+                <li key={p.id} className="profile__order">
+                  <span className="profile__order-items">{p.product_name || 'פריט'}</span>
+                  <span className="profile__order-meta">
+                    {formatPrice(p.amount)} ·{' '}
+                    {p.status === 'pending'
+                      ? 'ממתין לאישור המוכר/ת'
+                      : p.status === 'approved'
+                        ? 'אושר ✓'
+                        : 'נדחה'}
                   </span>
                 </li>
               ))}

@@ -15,8 +15,9 @@ A Hebrew, right-to-left second-hand fashion marketplace: buy, sell, chat, follow
   navigation, **sub-categories**, free-text search, sort, and a price-range filter.
 - **Product page** — image gallery, seller card + Google-Maps pickup location,
   ratings, similar items, add-to-cart, **make an offer**, and message the seller.
-- **Cart & checkout** — cart with totals; checkout with Bit / pay-in-person
-  (demo payment, no real charge); orders saved to the buyer's profile.
+- **Cart & checkout** — cart with totals; checkout (sign-in required) with Bit /
+  pay-in-person. Buying a listing creates a **purchase request the seller must
+  approve** before it's final; on approval the buyer gets a receipt email.
 - **Auth** — email/password + **Google** sign-in (Supabase Auth).
 - **Profiles** — private profile (avatar, bio, location, my listings, orders,
   offers received) and **public profiles** for sellers and users.
@@ -111,7 +112,9 @@ Run these once, in order:
 12. `migration_v7.sql` — chat read-state
 13. `migration_v8.sql` — follow any user
 14. `migration_v9.sql` — reviews on any user
-15. `seed_fix.sql` — verified product images + seed reviews
+15. `migration_v10_security.sql` — tighten insert policies (auth + ownership)
+16. `migration_v11_purchases.sql` — purchase requests (seller approval)
+17. `seed_fix.sql` — verified product images + seed reviews
 
 Also: create a **public Storage bucket** named `product-images`, set the
 **Site URL** to the production URL, and enable the **Google** auth provider.
@@ -139,6 +142,8 @@ erDiagram
     auth_users    ||--o{ reviews       : "writes/about"
     auth_users    ||--o{ follows       : "follower"
     sellers       ||--o{ follows       : "followed"
+    products      ||--o{ purchase_requests : "for"
+    auth_users    ||--o{ purchase_requests : "buyer/seller"
 
     auth_users {
       uuid id PK
@@ -221,6 +226,15 @@ erDiagram
       uuid follower_id FK
       uuid seller_id FK
       uuid followed_user_id FK
+    }
+    purchase_requests {
+      uuid id PK
+      uuid product_id FK
+      uuid buyer_id FK
+      uuid seller_id FK
+      int amount
+      text payment_method
+      text status
     }
 ```
 

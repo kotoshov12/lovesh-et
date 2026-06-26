@@ -11,6 +11,7 @@ import { useCart } from '../../context/CartContext.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { formatPrice } from '../../api/products.js'
 import { createOrder, sendReceipt } from '../../api/orders.js'
+import { createPurchaseRequest } from '../../api/purchases.js'
 import { createNotification } from '../../api/notifications.js'
 import './Checkout.css'
 
@@ -38,27 +39,45 @@ function Checkout() {
   const [bitPhone, setBitPhone] = useState('')
   const [placed, setPlaced] = useState(false)
 
+  // Items from a registered seller need that seller's approval first; demo/
+  // catalogue items (no registered owner) are completed straight away.
+  const needsApproval = items.some((i) => i.ownerId)
+
   async function handlePlaceOrder() {
+    const sellerItems = items.filter((i) => i.ownerId)
+    const demoItems = items.filter((i) => !i.ownerId)
     try {
-      await createOrder({ items, total, paymentMethod: method })
-      // Email the buyer a receipt (best-effort).
-      await sendReceipt({ email: user?.email, items, total, paymentMethod: method })
-      // Notify each item's seller (when the item has a registered owner).
-      const owners = [...new Set(items.map((i) => i.ownerId).filter(Boolean))]
-      await Promise.all(
-        owners.map((userId) =>
-          createNotification({
-            userId,
-            type: 'order',
-            body: 'מישהו הזמין פריט שלך! 🎉',
-            link: '/profile',
-          })
-        )
-      )
+      // Real listings → ask the seller to approve the Bit/meeting first.
+      for (const i of sellerItems) {
+        await createPurchaseRequest({
+          productId: i.id,
+          productName: i.name,
+          sellerId: i.ownerId,
+          amount: i.priceValue || 0,
+          paymentMethod: method,
+        })
+        await createNotification({
+          userId: i.ownerId,
+          type: 'purchase',
+          body: `בקשת רכישה חדשה: ${i.name} — מחכה לאישורך`,
+          link: '/profile',
+        })
+      }
+
+      // Demo items → complete immediately and email a receipt.
+      if (demoItems.length) {
+        const demoTotal = demoItems.reduce((s, i) => s + (i.priceValue || 0), 0)
+        await createOrder({ items: demoItems, total: demoTotal, paymentMethod: method })
+        await sendReceipt({
+          email: user?.email,
+          items: demoItems,
+          total: demoTotal,
+          paymentMethod: method,
+        })
+      }
     } catch (err) {
       console.error(err)
-      // Even if persistence fails (e.g. not logged in / migration missing),
-      // still complete the flow so the demo isn't blocked.
+      // Even if persistence fails (e.g. migration missing), don't block the flow.
     }
     clear()
     setPlaced(true)
@@ -73,13 +92,23 @@ function Checkout() {
         {placed ? (
           <div className="checkout__done">
             <Icon name="check_circle" size="xl" className="checkout__done-icon" />
-            <h1 className="checkout__title">ההזמנה התקבלה!</h1>
+            <h1 className="checkout__title">
+              {needsApproval ? 'הבקשה נשלחה למוכר/ת!' : 'ההזמנה התקבלה!'}
+            </h1>
             <p className="checkout__done-text">
-              {method === 'bit'
-                ? 'נשלח אליך אישור עם פרטי התשלום ב-Bit מול המוכר/ת.'
-                : 'תאמ/י עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}
-              {' '}
-              קבלה נשלחה לאימייל שלך 🧾
+              {needsApproval ? (
+                <>
+                  המוכר/ת צריכ/ה לאשר את ה{method === 'bit' ? 'תשלום ב-Bit' : 'מפגש'} לפני
+                  שהרכישה תסתיים. נעדכן אותך בהתראה ובאימייל ברגע שתאושר 🧾
+                </>
+              ) : (
+                <>
+                  {method === 'bit'
+                    ? 'נשלח אליך אישור עם פרטי התשלום ב-Bit מול המוכר/ת.'
+                    : 'תאמ/י עם המוכר/ת מפגש לאיסוף ותשלום במזומן.'}{' '}
+                  קבלה נשלחה לאימייל שלך 🧾
+                </>
+              )}
             </p>
             <Link to="/shop">
               <Button variant="primary" icon="arrow_back">

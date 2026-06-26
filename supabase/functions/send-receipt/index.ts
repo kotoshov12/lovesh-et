@@ -27,9 +27,22 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
   try {
-    const { email, items = [], total = 0, paymentMethod } = await req.json()
-    if (!email) return json({ error: 'missing email' }, 400)
+    const { email, buyerId, items = [], total = 0, paymentMethod } = await req.json()
     if (!RESEND_API_KEY) return json({ error: 'RESEND_API_KEY not configured' }, 500)
+
+    // Resolve recipient: explicit email, or look it up from a buyer id (used when
+    // a seller approves a purchase and we don't have the buyer's email at hand).
+    let to = email
+    if (!to && buyerId) {
+      const adminUrl = Deno.env.get('SUPABASE_URL')
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+      const r = await fetch(`${adminUrl}/auth/v1/admin/users/${buyerId}`, {
+        headers: { apikey: serviceKey!, Authorization: `Bearer ${serviceKey}` },
+      })
+      const u = await r.json()
+      to = u?.email
+    }
+    if (!to) return json({ error: 'missing recipient' }, 400)
 
     const rows = items
       .map(
@@ -62,7 +75,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         from: FROM,
-        to: email,
+        to,
         subject: 'הקבלה שלך מ-LOVEsh\\et 🧾',
         html,
       }),
