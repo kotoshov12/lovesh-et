@@ -20,6 +20,7 @@ const Profile = lazy(() => import('./pages/Profile/Profile.jsx'))
 const Messages = lazy(() => import('./pages/Messages/Messages.jsx'))
 const Conversation = lazy(() => import('./pages/Conversation/Conversation.jsx'))
 const Notifications = lazy(() => import('./pages/Notifications/Notifications.jsx'))
+const NotFound = lazy(() => import('./pages/NotFound/NotFound.jsx'))
 
 function App() {
   return (
@@ -91,6 +92,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   )
